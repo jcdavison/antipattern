@@ -1,0 +1,21 @@
+// VARIABLES
+
+$white: white;
+$red: #CF4E42;
+$mauve: rgb(151, 120, 120);
+$blue: rgb(120, 120, 151);
+$green: rgb(120, 151, 120);
+$light_green: rgba(120, 151, 120, 0.2);
+$light_grey: rgba(121, 121, 151, .6);
+$link_color: $green;
+
+// FONT
+// @import url(http://fonts.googleapis.com/css?family=Oxygen:400,700);
+
+@font-face{
+  font-family: "Oxygen";
+  src: url('Oxygen-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
