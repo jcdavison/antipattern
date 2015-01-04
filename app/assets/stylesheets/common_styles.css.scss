@@ -93,7 +93,6 @@ html, body {
   background-color: black;
   border-radius: 2px;
   color: white;
-  font-size: 3em;
   line-height: 1.6;
   position: relative;
   padding: 0 .5em;
@@ -128,18 +127,28 @@ html, body {
       margin-left: 26.5em;
       margin-top: 1em;
       line-height: 2.3;
+      font-size: 3em;
     }
 }
 
 
 @media (max-width: 1366px) {
   .home-hero-title {
-    width: 45%;
-    margin-top: 12.6em;
-    line-height: 2.3;
+    width: 49%;
+    margin-top: 10.6em;
+    line-height: 2.1;
   }
   .home-hero-slider {
-    height: 678px;
-    width: 708px;
+    height: 515px;
+    width: 490px;
+    margin-top: 2em;
+    margin-left: 5em;
+    background: white url('codereview2.jpg') no-repeat center center;
+  }
+  .home-sign-in {
+    line-height: 2.1;
+    margin-left: 21em;
+    margin-top: .8em;
+    font-size: 2.8em;
   }
 }
