@@ -6,9 +6,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <%= render 'shared/navigation' %>
   <%= yield %>
-  <%= render 'shared/modals/please_login_modal' %>
   <%= javascript_include_tag 'application' %>
 </body>
 </html>

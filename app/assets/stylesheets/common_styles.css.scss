@@ -9,13 +9,137 @@ $light_green: rgba(120, 151, 120, 0.2);
 $light_grey: rgba(121, 121, 151, .6);
 $link_color: $green;
 
+
 // FONT
 // @import url(http://fonts.googleapis.com/css?family=Oxygen:400,700);
 
 @font-face{
-  font-family: "Oxygen";
-  src: url('Oxygen-Regular.ttf') format('truetype');
+  font-family: "TitilliumWeb-Regular";
+  src: url('TitilliumWeb-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
+// BOOSTRAP OVERRIDES
+
+$font-family-base: "TitilliumWeb-Regular";
+
+// APPLICATION STYLES
+
+html, body {
+  height: 100%
+}
+
+.brd {
+  border: 1px black solid;
+}
+
+.contain {
+  position: fixed;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+}
+
+.contain .contain-scroll {
+    position: relative;
+    height: 100%;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 50px
+}
+
+#hero {
+  position: relative;
+  overflow: hidden;
+  background-size: 100%;
+}
+
+.home-content {
+  position: relative;
+}
+
+.home-hero {
+  position: relative;
+  overflow: hidden;
+  background: white url('hero.jpg') no-repeat center center;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover
+}
+
+.home-hero-title {
+  background-color: black;
+  border-radius: 2px;
+  color: white;
+  font-size: 2.8em;
+  padding-right: .5em;
+  text-align: right;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.home-hero-slider {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.home-sign-in {
+  background-color: black;
+  border-radius: 2px;
+  color: white;
+  font-size: 3em;
+  line-height: 1.6;
+  position: relative;
+  padding: 0 .5em;
+  display: inline-block;
+  vertical-align: top;
+}
+
+@media (min-width: 1770px) {
+    .home-hero {
+        -webkit-background-size: 100% !important;
+        -moz-background-size: 100% !important;
+        -ms-background-size: 100% !important;
+        -o-background-size: 100% !important;
+        background-size: 100% !important
+    }
+
+    .home-hero-title {
+      width: 45%;
+      margin-top: 13.6em;
+      line-height: 2.3;
+    }
+
+    .home-hero-slider {
+      background: white url('http://cl.ly/image/1g3V0a2N1E1s/Image%202015-01-02%20at%2010.18.00%20PM.png') no-repeat center center;
+      height: 678px;
+      width: 708px;
+      margin-top: 9em;
+      margin-left: 5em;
+    }
+
+    .home-sign-in {
+      margin-left: 26.5em;
+      margin-top: 1em;
+      line-height: 2.3;
+    }
+}
+
+
+@media (max-width: 1366px) {
+  .home-hero-title {
+    width: 45%;
+    margin-top: 12.6em;
+    line-height: 2.3;
+  }
+  .home-hero-slider {
+    height: 678px;
+    width: 708px;
+  }
+}
