@@ -1,7 +1,34 @@
 <div class='container'>
   <div class='row'>
-    <div class='col-sm-8 col-sm-offset-3 brd'>
-      <h2>Open Requests for Code Review</h2>
+    <div class='col-sm-10 col-sm-offset-2'>
+      <div class='row'>
+        <div class='col-sm-10 border-bottom no-left-padding'>
+          <h2>Requests for Code Review</h2>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-sm-10 text-right no-right-padding'>
+          <% @review_requests.each do |review| %>
+            <div class="review-request">
+              <div class="request-summary">
+                <span class='title'><%= review.title %></span> 
+                <span class='value summary'> value: <%= review.display_value %></span>
+                |
+                <span class='requested-by summary'>
+                  requested by: <%= link_to image_tag(review.user.profile_pic , class: 'user-pic'), review.user.github_profile, target: 'new' %>
+                </span>
+              </div>
+              <span class='request-actions'>
+                <div class='request-detail'>
+                  <%= review.detail %>
+                </div>
+                <div class="request-controls">
+                  <button class='btn btn-success'>offer to review</button>
+                </div>
+              </span>
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
-  </div>
 </div>

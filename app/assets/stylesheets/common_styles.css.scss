@@ -8,7 +8,7 @@ $green: rgb(120, 151, 120);
 $light_green: rgba(120, 151, 120, 0.2);
 $light_grey: rgba(121, 121, 151, .6);
 $link_color: $green;
-$gold: #E9DBA5;
+$gold: #FEFE00;
 
 // GLOBAL BOOTSTRAP OVERRIDES
 
@@ -163,4 +163,49 @@ html, body {
     margin-top: .8em;
     font-size: 2.8em;
   }
+}
+
+.user-pic {
+  height: 65px;
+  width: 65px;
+  border-radius: 10px;
+  border: solid 1px grey;
+}
+
+.review-request {
+  padding: .2em 0 .2em .2em;
+  margin: 5px 0;
+  div {
+    margin: .2em 0;
+    padding: .2em 0;
+  }
+}
+
+.border-bottom {
+  border-bottom: 1px solid grey;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.no-right-padding {
+  padding-right: 0 !important;
+}
+
+.no-left-padding {
+  padding-left: 0 !important;
+}
+
+.no-horizontal-padding {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.summary {
+  font-size: 1.2em;
+}
+
+.title {
+  font-size: 2.0em;
 }

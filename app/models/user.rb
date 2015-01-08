@@ -13,7 +13,6 @@ class User < ActiveRecord::Base
   def self.find_for_oauth(auth, signed_in_resource = nil)
     identity = Identity.find_for_oauth(auth)
     user = signed_in_resource ? signed_in_resource : identity.user
-    binding.pry
     if user.nil?
       if auth.provider.match 'google_oauth2/github'
         email = auth.info.email
@@ -26,7 +25,8 @@ class User < ActiveRecord::Base
         user = User.new(
           name: auth.extra.raw_info.name,
           email: email ? email : "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com",
-          password: Devise.friendly_token[0,20]
+          password: Devise.friendly_token[0,20],
+          github_profile: auth.info.urls.GitHub
         )
         user.save!
       end
