@@ -8,7 +8,13 @@ $green: rgb(120, 151, 120);
 $light_green: rgba(120, 151, 120, 0.2);
 $light_grey: rgba(121, 121, 151, .6);
 $link_color: $green;
+$gold: #E9DBA5;
 
+// GLOBAL BOOTSTRAP OVERRIDES
+
+$brand-primary: $blue;
+$text-color: gray;
+$link-hover-color: grey;
 
 // FONT
 // @import url(http://fonts.googleapis.com/css?family=Oxygen:400,700);
@@ -92,12 +98,18 @@ html, body {
 .home-sign-in {
   background-color: black;
   border-radius: 2px;
-  color: white;
   line-height: 1.6;
   position: relative;
   padding: 0 .5em;
   display: inline-block;
   vertical-align: top;
+  a {
+    color: white;
+  }
+  a:hover {
+    text-decoration: none;
+    color: $gold;
+  }
 }
 
 @media (min-width: 1770px) {

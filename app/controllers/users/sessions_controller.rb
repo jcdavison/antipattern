@@ -27,5 +27,3 @@ class Users::SessionsController < Devise::SessionsController
       recall: "#{controller_path}#failure")
   end
 end
-
-

@@ -7,7 +7,7 @@
       <div class="home-hero-slider">
       </div>
       <div class="home-sign-in">
-        Sign In via Github
+        <%= link_to "Sign In with Github", user_omniauth_authorize_path(provider: :github) %>
       </div>
     </div>
   </div>

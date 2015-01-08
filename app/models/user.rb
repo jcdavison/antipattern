@@ -2,19 +2,20 @@ class User < ActiveRecord::Base
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
 
-  devise :database_authenticatable, :registerable, :confirmable,
+  devise :database_authenticatable, :registerable, 
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
   validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
 
   has_many :identities
+  has_many :review_requests
 
 
   def self.find_for_oauth(auth, signed_in_resource = nil)
     identity = Identity.find_for_oauth(auth)
     user = signed_in_resource ? signed_in_resource : identity.user
-
+    binding.pry
     if user.nil?
-      if auth.provider == 'google_oauth2'
+      if auth.provider.match 'google_oauth2/github'
         email = auth.info.email
       else
         email_is_verified = auth.info.email && (auth.info.verified || auth.info.verified_email)
@@ -27,9 +28,12 @@ class User < ActiveRecord::Base
           email: email ? email : "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com",
           password: Devise.friendly_token[0,20]
         )
-        user.skip_confirmation!
         user.save!
       end
+    end
+    if user.profile_pic.nil?
+      user.profile_pic = auth.info.image
+      user.save
     end
 
     if identity.user != user
