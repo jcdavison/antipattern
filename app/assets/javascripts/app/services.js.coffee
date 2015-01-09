@@ -1,7 +1,7 @@
 angular.module('App.services', [] )
   .factory 'User', ($q, $http, $rootScope) ->
     User = 
-      authorize: () ->
+      isAuthorized: () ->
         deferred = $q.defer()
         $http
           method: 'get' 

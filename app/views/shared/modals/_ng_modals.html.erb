@@ -1,0 +1,9 @@
+<% if current_user %>
+  <script type="text/ng-template" id="submitOffer.html">
+    <%= render 'shared/modals/submit_offer' %>
+  </script>
+<% else %>
+  <script type="text/ng-template" id="pleaseLogin.html">
+    <%= render 'shared/modals/please_login' %>
+  </script>
+<% end %>

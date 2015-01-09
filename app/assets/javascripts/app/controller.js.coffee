@@ -6,12 +6,12 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User) ->
     if $rootScope.authorizedUser == true
       if modalPurpose == 'submitOffer'
         modalInstance = $modal.open(
-          templateUrl: 'ng-views/submit_offer_modal.html'
+          templateUrl: 'submitOffer.html'
           controller: 'offerCodeReviewCtrl'
         )
     else
       modalInstance = $modal.open(
-        templateUrl: 'ng-views/please_login_modal.html'
+        templateUrl: 'pleaseLogin.html'
         controller: 'genericModalCtrl'
       )
 )
@@ -22,9 +22,6 @@ controllers.controller('offerCodeReviewCtrl', ($scope, $modalInstance) ->
 )
 
 controllers.controller('genericModalCtrl', ($scope, $modalInstance) ->
-  $scope.doStuff = () ->
-    console.log 'stuff in modal done'
-
   $scope.cancel = () ->
     $modalInstance.dismiss('cancel');
 )
