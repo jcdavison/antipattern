@@ -1,5 +1,4 @@
 class HomeController < ApplicationController
-  before_filter :authenticate_user!, except: :splash
 
   def index
     all_review_requests

@@ -1,11 +1,15 @@
 angular.module('App.services', [] )
-  .factory 'User', ($q, $http) ->
+  .factory 'User', ($q, $http, $rootScope) ->
     User = 
-      authorized: false
-      isAuthorized: () ->
+      authorize: () ->
+        deferred = $q.defer()
         $http
           method: 'get' 
           url: '/api/authorized_user'
-        .success (response) ->
-          @authorized = true
+        .success (response) =>
+          $rootScope.authorizedUser = true
+          deferred.resolve(response)
+        .error (response) =>
+          deferred.reject(response)
+        return deferred.promise
     return User
