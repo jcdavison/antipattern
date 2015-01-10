@@ -3,18 +3,40 @@
 $white: white;
 $red: #CF4E42;
 $mauve: rgb(151, 120, 120);
-$blue: rgb(120, 120, 151);
+$blue: hsl(210, 68%, 42%);
 $green: rgb(120, 151, 120);
 $light_green: rgba(120, 151, 120, 0.2);
 $light_grey: rgba(121, 121, 151, .6);
 $link_color: $green;
 $gold: #FEFE00;
+$grey: gray;
 
 // GLOBAL BOOTSTRAP OVERRIDES
 
 $brand-primary: $blue;
-$text-color: gray;
-$link-hover-color: grey;
+$text-color: $grey;
+$link-hover-color: $grey;
+
+button.accept {
+  &:hover {
+    border-color: $green;
+    background-color: $green;
+    color: $white
+  }
+}
+
+button.cancel {
+  &:hover {
+    border-color: $red;
+    background-color: $red;
+    color: $white
+  }
+}
+button.btn-default {
+  color: $grey;
+  background-color: $white;
+  border-color: $grey;
+}
 
 // FONT
 // @import url(http://fonts.googleapis.com/css?family=Oxygen:400,700);
@@ -24,6 +46,18 @@ $link-hover-color: grey;
   src: url('TitilliumWeb-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+}
+
+.blue {
+  color: $blue;
+}
+
+.medium {
+  font-size: 2.2em;
+}
+
+.medium-small {
+  font-size: 1.6em;
 }
 
 // BOOSTRAP OVERRIDES
@@ -169,7 +203,7 @@ html, body {
   height: 65px;
   width: 65px;
   border-radius: 10px;
-  border: solid 1px grey;
+  border: solid 1px $grey;
 }
 
 .review-request {
@@ -182,7 +216,7 @@ html, body {
 }
 
 .border-bottom {
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid $grey;
 }
 
 .text-right {
