@@ -25,12 +25,17 @@ controllers.controller('requestCodeReview', ($scope, $rootScope, $modal, User) -
       )
 )
 
-controllers.controller('offerCodeReviewCtrl', ($scope, $modalInstance, reviewRequestId) ->
+controllers.controller('offerCodeReviewCtrl', ($scope, $modalInstance, reviewRequestId, Offer) ->
   $scope.cancel = () ->
     $modalInstance.dismiss('cancel');
 
+  setDisplayStatus = () ->
+    $scope.display_status = Offer.display_status
+  setDisplayStatus()
+
   $scope.offerCodeReview = () ->
-    console.log reviewRequestId
+    Offer.submit(reviewRequestId).then (r) ->
+      setDisplayStatus()
 )
 
 controllers.controller('genericModalCtrl', ($scope, $modalInstance) ->

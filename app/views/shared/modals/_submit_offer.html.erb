@@ -5,22 +5,35 @@
     <h4 class='modal-title red' ng-show='articleSubmitError()'>There was a problem, please try again.</h4>
   </div>
   <div class="modal-body clearfix">
-    <div class="medium-small text-right">
+    <div class="medium-small text-right" ng-show="display_status == 'instructions'">
       <div>You submit an offer to give a code review.</div>
       <div>The owner of the code review accepts or declines.</div>
       <div>You receive of notication of acceptance/decline.</div>
       <div>You give a solid code review.</div>
       <div>You get paid the posted value of the code review.</div>
     </div>
+    <div class="medium-small text-right" ng-show="display_status == 'confirmation'">
+      <div>Your offer has been received.</div>
+      <div>The owner must now accept or decline</div>
+      <div>You will receive notication of their choice</div>
+      <h3><a href="mailto:jd@antipattern.io">email antipatten.io for help</a></h3>
+      <div>Happy Hunting</div>
+    </div>
+    <div class="medium-small text-right" ng-show="display_status == 'error'">
+      there was a serious problem, with the api, it is the architect's fault
+      <h3><a href="mailto:jd@antipattern.io">email antipatten.io for help</a></h3>
+    </div>
   </div>
   <div class="modal-footer">
-    <form id="offerCodeReview">
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button class='btn btn-default tools cancel' ng-click='cancel()'>no thanks</button>
-            <button class='btn btn-default tools accept' ng-click='offerCodeReview()'>offer code review</button>
+    <div ng-show="display_status == 'instructions'">
+      <form id="offerCodeReview">
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+              <button class='btn btn-default tools cancel' ng-click='cancel()'>No Thanks</button>
+              <button class='btn btn-default tools accept' ng-click='offerCodeReview()'>Offer Code Review</button>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>

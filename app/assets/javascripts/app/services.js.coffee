@@ -13,3 +13,23 @@ angular.module('App.services', [] )
           deferred.reject(response)
         return deferred.promise
     return User
+
+  .factory 'Offer', ($q, $http) ->
+    Offer = 
+      display_status: 'instructions'
+      submit: (reviewRequestId) ->
+        deferred = $q.defer()
+        data = 
+          reviewRequestId: reviewRequestId
+        $http
+          method: 'post' 
+          url: '/api/offers'
+          data: data
+        .success (response) =>
+          @display_status = 'confirmation'
+          deferred.resolve(response)
+        .error (response) =>
+          @display_status = 'error'
+          deferred.reject(response)
+        return deferred.promise
+    return Offer

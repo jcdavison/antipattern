@@ -6,6 +6,7 @@ gem 'spring',        group: :development
 gem 'quiet_assets', '~> 1.0.3'
 gem 'pg', '~> 0.17.1'
 gem 'pry'
+gem 'aasm', '~> 4.0.8'
 
 #user auth
 gem 'devise', '~> 3.4.1'
