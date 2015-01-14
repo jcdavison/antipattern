@@ -84,7 +84,7 @@ Rails.application.configure do
     address:              'smtp.mailgun.org',
     port:                 587,
     domain:               'antipattern.io',
-    user_name:            'postmaster@anitpattern.io',
+    user_name:            'postmaster@antipattern.io',
     password:             ENV['MAILGUN_POSTMASTER'],
     authentication:       :plain }
 end
