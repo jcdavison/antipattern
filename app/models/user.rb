@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
     identity = Identity.find_for_oauth(auth)
     user = signed_in_resource ? signed_in_resource : identity.user
     if user.nil?
-      if auth.provider.match 'google_oauth2/github'
+      if auth.provider.match /google_oauth2|github/
         email = auth.info.email
       else
         email_is_verified = auth.info.email && (auth.info.verified || auth.info.verified_email)

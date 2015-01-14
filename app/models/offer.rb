@@ -3,7 +3,7 @@ class Offer < ActiveRecord::Base
   validates_presence_of :review_request_id, :user_id
 
   aasm do
-    state :presented, :initial => true
+    state :presented, :initial => true, :before_enter => :notify_of_offer
     state :accepted
     state :rejected
     state :delivered
@@ -13,5 +13,12 @@ class Offer < ActiveRecord::Base
     event :accept do
       transitions from: :presented, to: :accepted
     end
+  end
+
+  def notify_of_offer
+    review_request_owner = User.find ReviewRequest.find(review_request_id).user_id
+    offer_owner = User.find user_id
+    members = {offer_owner: offer_owner, review_request_owner: review_request_owner}
+    OfferMailer.notify_of_offer(members).deliver
   end
 end
