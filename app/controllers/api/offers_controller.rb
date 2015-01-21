@@ -12,4 +12,17 @@ class Api::OffersController < ApplicationController
     end
   end
 
+  def update
+    offer = Offer.find_by_id(params[:id])
+    if offer
+      if offer.register_decision params[:decision]
+        render json: { offer: offer.to_json }, status: 200
+      else
+        head :forbidden
+      end
+    else
+      head :forbidden
+    end
+  end
+
 end

@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
 
   has_many :identities
   has_many :review_requests
+  has_many :offers
 
 
   def self.find_for_oauth(auth, signed_in_resource = nil)

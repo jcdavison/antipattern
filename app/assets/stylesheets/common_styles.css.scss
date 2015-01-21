@@ -16,6 +16,7 @@ $grey: gray;
 $brand-primary: $blue;
 $text-color: $grey;
 $link-hover-color: $grey;
+$font-size-small: 20px;
 
 button.accept {
   &:hover {
@@ -38,6 +39,8 @@ button.btn-default {
   border-color: $grey;
 }
 
+$font-family-base: "TitilliumWeb-Regular";
+
 // FONT
 // @import url(http://fonts.googleapis.com/css?family=Oxygen:400,700);
 
@@ -59,15 +62,20 @@ button.btn-default {
 .medium-small {
   font-size: 1.6em;
 }
-
-// BOOSTRAP OVERRIDES
-
-$font-family-base: "TitilliumWeb-Regular";
+.navbar-default .navbar-nav > li > a.hover-blue {
+  &:hover {
+    color: $blue;
+  }
+}
 
 // APPLICATION STYLES
 
 html, body {
   height: 100%
+}
+
+.padded {
+  padding: .5em;
 }
 
 .brd {
@@ -242,4 +250,10 @@ html, body {
 
 .title {
   font-size: 2.0em;
+}
+
+// Offer
+
+section.offer {
+  margin: 1em 0;
 }

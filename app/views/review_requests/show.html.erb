@@ -1,0 +1,34 @@
+<div class='container'>
+  <div class='row'>
+    <div class='col-sm-10 col-sm-offset-2'>
+      <div class='row'>
+        <div class='col-sm-10 border-bottom no-left-padding'>
+          <h2>Request for Code Review</h2>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-sm-10 text-right no-right-padding'>
+          <div class="review-request" ng-controller="requestCodeReview">
+            <div class="request-summary">
+              <span class='title'><%= @review_request.title %></span> 
+              <span class='value summary'>value: <%= @review_request.display_value %></span>
+              |
+              <span class='requested-by summary'>
+                requested by: <%= link_to image_tag(@review_request.user.profile_pic , class: 'user-pic'), @review_request.user.github_profile, target: 'new' %>
+              </span>
+            </div>
+            <span class='request-actions'>
+              <div class='request-detail'>
+                <%= @review_request.detail %>
+              </div>
+              <div class="request-controls">
+              </div>
+            </span>
+          </div>
+          <% if @review_request.has_offers? %>
+            <%= render partial: 'shared/offers', locals: { offers: @review_request.offers } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+</div>

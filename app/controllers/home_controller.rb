@@ -14,4 +14,3 @@ class HomeController < ApplicationController
       @review_requests = ReviewRequest.all
     end
 end
-

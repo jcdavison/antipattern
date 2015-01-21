@@ -38,6 +38,17 @@ controllers.controller('offerCodeReviewCtrl', ($scope, $modalInstance, reviewReq
       setDisplayStatus()
 )
 
+controllers.controller('offerAcceptanceCtrl', ($scope, $modal, Offer) ->
+  # this is buggy, it shows the buttons after page refresh even if all the offers have a state
+  $scope.offer_status = null
+  $scope.registerDecision = (offerId, decision) ->
+    args = 
+      offerId: offerId 
+      decision: decision
+    Offer.registerDecision(args).then () ->
+      $scope.offer_status = Offer.state
+)
+
 controllers.controller('genericModalCtrl', ($scope, $modalInstance) ->
   $scope.cancel = () ->
     $modalInstance.dismiss('cancel');

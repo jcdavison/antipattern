@@ -7,10 +7,20 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to 'AntiPattern.io', authenticated_root_path, class: 'navbar-brand' %>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class='nav navbar-nav navbar-left'>
+        <li>
+          <%= link_to 'Give Code Review', authenticated_root_path, class: 'small hover-blue' %>
+        </li>
+        <li>
+          <a href='#' ng-click='requestCodeReview()' class="hover-blue small">Request Code Review</a>
+        </li>
+      </ul>
       <ul class='nav navbar-nav navbar-right'>
+        <li>
+          <%= link_to 'Home', authenticated_root_path %>
+        </li>
         <li>
           <% if current_user %>
             <%= render 'shared/sign_out' %>

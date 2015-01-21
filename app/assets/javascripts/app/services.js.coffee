@@ -17,6 +17,7 @@ angular.module('App.services', [] )
   .factory 'Offer', ($q, $http) ->
     Offer = 
       display_status: 'instructions'
+      state: null
       submit: (reviewRequestId) ->
         deferred = $q.defer()
         data = 
@@ -30,6 +31,22 @@ angular.module('App.services', [] )
           deferred.resolve(response)
         .error (response) =>
           @display_status = 'error'
+          deferred.reject(response)
+        return deferred.promise
+      registerDecision: (args) ->
+        deferred = $q.defer()
+        data = 
+          id: args.offerId
+          decision: args.decision
+        $http
+          method: 'post'
+          url: '/api/offer_decisions'
+          data: data
+        .success (response) =>
+          offer = JSON.parse response.offer
+          @state = offer.aasm_state
+          deferred.resolve(response)
+        .error (response) =>
           deferred.reject(response)
         return deferred.promise
     return Offer
