@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   namespace :api do
     post 'offers', to: 'offers#create'
     post 'offer_decisions', to: 'offers#update'
+    post 'reviews', to: 'reviews#create'
   end
 
   devise_scope :user do

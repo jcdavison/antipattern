@@ -1,0 +1,42 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <span class='modal-title blue medium'>Request a Code Review</span>
+  </div>
+
+  <div class="modal-body">
+    <form novalidate name="review_request" ng-submit="createReviewRequest()" id="review-request">
+      <div class="row">
+        <div class="col-md-11">
+          <input type="text" required ng-focus name="title" ng-model="codeReview.title" class="review-title pull-right friendly-margin" ng-class="{error: review_request.title.$dirty && review_request.title.$invalid}" placeholder="Title"/>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-11">
+          <textarea required ng-focus name="detail" cols="50" rows="8" ng-model="codeReview.detail" class="pull-right friendly-margin" ng-class="{error: review_request.detail.$dirty && review_request.detail.$invalid}" placeholder="add relevant details, markdown friendly :)"/>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-11">
+          <div class="pull-right">
+            <label class="friendly-margin">value:</label>
+            <select ng-model="codeReview.value" name="value" required class="friendly-margin pull-right">
+              <option value="10" selected>$10</option>
+              <option value="25">$25</option>
+              <option value="50">$50</option>
+            </select>
+            <br/>
+            <button type="submit" class="btn btn-default tools accept friendly-margin pull-right" ng-disabled="review_request.$invalid">
+              <span ng-show="review_request.title.$invalid">enter title</span>
+              <span ng-show="review_request.title.$valid && review_request.detail.$invalid">enter detail</span>
+              <span ng-show="review_request.detail.$valid && review_request.value.$invalid">select value</span>
+              <span ng-show="review_request.$valid">submit review</span>
+              <span ng-hide="accepted" class="grey"><%= fa_icon 'gears' %></span>
+              <span ng-show="accepted" class="green"><%= fa_icon 'check' %></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

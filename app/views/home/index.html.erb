@@ -12,6 +12,8 @@
             <div class="review-request" ng-controller="requestCodeReview">
               <div class="request-summary">
                 <span class='title'><%= review.title %></span> 
+              </div>
+              <div>
                 <span class='requested-by summary'>
                   requested by: <%= link_to review.user.name, review.user.github_profile, target: 'new' %>
                 </span>

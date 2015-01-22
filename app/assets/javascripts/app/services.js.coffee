@@ -14,6 +14,26 @@ angular.module('App.services', [] )
         return deferred.promise
     return User
 
+  .factory 'ReviewRequest', ($q, $http, $rootScope) ->
+    ReviewRequest = 
+      accepted: null
+      create: (codeReview) ->
+        deferred = $q.defer()
+        data =
+          review_request: codeReview
+        $http
+          method: 'post' 
+          url: '/api/reviews'
+          data: data
+        .success (response) =>
+          @accepted = true
+          console.log response
+          deferred.resolve(response)
+        .error (response) =>
+          deferred.reject(response)
+        return deferred.promise
+    return ReviewRequest
+
   .factory 'Offer', ($q, $http) ->
     Offer = 
       display_status: 'instructions'

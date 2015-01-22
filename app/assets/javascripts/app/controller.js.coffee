@@ -4,9 +4,37 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User) ->
   User.isAuthorized()
 )
 
+controllers.controller('createCodeReviewCtrl', ($scope, $rootScope,$modalInstance, $modal, ReviewRequest) ->
+  setAcceptStatus = () ->
+    $scope.accepted = ReviewRequest.accepted
+  setAcceptStatus()
+
+  $scope.codeReview = {}
+
+
+  $scope.createReviewRequest = () ->
+    ReviewRequest.create($scope.codeReview).then (someVal) ->
+      setAcceptStatus()
+      console.log "accepted", $scope.accepted
+
+  $scope.cancel = () ->
+    $modalInstance.dismiss('cancel');
+)
+
 controllers.controller('requestCodeReview', ($scope, $rootScope, $modal, User) ->
-  User.isAuthorized()
   $scope.reviewRequest = {}
+  $scope.requestCodeReview = () ->
+    if $rootScope.authorizedUser == true
+      modalInstance = $modal.open(
+        templateUrl: 'requestCodeReview.html'
+        controller: 'createCodeReviewCtrl'
+      )
+    else
+      modalInstance = $modal.open(
+        templateUrl: 'pleaseLogin.html'
+        controller: 'genericModalCtrl'
+      )
+
   $scope.confirmReviewOffer = (modalPurpose, reviewRequestId, size) ->
     if $rootScope.authorizedUser == true
       if modalPurpose == 'submitOffer'

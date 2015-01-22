@@ -78,6 +78,10 @@ html, body {
   padding: .5em;
 }
 
+.friendly-margin {
+  margin: .4em;
+}
+
 .brd {
   border: 1px black solid;
 }
@@ -97,6 +101,10 @@ html, body {
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     padding-bottom: 50px
+}
+
+textarea.error {
+  border: 1px solid $red;
 }
 
 #hero {
@@ -256,4 +264,12 @@ html, body {
 
 section.offer {
   margin: 1em 0;
+}
+
+// Create Review
+
+#review-request {
+  .review-title {
+    width: 20em;
+  }
 }

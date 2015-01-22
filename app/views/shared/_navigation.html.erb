@@ -13,7 +13,7 @@
         <li>
           <%= link_to 'Give Code Review', authenticated_root_path, class: 'small hover-blue' %>
         </li>
-        <li>
+        <li ng-controller='requestCodeReview'>
           <a href='#' ng-click='requestCodeReview()' class="hover-blue small">Request Code Review</a>
         </li>
       </ul>
