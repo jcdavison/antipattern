@@ -7,11 +7,11 @@
         </div>
       </div>
       <div class='row'>
-        <div class='col-sm-10 text-right no-right-padding'>
+        <div class='col-sm-10 text-right no-left-padding no-right-padding'>
           <% @review_requests.each do |review| %>
             <div class="review-request" ng-controller="requestCodeReview">
               <div class="request-summary clearfix">
-                <span class='tools octocat pull-left'><%= fa_icon 'github-square' %></span> 
+                <span class="shuttle pull-left"><%= fa_icon 'space-shuttle' %></span>
                 <span class='title pull-right'><%= review.title %></span> 
               </div>
               <div class="clearfix">
@@ -32,7 +32,9 @@
                       Hide Details
                     </span>
                   </button>
-                  <button class='btn btn-default tools accept' ng-click="confirmReviewOffer('submitOffer', '<%= review.id %>')">Offer Code Review</button>
+                  <button class='btn btn-default tools accept' ng-click="confirmReviewOffer('submitOffer', '<%= review.id %>')">
+                    Offer Code Review
+                  </button>
                 </div>
                 <div class='request-detail' ng-show="showDetail">
                   <%= markdown_to_html review.detail %>
