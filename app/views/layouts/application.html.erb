@@ -8,6 +8,9 @@
 <body ng-controller="appController">
   <%= render 'shared/navigation' %>
   <%= yield %>
+  <div class="center-block centered">
+    <span class="octocat"><%= fa_icon 'space-shuttle' %></span>
+  </div>
   <%= render 'shared/modals/ng_modals' %>
   <%= javascript_include_tag 'application' %>
 </body>

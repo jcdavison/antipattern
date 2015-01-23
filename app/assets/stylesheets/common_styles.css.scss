@@ -54,6 +54,10 @@ $font-family-base: "TitilliumWeb-Regular";
 // FONT
 // @import url(http://fonts.googleapis.com/css?family=Oxygen:400,700);
 
+.centered {
+  text-align: center;
+}
+
 @font-face{
   font-family: "TitilliumWeb-Regular";
   src: url('TitilliumWeb-Regular.ttf') format('truetype');

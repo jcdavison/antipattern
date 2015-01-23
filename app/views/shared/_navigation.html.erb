@@ -22,6 +22,9 @@
           <%= link_to 'HOME', authenticated_root_path %>
         </li>
         <li>
+          <%= link_to 'ABOUT', "#" %>
+        </li>
+        <li>
           <% if current_user %>
             <%= render 'shared/sign_out' %>
           <% else %>
