@@ -15,11 +15,11 @@
                 <span class='title pull-right'><%= review.title %></span> 
               </div>
               <div class="clearfix">
+                <span class='value summary blue'>Offered Value: <%= review.display_value %></span>
                 <span class='requested-by summary padded'>
-                  requested by: <%= link_to review.user.name, review.user.github_profile, target: 'new' %>
+                  Requested By: <%= link_to review.user.name, review.user.github_profile, target: 'new' %> <%= image_tag review.user.profile_pic, class: 'profile' %>
                 </span>
 
-                <span class='value summary blue'>value: <%= review.display_value %></span>
               </div>
               <span class='request-actions'>
                 <div class='request-detail'>
