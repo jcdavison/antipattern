@@ -18,11 +18,14 @@ $text-color: $grey;
 $link-hover-color: $grey;
 $font-size-small: 20px;
 
-button.accept {
+button.btn-default.accept {
+  border-color: $green;
+  background-color: $green;
+  color: $white;
   &:hover {
     border-color: $green;
-    background-color: $green;
-    color: $white
+    background-color: $white;
+    color: $green;
   }
 }
 
@@ -257,7 +260,11 @@ textarea.error {
 }
 
 .title {
-  font-size: 2.0em;
+  font-size: 2.8em;
+}
+
+.octocat {
+  font-size: 2.6em;
 }
 
 // Offer
@@ -271,5 +278,11 @@ section.offer {
 #review-request {
   .review-title {
     width: 20em;
+  }
+}
+
+.request-detail {
+  img {
+    max-width: 100%;
   }
 }

@@ -10,11 +10,12 @@
         <div class='col-sm-10 text-right no-right-padding'>
           <% @review_requests.each do |review| %>
             <div class="review-request" ng-controller="requestCodeReview">
-              <div class="request-summary">
-                <span class='title'><%= review.title %></span> 
+              <div class="request-summary clearfix">
+                <span class='tools octocat pull-left'><%= fa_icon 'github-square' %></span> 
+                <span class='title pull-right'><%= review.title %></span> 
               </div>
-              <div>
-                <span class='requested-by summary'>
+              <div class="clearfix">
+                <span class='requested-by summary padded'>
                   requested by: <%= link_to review.user.name, review.user.github_profile, target: 'new' %>
                 </span>
 
