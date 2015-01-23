@@ -15,18 +15,27 @@
                 <span class='title pull-right'><%= review.title %></span> 
               </div>
               <div class="clearfix">
-                <span class='value summary blue'>Offered Value: <%= review.display_value %></span>
-                <span class='requested-by summary padded'>
+                <span class='value medium-small blue'>Offered Value: <%= review.display_value %></span>
+                <span class='requested-by medium-small padded'>
                   Requested By: <%= link_to review.user.name, review.user.github_profile, target: 'new' %> <%= image_tag review.user.profile_pic, class: 'profile' %>
                 </span>
 
               </div>
+
               <span class='request-actions'>
-                <div class='request-detail'>
-                  <%= markdown_to_html review.detail %>
-                </div>
                 <div class="request-controls">
+                  <button class='btn btn-default tools accept' ng-click="toggleDetail()" ng-class="{green: showDetail}">
+                    <span ng-show='!showDetail'>
+                      Show Details
+                    </span>
+                    <span ng-show='showDetail'>
+                      Hide Details
+                    </span>
+                  </button>
                   <button class='btn btn-default tools accept' ng-click="confirmReviewOffer('submitOffer', '<%= review.id %>')">Offer Code Review</button>
+                </div>
+                <div class='request-detail' ng-show="showDetail">
+                  <%= markdown_to_html review.detail %>
                 </div>
               </span>
             </div>

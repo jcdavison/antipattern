@@ -23,6 +23,10 @@ controllers.controller('createCodeReviewCtrl', ($scope, $rootScope,$modalInstanc
 
 controllers.controller('requestCodeReview', ($scope, $rootScope, $modal, User) ->
   $scope.reviewRequest = {}
+  $scope.toggleDetail = () ->
+    $scope.showDetail = ! $scope.showDetail
+
+  $scope.showDetail = false
   $scope.requestCodeReview = () ->
     if $rootScope.authorizedUser == true
       modalInstance = $modal.open(
