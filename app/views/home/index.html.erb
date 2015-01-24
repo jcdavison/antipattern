@@ -11,8 +11,14 @@
           <% @review_requests.each do |review| %>
             <div class="review-request" ng-controller="requestCodeReview">
               <div class="request-summary clearfix">
-                <span class="shuttle pull-left"><%= fa_icon 'space-shuttle' %></span>
-                <span class='title pull-right'><%= review.title %></span> 
+                <div class="row">
+                  <div class='col-sm-1'>
+                    <span class="shuttle pull-left"><%= fa_icon 'space-shuttle' %></span>
+                  </div>
+                  <div class='col-sm-11'>
+                    <span class='title pull-right'><%= review.title %></span> 
+                  </div>
+                </div>
               </div>
               <div class="clearfix">
                 <span class='value medium-small blue'>Offered Value: <%= review.display_value %></span>
@@ -23,8 +29,11 @@
               </div>
 
               <span class='request-actions'>
+                <div class='request-detail' ng-show="showDetail">
+                  <%= markdown_to_html review.detail %>
+                </div>
                 <div class="request-controls">
-                  <button class='btn btn-default tools accept' ng-click="toggleDetail()" ng-class="{green: showDetail}">
+                  <button class='btn btn-default tools summary' ng-click="toggleDetail()">
                     <span ng-show='!showDetail'>
                       Show Details
                     </span>
@@ -32,12 +41,11 @@
                       Hide Details
                     </span>
                   </button>
-                  <button class='btn btn-default tools accept' ng-click="confirmReviewOffer('submitOffer', '<%= review.id %>')">
-                    Offer Code Review
+                  <button class='btn btn-default tools summary' ng-click="confirmReviewOffer('submitOffer', '<%= review.id %>')">
+                    <span>
+                      Offer Code Review
+                    </span>
                   </button>
-                </div>
-                <div class='request-detail' ng-show="showDetail">
-                  <%= markdown_to_html review.detail %>
                 </div>
               </span>
             </div>
