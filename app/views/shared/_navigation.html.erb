@@ -19,17 +19,7 @@
       </ul>
       <ul class='nav navbar-nav navbar-right'>
         <li>
-          <%= link_to 'HOME', authenticated_root_path %>
-        </li>
-        <li>
-          <%= link_to 'ABOUT', "#" %>
-        </li>
-        <li>
-          <% if current_user %>
-            <%= render 'shared/sign_out' %>
-          <% else %>
-            <%= render 'shared/sign_in' %>
-          <% end %>
+          <%= render 'shared/sign_in' %>
         </li>
       </ul>
     </div>
