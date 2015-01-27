@@ -27,12 +27,15 @@
           Hide Details
         </span>
       </button>
-      <button class='btn btn-default tools' ng-click="confirmReviewOffer('submitOffer', '<%= review.id %>')" ng-class='{disabled: hasOffered, summary: !hasOffered}' ng-disabled="hasOffered">
-        <span ng-hide='hasOffered'>
+      <button class='btn btn-default tools' ng-click="confirmReviewOffer('submitOffer', '<%= review.id %>')" ng-class='{disabled: hasOffered || ownedByCurrentUser, summary: !hasOffered}' ng-disabled="hasOffered">
+        <span ng-hide='hasOffered || ownedByCurrentUser'>
           Offer Code Review
         </span>
         <span ng-show='hasOffered'>
           Offered
+        </span>
+        <span ng-show='ownedByCurrentUser'>
+          You Own This
         </span>
       </button>
     </div>

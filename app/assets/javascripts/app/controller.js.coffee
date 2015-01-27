@@ -1,7 +1,9 @@
 controllers = angular.module('App.controllers', [])
 
 controllers.controller('appController', ($scope, $rootScope, $modal, User) ->
-  User.isAuthorized()
+  User.isAuthorized().then (response) ->
+    if response.success
+      $rootScope.$broadcast 'authorized-user'
 )
 
 controllers.controller('createCodeReviewCtrl', ($scope, $rootScope, $modalInstance, $modal, ReviewRequest) ->
@@ -38,6 +40,14 @@ controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, $locati
   $scope.reviewRequest = {}
   $scope.showDetail = false
   $scope.hasOffered = false
+  $scope.ownedByCurrentUser = false
+
+  ownedByCurrentUser = () ->
+    ReviewRequest.ownedByCurrentUser($attrs.reviewRequestId).then (response) ->
+      $scope.ownedByCurrentUser = response.owned_by
+
+  $scope.$on 'authorized-user', () ->
+    ownedByCurrentUser()
 
   setShowDetail = () ->
     if $location.absUrl().match /code-reviews/
@@ -53,8 +63,6 @@ controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, $locati
   setHasOffered = () ->
     ReviewRequest.userHasOffered($attrs.reviewRequestId).then (response) ->
       $scope.hasOffered = response.has_offered
-
-  setHasOffered()
 
   $scope.confirmReviewOffer = (modalPurpose, reviewRequestId, size) ->
     if $rootScope.authorizedUser == true

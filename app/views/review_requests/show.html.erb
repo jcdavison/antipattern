@@ -8,3 +8,6 @@
       </div>
     </div>
 </div>
+<% if is_owner_of?(current_user: current_user, review_request: @review_request) %>
+  stuff stuff stuff
+<% end %>

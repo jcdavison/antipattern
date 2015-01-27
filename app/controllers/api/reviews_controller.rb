@@ -1,5 +1,5 @@
 class Api::ReviewsController < ApplicationController
-  before_filter :authenticate_user!, except: [ :has_offered ]
+  before_filter :authenticate_user!
   respond_to :json
 
   def create
@@ -9,6 +9,12 @@ class Api::ReviewsController < ApplicationController
     else
       head :forbidden
     end
+  end
+
+  def owned_by
+    review_request = ReviewRequest.find_by(user_id: current_user.id, id: params[:id])
+    owned_by = !review_request.nil?
+    render json: { owned_by: owned_by}
   end
 
 
