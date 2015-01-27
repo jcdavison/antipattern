@@ -34,10 +34,15 @@ controllers.controller('requestCodeReview', ($scope, $rootScope, $modal, User) -
       )
 )
 
-controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, User, $attrs, ReviewRequest) ->
+controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest) ->
   $scope.reviewRequest = {}
   $scope.showDetail = false
   $scope.hasOffered = false
+
+  setShowDetail = () ->
+    if $location.absUrl().match /code-reviews/
+      $scope.showDetail = true
+  setShowDetail()
 
   $scope.$on 'review-offer-created', () ->
     setHasOffered()
