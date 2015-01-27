@@ -2,7 +2,7 @@
   <body>
     <h3>Dear <%= @review_request_owner.name %></h3>
 
-    <p><%= @offer_owner.name %> would like to review your code.  Visit  or decline he code review.</p>
+    <p><%= @offer_owner.name %>, <%= link_to @offer_owner.github_profile, @offer_owner.github_profile %>, would like to review your code.  Visit <%= link_to(code_review_url(@review_request_id), code_review_url(@review_request_id) ) %> to accept or decline the offer.</p>
 
     <p>Thanks,</p>
 
