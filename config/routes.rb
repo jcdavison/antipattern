@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     post 'offers', to: 'offers#create'
     post 'offer_decisions', to: 'offers#update'
     post 'reviews', to: 'reviews#create'
+    get 'has_offered', to: 'offers#has_offered'
   end
 
   devise_scope :user do

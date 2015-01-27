@@ -9,13 +9,10 @@
       <div class='row'>
         <div class='col-sm-10 text-right no-left-padding no-right-padding'>
           <% @review_requests.each do |review| %>
-            <div class="review-request" ng-controller="requestCodeReview">
+            <div class="review-request" ng-controller="reviewRequestCtrl" setReviewRequestId review-Request-ID="<%= review.id %>">
               <div class="request-summary clearfix">
                 <div class="row">
-                  <div class='col-sm-1'>
-                    <span class="shuttle pull-left"><%= fa_icon 'space-shuttle' %></span>
-                  </div>
-                  <div class='col-sm-11'>
+                  <div class='col-sm-12'>
                     <span class='title pull-right'><%= review.title %></span> 
                   </div>
                 </div>
@@ -41,9 +38,12 @@
                       Hide Details
                     </span>
                   </button>
-                  <button class='btn btn-default tools summary' ng-click="confirmReviewOffer('submitOffer', '<%= review.id %>')">
-                    <span>
+                  <button class='btn btn-default tools' ng-click="confirmReviewOffer('submitOffer', '<%= review.id %>')" ng-class='{disabled: hasOffered, summary: !hasOffered}' ng-disabled="hasOffered">
+                    <span ng-hide='hasOffered'>
                       Offer Code Review
+                    </span>
+                    <span ng-show='hasOffered'>
+                      Offered
                     </span>
                   </button>
                 </div>

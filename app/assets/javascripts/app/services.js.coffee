@@ -12,11 +12,22 @@ angular.module('App.services', [] )
         .error (response) =>
           deferred.reject(response)
         return deferred.promise
+
     return User
 
-  .factory 'ReviewRequest', ($q, $http, $rootScope) ->
+  .factory 'ReviewRequest', ($q, $http) ->
     ReviewRequest = 
       accepted: null
+      userHasOffered: (reviewRequestId) ->
+        deferred = $q.defer()
+        $http
+          method: 'get' 
+          url: "/api/has_offered?id=#{reviewRequestId}"
+        .success (response) =>
+          deferred.resolve(response)
+        .error (response) =>
+          deferred.reject(response)
+        return deferred.promise
       create: (codeReview) ->
         deferred = $q.defer()
         data =

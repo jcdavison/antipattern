@@ -25,4 +25,10 @@ class Api::OffersController < ApplicationController
     end
   end
 
+  def has_offered
+    review_request = Offer.find_by(user_id: current_user.id, review_request_id: params[:id])
+    has_offered = !review_request.nil?
+    render json: { has_offered: has_offered }, status: 200
+  end
+
 end

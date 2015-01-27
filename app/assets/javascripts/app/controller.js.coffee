@@ -4,13 +4,12 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User) ->
   User.isAuthorized()
 )
 
-controllers.controller('createCodeReviewCtrl', ($scope, $rootScope,$modalInstance, $modal, ReviewRequest) ->
+controllers.controller('createCodeReviewCtrl', ($scope, $rootScope, $modalInstance, $modal, ReviewRequest) ->
   setAcceptStatus = () ->
     $scope.accepted = ReviewRequest.accepted
   setAcceptStatus()
 
   $scope.codeReview = {}
-
 
   $scope.createReviewRequest = () ->
     ReviewRequest.create($scope.codeReview).then (someVal) ->
@@ -22,11 +21,6 @@ controllers.controller('createCodeReviewCtrl', ($scope, $rootScope,$modalInstanc
 )
 
 controllers.controller('requestCodeReview', ($scope, $rootScope, $modal, User) ->
-  $scope.reviewRequest = {}
-  $scope.toggleDetail = () ->
-    $scope.showDetail = ! $scope.showDetail
-
-  $scope.showDetail = false
   $scope.requestCodeReview = () ->
     if $rootScope.authorizedUser == true
       modalInstance = $modal.open(
@@ -38,6 +32,24 @@ controllers.controller('requestCodeReview', ($scope, $rootScope, $modal, User) -
         templateUrl: 'pleaseLogin.html'
         controller: 'genericModalCtrl'
       )
+)
+
+controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, User, $attrs, ReviewRequest) ->
+  $scope.reviewRequest = {}
+  $scope.showDetail = false
+  $scope.hasOffered = false
+
+  $scope.$on 'review-offer-created', () ->
+    setHasOffered()
+
+  $scope.toggleDetail = () ->
+    $scope.showDetail = ! $scope.showDetail
+
+  setHasOffered = () ->
+    ReviewRequest.userHasOffered($attrs.reviewRequestId).then (response) ->
+      $scope.hasOffered = response.has_offered
+
+  setHasOffered()
 
   $scope.confirmReviewOffer = (modalPurpose, reviewRequestId, size) ->
     if $rootScope.authorizedUser == true
@@ -57,7 +69,7 @@ controllers.controller('requestCodeReview', ($scope, $rootScope, $modal, User) -
       )
 )
 
-controllers.controller('offerCodeReviewCtrl', ($scope, $modalInstance, reviewRequestId, Offer) ->
+controllers.controller('offerCodeReviewCtrl', ($rootScope, $scope, $modalInstance, reviewRequestId, Offer) ->
   $scope.cancel = () ->
     $modalInstance.dismiss('cancel');
 
@@ -67,6 +79,7 @@ controllers.controller('offerCodeReviewCtrl', ($scope, $modalInstance, reviewReq
 
   $scope.offerCodeReview = () ->
     Offer.submit(reviewRequestId).then (r) ->
+      $rootScope.$broadcast 'review-offer-created'
       setDisplayStatus()
 )
 

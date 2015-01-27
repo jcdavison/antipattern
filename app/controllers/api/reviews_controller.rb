@@ -1,5 +1,5 @@
 class Api::ReviewsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, except: [ :has_offered ]
   respond_to :json
 
   def create

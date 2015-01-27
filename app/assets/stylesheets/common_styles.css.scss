@@ -29,6 +29,17 @@ button.btn-default.accept {
   }
 }
 
+button.btn-default.disabled {
+  border: 1px solid $grey;
+  color: $grey;
+  background-color: $white;
+  &:hover {
+    border: 1px solid $grey;
+    color: $grey;
+    background-color: $white;
+  }
+}
+
 button.btn-default.summary {
   border-color: $blue;
   background-color: $white;

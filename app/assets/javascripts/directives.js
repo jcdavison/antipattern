@@ -17,3 +17,14 @@ directives.directive('ngFocus', [function() {
     }
   }
 }]);
+
+directives.directive('setReviewRequestId', [function() {
+    return {
+      scope : {
+          reviewRequestId : '@reviewRequestId',
+      },
+      controller: function($scope, $element, $attrs){
+          $scope.reviewRequestId = $attrs.reviewRequestId
+      }
+    }
+}]);
