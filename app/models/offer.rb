@@ -24,7 +24,7 @@ class Offer < ActiveRecord::Base
   def notify_of_offer
     review_request_owner = User.find ReviewRequest.find(review_request_id).user_id
     offer_owner = User.find user_id
-    members = {offer_owner: offer_owner, review_request_owner: review_request_owner}
+    members = {offer_owner: offer_owner, review_request_owner: review_request_owner, review_request_id: review_request_id}
     OfferMailer.notify_of_offer(members).deliver
   end
 

@@ -1,0 +1,41 @@
+<div class="review-request" ng-controller="reviewRequestCtrl" setReviewRequestId review-Request-ID="<%= review.id %>">
+  <div class="request-summary clearfix">
+    <div class="row">
+      <div class='col-sm-12'>
+        <span class='title pull-right'><%= review.title %></span> 
+      </div>
+    </div>
+  </div>
+  <div class="clearfix">
+    <span class='value medium-small blue'>Offered Value: <%= review.display_value %></span>
+    <span class='requested-by medium-small padded'>
+      Requested By: <%= link_to review.user.name, review.user.github_profile, target: 'new' %> <%= image_tag review.user.profile_pic, class: 'profile' %>
+    </span>
+
+  </div>
+
+  <span class='request-actions'>
+    <div class='request-detail' ng-show="showDetail">
+      <%= markdown_to_html review.detail %>
+    </div>
+    <div class="request-controls">
+      <button class='btn btn-default tools summary' ng-click="toggleDetail()">
+        <span ng-show='!showDetail'>
+          Show Details
+        </span>
+        <span ng-show='showDetail'>
+          Hide Details
+        </span>
+      </button>
+      <button class='btn btn-default tools' ng-click="confirmReviewOffer('submitOffer', '<%= review.id %>')" ng-class='{disabled: hasOffered, summary: !hasOffered}' ng-disabled="hasOffered">
+        <span ng-hide='hasOffered'>
+          Offer Code Review
+        </span>
+        <span ng-show='hasOffered'>
+          Offered
+        </span>
+      </button>
+    </div>
+  </span>
+</div>
+
