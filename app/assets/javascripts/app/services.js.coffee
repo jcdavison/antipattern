@@ -49,7 +49,6 @@ angular.module('App.services', [] )
           data: data
         .success (response) =>
           @accepted = true
-          console.log response
           deferred.resolve(response)
         .error (response) =>
           deferred.reject(response)
@@ -59,6 +58,7 @@ angular.module('App.services', [] )
   .factory 'Offer', ($q, $http) ->
     Offer = 
       display_status: 'instructions'
+      accept_status: null
       state: null
       submit: (reviewRequestId) ->
         deferred = $q.defer()
@@ -75,6 +75,17 @@ angular.module('App.services', [] )
           @display_status = 'error'
           deferred.reject(response)
         return deferred.promise
+      checkStatus: (offerId) ->
+        deferred = $q.defer()
+        $http
+          method: 'get'
+          url: "/api/decision_registered?id=#{offerId}"
+        .success (response) =>
+          @accept_status = response.accept_status
+          deferred.resolve(response)
+        .error (response) =>
+          deferred.reject(response)
+        return deferred.promise
       registerDecision: (args) ->
         deferred = $q.defer()
         data = 
@@ -85,8 +96,6 @@ angular.module('App.services', [] )
           url: '/api/offer_decisions'
           data: data
         .success (response) =>
-          offer = JSON.parse response.offer
-          @state = offer.aasm_state
           deferred.resolve(response)
         .error (response) =>
           deferred.reject(response)

@@ -28,3 +28,14 @@ directives.directive('setReviewRequestId', [function() {
       }
     }
 }]);
+
+directives.directive('setOfferId', [function() {
+    return {
+      scope : {
+          offerId : '@offerId',
+      },
+      controller: function($scope, $element, $attrs){
+          $scope.offerId = $attrs.offerId
+      }
+    }
+}]);
