@@ -20,6 +20,9 @@ class Offer < ActiveRecord::Base
     end
 
     event :reject do
+      before do 
+        notify_rejection
+      end
       transitions from: :presented, to: :rejected
     end
   end
@@ -29,6 +32,13 @@ class Offer < ActiveRecord::Base
     review_request_owner = review_request.user
     recipients = {offer_owner: offer_owner, review_request_owner: review_request_owner}
     OfferMailer.notify_acceptance(recipients).deliver
+  end
+
+  def notify_rejection
+    offer_owner = user
+    review_request_owner = review_request.user
+    recipients = {offer_owner: offer_owner, review_request_owner: review_request_owner}
+    OfferMailer.notify_rejection(recipients).deliver
   end
 
   def notify_of_offer

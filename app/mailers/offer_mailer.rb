@@ -16,4 +16,12 @@ class OfferMailer < ActionMailer::Base
     subject = 'Antipattern.io acceptance of Code Review Offer'
     mail to: to, from: 'jd@startuplandia.io', subject: subject
   end
+
+  def notify_rejection recipients
+    @offer_owner = recipients[:offer_owner]
+    @review_request_owner = recipients[:review_request_owner]
+    to = @offer_owner.email
+    subject = 'Antipattern.io code review offer status'
+    mail to: to, from: 'jd@startuplandia.io', subject: subject
+  end
 end
