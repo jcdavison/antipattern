@@ -63,6 +63,8 @@ controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, $locati
     ReviewRequest.userHasOffered($attrs.reviewRequestId).then (response) ->
       $scope.hasOffered = response.has_offered
 
+  setHasOffered()
+
   $scope.confirmReviewOffer = (modalPurpose, reviewRequestId, size) ->
     if $rootScope.authorizedUser == true
       if modalPurpose == 'submitOffer'
