@@ -1,0 +1,14 @@
+<html>
+  <body>
+    <h3>Congratuations! It's a Code Review.</h3>
+
+    <p><%= @review_request_owner.name %>, has accepted the offer to review code made by <%= @offer_owner.name %>.</p>
+    <p>Feel free to use the email addresses provided here to communicate among yourselves to arrange for delivery of the code review.</p>
+    <p>Once the code review has been completed, <%= @offer_owner.name %> should visit Antipattern.io and click the deliver button. Once the founder of Antipattern.io verifies with <%= @review_request_owner.name %> that the code review adheres to our basic guidelines, <%= @offer_owner.name %> will get paid.</p> 
+
+    <p>Thanks,</p>
+
+    <p><a href="https://github.com/jcdavison">John Davison, Antipattern.io Founder</a></p>
+    <p><a href="mailto:jd@startuplandia.io?subject=code review offer help">email antipattern.io support</a></p>
+  </body>
+</html>

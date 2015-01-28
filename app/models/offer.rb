@@ -13,12 +13,22 @@ class Offer < ActiveRecord::Base
     state :paid
 
     event :accept do
+      before do
+        notify_acceptance
+      end
       transitions from: :presented, to: :accepted
     end
 
     event :reject do
       transitions from: :presented, to: :rejected
     end
+  end
+
+  def notify_acceptance
+    offer_owner = user
+    review_request_owner = review_request.user
+    recipients = {offer_owner: offer_owner, review_request_owner: review_request_owner}
+    OfferMailer.notify_acceptance(recipients).deliver
   end
 
   def notify_of_offer
