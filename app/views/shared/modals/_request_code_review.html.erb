@@ -8,12 +8,12 @@
     <form novalidate name="review_request" ng-submit="createReviewRequest()" id="review-request">
       <div class="row">
         <div class="col-md-11">
-          <input type="text" required ng-focus name="title" ng-model="codeReview.title" class="review-title pull-right friendly-margin" ng-class="{error: review_request.title.$dirty && review_request.title.$invalid}" placeholder="Title"/>
+          <input type="text" required ng-focus name="title" ng-model="codeReview.title" class="review-title pull-right friendly-margin" ng-class="{error: review_request.title.$dirty && review_request.title.$invalid}" placeholder="Title" ng-minlength=5 />
         </div>
       </div>
       <div class="row">
         <div class="col-md-11">
-          <textarea required ng-focus name="detail" cols="60" rows="8" ng-model="codeReview.detail" class="pull-right friendly-margin" ng-class="{error: review_request.detail.$dirty && review_request.detail.$invalid}" placeholder="add relevant details, markdown friendly :)"/>
+          <textarea required ng-focus name="detail" cols="60" rows="8" ng-model="codeReview.detail" class="pull-right friendly-margin" ng-class="{error: review_request.detail.$dirty && review_request.detail.$invalid}" placeholder="add relevant details, markdown friendly :)" ng-minlength=5 />
         </div>
       </div>
       <div class="row">

@@ -146,7 +146,7 @@ html, body {
     padding-bottom: 50px
 }
 
-textarea.error {
+textarea.error, input.error {
   border: 1px solid $red;
 }
 
@@ -206,34 +206,34 @@ textarea.error {
 }
 
 @media (min-width: 1770px) {
-    .home-hero {
-        -webkit-background-size: 100% !important;
-        -moz-background-size: 100% !important;
-        -ms-background-size: 100% !important;
-        -o-background-size: 100% !important;
-        background-size: 100% !important
-    }
+  .home-hero {
+      -webkit-background-size: 100% !important;
+      -moz-background-size: 100% !important;
+      -ms-background-size: 100% !important;
+      -o-background-size: 100% !important;
+      background-size: 100% !important
+  }
 
-    .home-hero-title {
-      width: 45%;
-      margin-top: 13.6em;
-      line-height: 2.3;
-    }
+  .home-hero-title {
+    width: 45%;
+    margin-top: 13.6em;
+    line-height: 2.3;
+  }
 
-    .home-hero-slider {
-      background: white url('codereview2-full.jpg') no-repeat center center;
-      height: 732px;
-      width: 700px;
-      margin-top: 4em;
-      margin-left: 5em;
-    }
+  .home-hero-slider {
+    background: white url('codereview2-full.jpg') no-repeat center center;
+    height: 732px;
+    width: 700px;
+    margin-top: 4em;
+    margin-left: 5em;
+  }
 
-    .home-sign-in {
-      margin-left: 26.5em;
-      margin-top: 1em;
-      line-height: 2.3;
-      font-size: 3em;
-    }
+  .home-sign-in {
+    margin-left: 26.5em;
+    margin-top: 1em;
+    line-height: 2.3;
+    font-size: 3em;
+  }
 }
 
 
