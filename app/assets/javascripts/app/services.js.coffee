@@ -18,6 +18,7 @@ angular.module('App.services', [] )
   .factory 'ReviewRequest', ($q, $http) ->
     ReviewRequest = 
       accepted: null
+      recentlyCreated: []
       userHasOffered: (reviewRequestId) ->
         deferred = $q.defer()
         $http
@@ -45,11 +46,12 @@ angular.module('App.services', [] )
           review_request: codeReview
         $http
           method: 'post' 
-          url: '/api/reviews'
+          url: '/api/reviews.json'
           data: data
         .success (response) =>
           @accepted = true
-          deferred.resolve(response)
+          @recentlyCreated.unshift response.review_request
+          deferred.resolve(response.review_request)
         .error (response) =>
           deferred.reject(response)
         return deferred.promise

@@ -3,9 +3,9 @@ class Api::ReviewsController < ApplicationController
   respond_to :json
 
   def create
-    review_request = ReviewRequest.new(review_request_params.merge(user_id: current_user.id))
-    if review_request.save
-      render json: { review_request: review_request.to_json }, status: 200
+    @review_request = ReviewRequest.new(review_request_params.merge(user_id: current_user.id))
+    if @review_request.save
+      render 'api/reviews/review'
     else
       head :forbidden
     end
@@ -17,11 +17,9 @@ class Api::ReviewsController < ApplicationController
     render json: { owned_by: owned_by}
   end
 
-
   private
 
   def review_request_params
     params.require(:review_request).permit(:title, :detail, :value)
   end
-
 end

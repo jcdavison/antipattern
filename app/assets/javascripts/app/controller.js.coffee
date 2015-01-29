@@ -1,21 +1,29 @@
 controllers = angular.module('App.controllers', [])
 
-controllers.controller('appController', ($scope, $rootScope, $modal, User) ->
+controllers.controller('appController', ($scope, $rootScope, $modal, User, ReviewRequest) ->
   User.isAuthorized().then (response) ->
     if response.success
       $rootScope.$broadcast 'authorized-user'
+
+  $scope.newReviewRequests = []
+
+  $scope.$on 'review-request-created', () ->
+    $scope.newReviewRequests = ReviewRequest.recentlyCreated
 )
 
 controllers.controller('createCodeReviewCtrl', ($scope, $rootScope, $modalInstance, $modal, ReviewRequest) ->
+  $scope.codeReview = {}
+  $scope.reviewRequests = []
+
   setAcceptStatus = () ->
     $scope.accepted = ReviewRequest.accepted
   setAcceptStatus()
 
-  $scope.codeReview = {}
-
   $scope.createReviewRequest = () ->
-    ReviewRequest.create($scope.codeReview).then (someVal) ->
+    ReviewRequest.create($scope.codeReview).then (newReviewRequest) ->
+      $rootScope.$broadcast 'review-request-created'
       setAcceptStatus()
+      $modalInstance.dismiss('cancel');
 
   $scope.cancel = () ->
     $modalInstance.dismiss('cancel');
