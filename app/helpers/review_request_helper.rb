@@ -4,6 +4,6 @@ module ReviewRequestHelper
   end
 
   def is_owner_of? args
-    args[:current_user].id == args[:review_request].user.id
+    args[:current_user] ? args[:current_user].id == args[:review_request].user.id : false
   end
 end
