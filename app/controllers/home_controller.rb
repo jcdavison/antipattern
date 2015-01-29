@@ -11,6 +11,6 @@ class HomeController < ApplicationController
   private
 
     def all_review_requests
-      @review_requests = ReviewRequest.all
+      @review_requests = ReviewRequest.order 'created_at DESC'
     end
 end
