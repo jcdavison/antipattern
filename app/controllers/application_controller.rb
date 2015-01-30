@@ -2,11 +2,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   after_filter  :set_csrf_cookie_for_ng
 
-  def ensure_signup_complete
-    return if action_name == 'finish_signup'
-    if current_user && !current_user.email_verified?
-      redirect_to finish_signup_path(current_user)
-    end
+  def after_sign_in_path_for(resource)
+    current_user_path
   end
 
   private
