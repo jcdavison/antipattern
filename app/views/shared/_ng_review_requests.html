@@ -17,8 +17,7 @@
     </div>
 
     <span class='request-actions'>
-      <div class='request-detail' ng-show="showDetail">
-        {{review.detail}}
+      <div class='request-detail' ng-show="showDetail" ng-bind-html="review.detail">
       </div>
       <div class="request-controls">
         <button class='btn btn-default tools summary' ng-click="toggleDetail()">
