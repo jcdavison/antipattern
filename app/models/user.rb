@@ -6,9 +6,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
   validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
 
-  has_many :identities
-  has_many :review_requests
-  has_many :offers
+  has_many :identities, dependent: :destroy
+  has_many :review_requests, dependent: :destroy
+  has_many :offers, dependent: :destroy
 
 
   def self.find_for_oauth(auth, signed_in_resource = nil)
