@@ -14,6 +14,11 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, Revie
 controllers.controller('createCodeReviewCtrl', ($scope, $rootScope, $modalInstance, $modal, ReviewRequest) ->
   $scope.codeReview = {}
   $scope.reviewRequests = []
+  $scope.values = [
+    {value: '$10.00'},
+    {value: '$25.00'},
+    {value: '$50.00'} ]
+  $scope.reviewRequest.value = $scope.values[0]
 
   setAcceptStatus = () ->
     $scope.accepted = ReviewRequest.accepted
@@ -24,6 +29,7 @@ controllers.controller('createCodeReviewCtrl', ($scope, $rootScope, $modalInstan
       $rootScope.$broadcast 'review-request-created'
       setAcceptStatus()
       $modalInstance.dismiss('cancel');
+
 
   $scope.cancel = () ->
     $modalInstance.dismiss('cancel');
@@ -73,6 +79,22 @@ controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, $locati
 
   setHasOffered()
 
+  $scope.editReviewRequest = () ->
+    modalInstance = $modal.open(
+      templateUrl: 'editCodeReview.html'
+      controller: 'editCodeReviewCtrl'
+      size: 'md'
+      resolve:
+        reviewRequestId: () ->
+          $attrs.reviewRequestId
+        reviewRequestDetail: () ->
+          $attrs.reviewRequestDetail
+        reviewRequestValue: () ->
+          $attrs.reviewRequestValue
+        reviewRequestTitle: () ->
+          $attrs.reviewRequestTitle
+    )
+
   $scope.confirmReviewOffer = (modalPurpose, reviewRequestId, size) ->
     if $rootScope.authorizedUser == true
       if modalPurpose == 'submitOffer'
@@ -89,6 +111,20 @@ controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, $locati
         templateUrl: 'pleaseLogin.html'
         controller: 'genericModalCtrl'
       )
+)
+
+controllers.controller('editCodeReviewCtrl', ($scope, $rootScope, $modalInstance, User, reviewRequestId, reviewRequestDetail, reviewRequestValue, reviewRequestTitle) -> 
+  $scope.reviewRequest = {}
+  $scope.reviewRequest.id = reviewRequestId
+  $scope.reviewRequest.detail = reviewRequestDetail
+  $scope.reviewRequest.title = reviewRequestTitle
+  $scope.values = [
+    {value: '$10.0'},
+    {value: '$25.0'},
+    {value: '$50.0'} ]
+  $scope.values.forEach (ele, i) ->
+    if ele.value == reviewRequestValue
+      $scope.reviewRequest.value = $scope.values[i] 
 )
 
 controllers.controller('offerCodeReviewCtrl', ($rootScope, $scope, $modalInstance, reviewRequestId, Offer) ->

@@ -1,4 +1,4 @@
-<div class="review-request" ng-controller="reviewRequestCtrl" setReviewRequestId review-Request-ID="<%= review.id %>">
+<div class="review-request" ng-controller="reviewRequestCtrl" setReviewRequestId review-Request-ID="<%= review.id %>" setReviewRequestDetail review-Request-Detail="<%= review.detail %>" setReviewRequestValue review-request-value="<%= review.display_value %>" setReviewRequestTitle review-Request-Title="<%= review.title %>">
   <div class="request-summary clearfix">
     <div class="row">
       <div class='col-sm-12'>
@@ -27,15 +27,17 @@
           Hide Details
         </span>
       </button>
-      <button class='btn btn-default tools' ng-click="confirmReviewOffer('submitOffer', '<%= review.id %>')" ng-class='{disabled: hasOffered || ownedByCurrentUser, summary: !hasOffered}' ng-disabled="hasOffered">
+      <button class='btn btn-default tools' ng-click="confirmReviewOffer('submitOffer', '<%= review.id %>')" ng-class='{disabled: hasOffered || ownedByCurrentUser, summary: !hasOffered}' ng-disabled="hasOffered" ng-hide='ownedByCurrentUser'>
         <span ng-hide='hasOffered || ownedByCurrentUser'>
           Offer Code Review
         </span>
         <span ng-show='hasOffered'>
           Offered
         </span>
-        <span ng-show='ownedByCurrentUser'>
-          You Own This
+      </button>
+      <button class='btn btn-default tools' ng-click="editReviewRequest()" ng-show='ownedByCurrentUser'>
+        <span>
+          Edit
         </span>
       </button>
     </div>

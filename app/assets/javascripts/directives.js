@@ -29,6 +29,38 @@ directives.directive('setReviewRequestId', [function() {
     }
 }]);
 
+directives.directive('setReviewRequestDetail', [function() {
+    return {
+      scope : {
+          reviewRequestDetail : '@reviewRequestDetail',
+      },
+      controller: function($scope, $element, $attrs){
+          $scope.reviewRequestDetail = $attrs.reviewRequestDetail
+      }
+    }
+}]);
+
+directives.directive('setReviewRequestValue', [function() {
+    return {
+      scope : {
+          reviewRequestValue : '@reviewRequestValue',
+      },
+      controller: function($scope, $element, $attrs){
+          $scope.reviewRequestValue = $attrs.reviewRequestValue
+      }
+    }
+}]);
+
+directives.directive('setReviewRequestTitle', [function() {
+    return {
+      scope : {
+          reviewRequestTitle : '@reviewRequestTitle',
+      },
+      controller: function($scope, $element, $attrs){
+          $scope.reviewRequestTitle = $attrs.reviewRequestTitle
+      }
+    }
+}]);
 directives.directive('setOfferId', [function() {
     return {
       scope : {
