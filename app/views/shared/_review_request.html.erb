@@ -1,4 +1,4 @@
-<div class="review-request" ng-controller="reviewRequestCtrl" setReviewRequestId review-Request-ID="<%= review.id %>" setReviewRequestDetailHtml review-Request-Detail-Html="<%= markdown_to_html review.detail %>" setReviewRequestDetailRaw review-Request-Detail-Raw="<%= review.detail %>" setReviewRequestValue review-request-value="<%= review.display_value %>" setReviewRequestTitle review-Request-Title="<%= review.title %>">
+<div class="review-request" ng-controller="reviewRequestCtrl" setReviewRequestId review-Request-ID="<%= review.id %>" setReviewRequestDetailHtml review-Request-Detail-Html="<%= markdown_to_html review.detail %>" setReviewRequestDetailRaw review-Request-Detail-Raw="<%= review.detail %>" setReviewRequestValue review-request-value="<%= review.value %>" setReviewRequestTitle review-Request-Title="<%= review.title %>">
 
   <div class="request-summary clearfix">
     <div class="row">
@@ -9,7 +9,7 @@
   </div>
 
   <div class="clearfix">
-    <span class='value medium-small blue'>Offered Value: ${{reviewRequest.value}} </span>
+    <span class='value medium-small blue'>Offered Value: ${{reviewRequest.value/100}} </span>
     <span class='requested-by medium-small padded'>
       Requested By: <%= link_to review.user.name, review.user.github_profile, target: 'new' %> <%= image_tag review.user.profile_pic, class: 'profile' %>
     </span>
