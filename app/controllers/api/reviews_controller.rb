@@ -17,9 +17,18 @@ class Api::ReviewsController < ApplicationController
     render json: { owned_by: owned_by}
   end
 
+  def update
+    @code_review = ReviewRequest.find_by(user_id: current_user.id, id: params[:code_review][:id])
+    if @code_review.update_attributes(code_review_params)
+      render 'api/reviews/update'
+    else
+      head :forbidden
+    end
+  end
+
   private
 
-  def review_request_params
-    params.require(:review_request).permit(:title, :detail, :value)
+  def code_review_params
+    params.require(:code_review).permit(:title, :detail, :value)
   end
 end

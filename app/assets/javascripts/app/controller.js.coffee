@@ -113,18 +113,22 @@ controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, $locati
       )
 )
 
-controllers.controller('editCodeReviewCtrl', ($scope, $rootScope, $modalInstance, User, reviewRequestId, reviewRequestDetail, reviewRequestValue, reviewRequestTitle) -> 
+controllers.controller('editCodeReviewCtrl', ($scope, $rootScope, $modalInstance, User, reviewRequestId, reviewRequestDetail, reviewRequestValue, reviewRequestTitle, ReviewRequest) -> 
   $scope.reviewRequest = {}
+
   $scope.reviewRequest.id = reviewRequestId
-  $scope.reviewRequest.detail = reviewRequestDetail
+  $scope.reviewRequest.detail_html = reviewRequestDetail
   $scope.reviewRequest.title = reviewRequestTitle
-  $scope.values = [
-    {value: '$10.0'},
-    {value: '$25.0'},
-    {value: '$50.0'} ]
+  $scope.values = [ {value: '$10.0'}, {value: '$25.0'}, {value: '$50.0'} ]
+
   $scope.values.forEach (ele, i) ->
     if ele.value == reviewRequestValue
-      $scope.reviewRequest.value = $scope.values[i] 
+      $scope.reviewRequest.display_value = $scope.values[i] 
+
+  $scope.editReviewRequest = () ->
+    ReviewRequest.update($scope.reviewRequest).then () ->
+      console.log "wtf"
+      $scope.reviewRequest = ReviewRequest.codeReviews[reviewRequestId]
 )
 
 controllers.controller('offerCodeReviewCtrl', ($rootScope, $scope, $modalInstance, reviewRequestId, Offer) ->

@@ -5,7 +5,7 @@
   </div>
 
   <div class="modal-body">
-    <form novalidate name="review_request" ng-submit="" id="review-request">
+    <form novalidate name="review_request" ng-submit="editReviewRequest()" id="review-request">
       <div class="row">
         <div class="col-md-11">
           <input type="text" required ng-focus name="title" ng-model="reviewRequest.title" class="review-title pull-right friendly-margin" ng-class="{error: review_request.title.$dirty && review_request.title.$invalid}" ng-minlength=5 />
