@@ -13,14 +13,14 @@
       </div>
       <div class="row">
         <div class="col-md-11">
-          <textarea required ng-focus name="detail" cols="60" rows="8" ng-model="reviewRequest.detail" class="pull-right friendly-margin" ng-class="{error: review_request.detail.$dirty && review_request.detail.$invalid}" ng-minlength=5 />
+          <textarea required ng-focus name="detail" cols="60" rows="8" ng-model="reviewRequest.detailRaw" class="pull-right friendly-margin" ng-class="{error: review_request.detail.$dirty && review_request.detail.$invalid}" ng-minlength=5 />
         </div>
       </div>
       <div class="row">
         <div class="col-md-11">
           <div class="pull-right">
             <label class="friendly-margin">value:</label>
-            <select ng-model="reviewRequest.display_value" ng-options="ele.display_value for ele in values" name="display_value" required class="friendly-margin pull-right">
+            <select ng-model="reviewRequest.value" ng-options="ele.value for ele in values" name="value" required class="friendly-margin pull-right">
             </select>
             <br/>
             <button type="submit" class="btn btn-default tools accept friendly-margin pull-right" ng-disabled="review_request.$invalid">

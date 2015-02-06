@@ -1,4 +1,5 @@
-<div class="review-request" ng-controller="reviewRequestCtrl" setReviewRequestId review-Request-ID="<%= review.id %>" setReviewRequestDetail review-Request-Detail="<%= review.detail %>" setReviewRequestValue review-request-value="<%= review.display_value %>" setReviewRequestTitle review-Request-Title="<%= review.title %>">
+<div class="review-request" ng-controller="reviewRequestCtrl" setReviewRequestId review-Request-ID="<%= review.id %>" setReviewRequestDetailHtml review-Request-Detail-Html="<%= markdown_to_html review.detail %>" setReviewRequestDetailRaw review-Request-Detail-Raw="<%= review.detail %>" setReviewRequestValue review-request-value="<%= review.display_value %>" setReviewRequestTitle review-Request-Title="<%= review.title %>">
+
   <div class="request-summary clearfix">
     <div class="row">
       <div class='col-sm-12'>
@@ -6,17 +7,16 @@
       </div>
     </div>
   </div>
+
   <div class="clearfix">
-    <span class='value medium-small blue'>Offered Value: <%= review.display_value %></span>
+    <span class='value medium-small blue'>Offered Value: ${{reviewRequest.value}} </span>
     <span class='requested-by medium-small padded'>
       Requested By: <%= link_to review.user.name, review.user.github_profile, target: 'new' %> <%= image_tag review.user.profile_pic, class: 'profile' %>
     </span>
-
   </div>
 
   <span class='request-actions'>
-    <div class='request-detail' ng-show="showDetail">
-      <%= markdown_to_html review.detail %>
+    <div class='request-detail' ng-show="showDetail" ng-bind-html="reviewRequest.detailHtml">
     </div>
     <div class="request-controls">
       <button class='btn btn-default tools summary' ng-click="toggleDetail()">

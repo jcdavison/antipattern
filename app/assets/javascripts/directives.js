@@ -29,13 +29,25 @@ directives.directive('setReviewRequestId', [function() {
     }
 }]);
 
-directives.directive('setReviewRequestDetail', [function() {
+directives.directive('setReviewRequestDetailHtml', [function() {
     return {
       scope : {
-          reviewRequestDetail : '@reviewRequestDetail',
+          reviewRequestDetailHtml : '@reviewRequestDetailHtml',
       },
       controller: function($scope, $element, $attrs){
-          $scope.reviewRequestDetail = $attrs.reviewRequestDetail
+          $scope.reviewRequestDetailHtml = $attrs.reviewRequestDetailHtml
+      }
+    }
+}]);
+
+
+directives.directive('setReviewRequestDetailRaw', [function() {
+    return {
+      scope : {
+          reviewRequestDetailRaw : '@reviewRequestDetailRaw',
+      },
+      controller: function($scope, $element, $attrs){
+          $scope.reviewRequestDetailRaw = $attrs.reviewRequestDetailRaw
       }
     }
 }]);

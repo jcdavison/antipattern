@@ -56,13 +56,13 @@ angular.module('App.services', [] )
           deferred.reject(response)
         return deferred.promise
       update: (codeReview) ->
+        codeReview.detail = codeReview.detailRaw
         $http
           method: 'put'
           url: '/api/reviews.json'
           data:
             code_review: codeReview
         .then (response) =>
-          console.log "response", response
           @codeReviews[response.data.code_review.id] = response.data.code_review
     return ReviewRequest
 

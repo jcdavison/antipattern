@@ -14,10 +14,7 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, Revie
 controllers.controller('createCodeReviewCtrl', ($scope, $rootScope, $modalInstance, $modal, ReviewRequest) ->
   $scope.codeReview = {}
   $scope.reviewRequests = []
-  $scope.values = [
-    {value: '$10.00'},
-    {value: '$25.00'},
-    {value: '$50.00'} ]
+  $scope.values = [ {value: '10.0'}, {value: '25.0'}, {value: '50.0'} ]
   $scope.reviewRequest.value = $scope.values[0]
 
   setAcceptStatus = () ->
@@ -53,7 +50,8 @@ controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, $locati
   $scope.reviewRequest =
     title: $attrs.reviewRequestTitle 
     value: $attrs.reviewRequestValue 
-    detail: $attrs.reviewRequestDetail
+    detailHtml: marked($attrs.reviewRequestDetailHtml)
+    detailRaw: $attrs.reviewRequestDetailRaw
     id: $attrs.reviewRequestId
 
   $scope.showDetail = false
@@ -66,6 +64,13 @@ controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, $locati
 
   $scope.$on 'authorized-user', () ->
     ownedByCurrentUser()
+
+  $scope.$on 'review-request-updated', () ->
+    updatedReviewRequest = ReviewRequest.codeReviews[$attrs.reviewRequestId]
+    if updatedReviewRequest
+      $scope.reviewRequest = updatedReviewRequest 
+      $scope.reviewRequest.value = updatedReviewRequest.value / 100
+      $scope.reviewRequest.detailHtml = marked updatedReviewRequest.detailRaw
 
   setShowDetail = () ->
     if $location.absUrl().match /code-reviews/
@@ -92,8 +97,10 @@ controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, $locati
       resolve:
         reviewRequestId: () ->
           $attrs.reviewRequestId
-        reviewRequestDetail: () ->
-          $attrs.reviewRequestDetail
+        reviewRequestDetailHtml: () ->
+          $attrs.reviewRequestDetailHtml
+        reviewRequestDetailRaw: () ->
+          $attrs.reviewRequestDetailRaw
         reviewRequestValue: () ->
           $attrs.reviewRequestValue
         reviewRequestTitle: () ->
@@ -118,26 +125,32 @@ controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, $locati
       )
 )
 
-controllers.controller('editCodeReviewCtrl', ($scope, $rootScope, $modalInstance, User, reviewRequestId, reviewRequestDetail, reviewRequestValue, reviewRequestTitle, ReviewRequest) -> 
+controllers.controller('editCodeReviewCtrl', ($scope, $rootScope, $modalInstance, User, reviewRequestId, reviewRequestDetailRaw, reviewRequestDetailHtml, reviewRequestValue, reviewRequestTitle, ReviewRequest) -> 
   $scope.reviewRequest = {}
 
   $scope.reviewRequest.id = reviewRequestId
-  $scope.reviewRequest.detail = reviewRequestDetail
+  $scope.reviewRequest.detailHtml = reviewRequestDetailHtml
+  $scope.reviewRequest.detailRaw = reviewRequestDetailRaw
   $scope.reviewRequest.title = reviewRequestTitle
-  $scope.values = [ {display_value: '$10.0'}, {display_value: '$25.0'}, {display_value: '$50.0'} ]
+  $scope.values = [ {value: '10.0'}, {value: '25.0'}, {value: '50.0'} ]
 
   $scope.values.forEach (ele, i) ->
-    if ele.display_value == reviewRequestValue
-      $scope.reviewRequest.display_value = $scope.values[i] 
+    if ele.value == reviewRequestValue
+      $scope.reviewRequest.value = $scope.values[i] 
 
   $scope.editReviewRequest = () ->
     ReviewRequest.update($scope.reviewRequest).then () ->
       $scope.reviewRequest = ReviewRequest.codeReviews[reviewRequestId]
+      $rootScope.$broadcast 'review-request-updated'
+
+  $scope.cancel = () ->
+    $modalInstance.dismiss('cancel')
+
 )
 
 controllers.controller('offerCodeReviewCtrl', ($rootScope, $scope, $modalInstance, reviewRequestId, Offer) ->
   $scope.cancel = () ->
-    $modalInstance.dismiss('cancel');
+    $modalInstance.dismiss('cancel')
 
   setDisplayStatus = () ->
     $scope.display_status = Offer.display_status
