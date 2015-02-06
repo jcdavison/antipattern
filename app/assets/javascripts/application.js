@@ -6,5 +6,6 @@
 //= require angular-route
 //= require angular-sanitize
 //= require angular-ui-bootstrap-tpls
+//= require marked
 //= require select
 //= require_tree .
