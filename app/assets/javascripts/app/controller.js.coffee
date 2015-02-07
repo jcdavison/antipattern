@@ -15,7 +15,7 @@ controllers.controller('createCodeReviewCtrl', ($scope, $rootScope, $modalInstan
   $scope.codeReview = {}
   $scope.reviewRequests = []
   $scope.values = [ {value: '10'}, {value: '25'}, {value: '50'} ]
-  $scope.reviewRequest.value = $scope.values[0]
+  $scope.codeReview.value = $scope.values[0]
 
   setAcceptStatus = () ->
     $scope.accepted = ReviewRequest.accepted
