@@ -29,18 +29,6 @@ directives.directive('setReviewRequestId', [function() {
     }
 }]);
 
-directives.directive('setReviewRequestDetailHtml', [function() {
-    return {
-      scope : {
-          reviewRequestDetailHtml : '@reviewRequestDetailHtml',
-      },
-      controller: function($scope, $element, $attrs){
-          $scope.reviewRequestDetailHtml = $attrs.reviewRequestDetailHtml
-      }
-    }
-}]);
-
-
 directives.directive('setReviewRequestDetailRaw', [function() {
     return {
       scope : {

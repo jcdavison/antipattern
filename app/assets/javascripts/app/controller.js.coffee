@@ -46,13 +46,15 @@ controllers.controller('requestCodeReview', ($scope, $rootScope, $modal, User) -
       )
 )
 
-controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest) ->
+controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest, $sanitize) ->
+  marked.setOptions(gfm: true)
+
   $scope.reviewRequest =
+    id: $attrs.reviewRequestId
     title: $attrs.reviewRequestTitle 
     value: $attrs.reviewRequestValue 
-    detailHtml: marked($attrs.reviewRequestDetailHtml)
     detailRaw: $attrs.reviewRequestDetailRaw
-    id: $attrs.reviewRequestId
+    detailHtml: marked($attrs.reviewRequestDetailRaw)
 
   $scope.showDetail = false
   $scope.hasOffered = false
@@ -68,9 +70,10 @@ controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, $locati
   $scope.$on 'review-request-updated', () ->
     updatedReviewRequest = ReviewRequest.codeReviews[$attrs.reviewRequestId]
     if updatedReviewRequest
-      $scope.reviewRequest = updatedReviewRequest 
+      $scope.reviewRequest.title = updatedReviewRequest.title
       $scope.reviewRequest.value = updatedReviewRequest.value / 100
-      $scope.reviewRequest.detailHtml = marked updatedReviewRequest.detailRaw
+      $scope.reviewRequest.detailRaw = updatedReviewRequest.detail
+      $scope.reviewRequest.detailHtml = marked updatedReviewRequest.detail
 
   setShowDetail = () ->
     if $location.absUrl().match /code-reviews/
@@ -135,16 +138,17 @@ controllers.controller('editCodeReviewCtrl', ($scope, $rootScope, $modalInstance
   $scope.values = [ {value: 10}, {value: 25}, {value: 50} ]
 
   $scope.values.forEach (ele, i) ->
-    console.log ele.value
-    console.log reviewRequestValue/100
-    console.log ele.value == reviewRequestValue/100
-    if ele.value == reviewRequestValue/100
+    if ele.value == reviewRequestValue / 100
       $scope.reviewRequest.value = $scope.values[i].value
 
   $scope.editReviewRequest = () ->
     ReviewRequest.update($scope.reviewRequest).then () ->
+      # this is redudant
       $scope.reviewRequest = ReviewRequest.codeReviews[reviewRequestId]
+      $scope.reviewRequest.detailRaw = $scope.reviewRequest.detail
+      $scope.reviewRequest.value = $scope.reviewRequest.value / 100
       $rootScope.$broadcast 'review-request-updated'
+      $modalInstance.dismiss('cancel')
 
   $scope.cancel = () ->
     $modalInstance.dismiss('cancel')
