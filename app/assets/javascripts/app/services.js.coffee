@@ -57,7 +57,7 @@ angular.module('App.services', [] )
         return deferred.promise
       update: (codeReview) ->
         codeReview.detail = codeReview.detailRaw
-        codeReview.value = (codeReview.value.value * 100)
+        codeReview.value = (codeReview.value * 100)
         $http
           method: 'put'
           url: '/api/reviews.json'
