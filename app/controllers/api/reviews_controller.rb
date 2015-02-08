@@ -3,7 +3,7 @@ class Api::ReviewsController < ApplicationController
   respond_to :json
 
   def create
-    @review_request = ReviewRequest.new(review_request_params.merge(user_id: current_user.id))
+    @review_request = ReviewRequest.new(code_review_params.merge(user_id: current_user.id))
     if @review_request.save
       render 'api/reviews/review'
     else

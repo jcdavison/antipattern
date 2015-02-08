@@ -1,6 +1,5 @@
 <span ng-repeat="review in newReviewRequests">
-  <div class="review-request" ng-controller="reviewRequestCtrl" setReviewRequestId review-Request-ID="{{review.id}}" >
-
+  <div >
     <div class="request-summary clearfix">
       <div class="row">
         <div class='col-sm-12'>
@@ -12,7 +11,7 @@
     <div class="clearfix">
       <span class='value medium-small blue'>Offered Value: {{review.display_value}}</span>
       <span class='requested-by medium-small padded'>
-        Requested By: <a href="{{review.user.github_profile}}">{{review.user.name}} </a><img src="{{review.user.profile_pic}}" class='profile'> 
+        Requested By: <a href="{{review.user.github_profile}}">{{review.user.name}} </a><img ng-src="{{review.user.profile_pic}}" class='profile'> 
       </span>
     </div>
 
@@ -28,14 +27,8 @@
             Hide Details
           </span>
         </button>
-        <button class='btn btn-default tools' ng-click="confirmReviewOffer('submitOffer', '{{review.id}}')" ng-class='{disabled: hasOffered || ownedByCurrentUser, summary: !hasOffered}' ng-disabled="hasOffered">
-          <span ng-hide='hasOffered || ownedByCurrentUser'>
-            Offer Code Review
-          </span>
-          <span ng-show='hasOffered'>
-            Offered
-          </span>
-          <span ng-show='ownedByCurrentUser'>
+        <button class='btn btn-default tools' ng-click="confirmReviewOffer('submitOffer', '{{review.id}}')" ng-class='{disabled: hasOffered || ownedByCurrentUser, summary: !hasOffered}' ng-disabled="true">
+          <span>
             You Own This
           </span>
         </button>

@@ -9,12 +9,15 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, Revie
 
   $scope.$on 'review-request-created', () ->
     $scope.newReviewRequests = ReviewRequest.recentlyCreated
+    $rootScope.$broadcast 'set-owned-by-current-user'
+
+  $rootScope.values = [ {value: 10}, {value: 25}, {value: 50} ]
 )
 
 controllers.controller('createCodeReviewCtrl', ($scope, $rootScope, $modalInstance, $modal, ReviewRequest) ->
   $scope.codeReview = {}
   $scope.reviewRequests = []
-  $scope.values = [ {value: '10'}, {value: '25'}, {value: '50'} ]
+  $scope.values = $rootScope.values 
   $scope.codeReview.value = $scope.values[0]
 
   setAcceptStatus = () ->
@@ -48,7 +51,6 @@ controllers.controller('requestCodeReview', ($scope, $rootScope, $modal, User) -
 
 controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest, $sanitize) ->
   marked.setOptions(gfm: true)
-
   $scope.reviewRequest =
     id: $attrs.reviewRequestId
     title: $attrs.reviewRequestTitle 
@@ -82,6 +84,9 @@ controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, $locati
 
   $scope.$on 'review-offer-created', () ->
     setHasOffered()
+
+  $scope.$on 'set-owned-by-current-user', () ->
+    ownedByCurrentUser()
 
   $scope.toggleDetail = () ->
     $scope.showDetail = ! $scope.showDetail
@@ -135,7 +140,7 @@ controllers.controller('editCodeReviewCtrl', ($scope, $rootScope, $modalInstance
   $scope.reviewRequest.detailHtml = reviewRequestDetailHtml
   $scope.reviewRequest.detailRaw = reviewRequestDetailRaw
   $scope.reviewRequest.title = reviewRequestTitle
-  $scope.values = [ {value: 10, label: 10}, {value: 25, label: 25}, {value: 50, label: 50} ]
+  $scope.values = $rootScope.values 
 
   $scope.values.forEach (ele, i) ->
     if ele.value == reviewRequestValue / 100

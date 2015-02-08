@@ -42,8 +42,9 @@ angular.module('App.services', [] )
         return deferred.promise
       create: (codeReview) ->
         deferred = $q.defer()
+        codeReview.value = codeReview.value.value * 100
         data =
-          review_request: codeReview
+          code_review: codeReview
         $http
           method: 'post' 
           url: '/api/reviews.json'
