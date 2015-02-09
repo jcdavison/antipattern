@@ -60,6 +60,13 @@ angular.module('App.services', [] )
           data:
             code_review: codeReview
         .then (response) =>
+          return response
+      delete: (codeReview) ->
+        $http
+          method: 'delete'
+          url: "/api/reviews/#{codeReview.id}.json"
+        .then (response) =>
+          return response
     return ReviewRequest
 
   .factory 'Offer', ($q, $http) ->

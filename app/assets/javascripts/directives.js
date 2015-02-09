@@ -28,7 +28,7 @@ directives.directive('showifowner', [ 'ReviewRequest', function(ReviewRequest) {
     link: function (scope, element, attrs) {
       ReviewRequest.ownedByCurrentUser(scope.showifowner).then( function (response) { 
         if (response.owned_by == true) {
-          scope.$parent.shouldHideEdit = false
+          scope.$parent.shouldHideOwnerTools = false
         }
       });
     }
@@ -58,7 +58,6 @@ directives.directive('hideifoffered', [ 'ReviewRequest', function(ReviewRequest)
       reviewid: '@'
     },
     link: function ($scope, element, $attrs) {
-      // this feels very redundant but i'm going with it for now
       ReviewRequest.userHasOffered($scope.reviewid).then( function (response) { 
         if(response.data.has_offered == true) {
           element.hide();
@@ -70,6 +69,23 @@ directives.directive('hideifoffered', [ 'ReviewRequest', function(ReviewRequest)
             element.hide();
           }
         });
+      });
+    }
+  }
+}]);
+
+
+directives.directive('hideifdeleted', [ 'ReviewRequest', function(ReviewRequest) {
+  return {
+    restrict: 'A',
+    scope: {
+      hideifdeleted: '@'
+    },
+    link: function ($scope, element, $attrs) {
+        $scope.$on('codeReviewDeleted', function (e, args) {
+            if (args.id == $scope.hideifdeleted) {
+              element.hide()
+            }
       });
     }
   }

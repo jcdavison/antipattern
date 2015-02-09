@@ -31,6 +31,15 @@ class Api::ReviewsController < ApplicationController
     end
   end
 
+  def destroy
+    @code_review = ReviewRequest.find_by(id: params[:id])
+    if @code_review.destroy
+      head :ok
+    else
+      head :forbidden
+    end
+  end
+
   private
 
     def code_review_params

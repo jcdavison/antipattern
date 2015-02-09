@@ -7,6 +7,7 @@ $blue: hsl(210, 68%, 42%);
 $green: rgb(120, 151, 120);
 $light_green: rgba(120, 151, 120, 0.2);
 $light_grey: rgba(121, 121, 151, .5);
+$light_red: rgba(207, 78, 66, .5);
 $link_color: $green;
 $gold: #FEFE00;
 $grey: gray;
@@ -57,6 +58,17 @@ button.btn-default.cancel {
   &:hover {
     border-color: $red;
     background-color: $red;
+    color: $white
+  }
+}
+
+button.btn-default.delete {
+  border-color: $light_red;
+  background-color: $white;
+  color: $light_red;
+  &:hover {
+    border-color: $light_red;
+    background-color: $light_red;
     color: $white
   }
 }
