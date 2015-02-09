@@ -19,7 +19,6 @@ directives.directive('ngFocus', [function() {
 }]);
 
 directives.directive('showifowner', [ 'ReviewRequest', function(ReviewRequest) {
-  var IS_OWNER = false
   return {
     restrict: 'A',
     scope: {
@@ -29,7 +28,7 @@ directives.directive('showifowner', [ 'ReviewRequest', function(ReviewRequest) {
     link: function (scope, element, attrs) {
       ReviewRequest.ownedByCurrentUser(scope.showifowner).then( function (response) { 
         if (response.owned_by == true) {
-          scope.$parent.shouldShowEdit = true
+          scope.$parent.shouldHideEdit = false
         }
       });
     }
@@ -37,7 +36,6 @@ directives.directive('showifowner', [ 'ReviewRequest', function(ReviewRequest) {
 }]);
 
 directives.directive('hideifowner', [ 'ReviewRequest', function(ReviewRequest) {
-  var IS_OWNER = false
   return {
     restrict: 'A',
     scope: {
@@ -48,6 +46,30 @@ directives.directive('hideifowner', [ 'ReviewRequest', function(ReviewRequest) {
         if (response.owned_by == true) {
           element.hide();
         }
+      });
+    }
+  }
+}]);
+
+directives.directive('hideifoffered', [ 'ReviewRequest', function(ReviewRequest) {
+  return {
+    restrict: 'A',
+    scope: {
+      reviewid: '@'
+    },
+    link: function ($scope, element, $attrs) {
+      // this feels very redundant but i'm going with it for now
+      ReviewRequest.userHasOffered($scope.reviewid).then( function (response) { 
+        if(response.data.has_offered == true) {
+          element.hide();
+        }
+      });
+      $scope.$on('offer-success', function () {
+        ReviewRequest.userHasOffered($scope.reviewid).then( function (response) { 
+          if(response.data.has_offered == true) {
+            element.hide();
+          }
+        });
       });
     }
   }

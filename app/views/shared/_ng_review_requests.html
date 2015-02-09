@@ -28,17 +28,22 @@
               Hide Details
             </span>
           </button>
-          <button class='btn btn-default tools' ng-click="confirmReviewOffer('submitOffer', '{{review.id}}')" ng-class='{disabled: hasOffered , summary: !hasOffered}' hideifowner="{{review.id}}">
-            <span>
-              Offer Code Review
-            </span>
-            <span ng-show='hasOffered'>
-              Offered
-            </span>
-          </button>
-          <button class='btn btn-default tools accept' ng-click="editReviewRequest()" showifowner="{{review.id}}" displaySetting="waffles" ng-hide="shouldHideEdit == true" >
+
+          <span hideifoffered reviewid="{{review.id}}" >
+            <button class='btn btn-default tools' ng-click="confirmReviewOffer()" ng-class='{disabled: hasOffered , summary: !hasOffered}' hideifowner="{{review.id}}">
+              <span>
+                Offer Code Review
+              </span>
+              <span ng-show='hasOffered'>
+                Offered
+              </span>
+            </button>
+          </span>
+
+          <button class='btn btn-default tools accept' ng-click="editReviewRequest()" showifowner="{{review.id}}" ng-hide="shouldHideEdit == true" >
             Edit
           </button>
+
         </div>
       </span>
     </div>
