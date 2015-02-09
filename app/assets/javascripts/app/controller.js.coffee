@@ -11,42 +11,15 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, Revie
   $rootScope.values = [ {value: 10}, {value: 25}, {value: 50} ]
 )
 
-controllers.controller('createCodeReviewModal', ($scope, $rootScope, $modalInstance, $modal, ReviewRequest) ->
-  $scope.codeReview = {}
-  $scope.values = $rootScope.values 
-  $scope.codeReview.value = $scope.values[0]
-
-  setAcceptStatus = () ->
-    $scope.accepted = ReviewRequest.accepted
-  setAcceptStatus()
-
-  $scope.createReviewRequest = () ->
-    ReviewRequest.create($scope.codeReview).then () ->
-      setAcceptStatus()
-      $rootScope.$broadcast 'new-request-created'
-      $modalInstance.dismiss('cancel');
-
-  $scope.cancel = () ->
-    $modalInstance.dismiss('cancel');
-)
-
-controllers.controller('createCodeReview', ($scope, $rootScope, $modal, User) ->
-  $scope.requestCodeReview = () ->
-    if $rootScope.authorizedUser == true
-      modalInstance = $modal.open(
-        templateUrl: 'requestCodeReview.html'
-        controller: 'createCodeReviewModal'
-      )
-    else
-      modalInstance = $modal.open(
-        templateUrl: 'pleaseLogin.html'
-        controller: 'genericModalCtrl'
-      )
-)
-
 controllers.controller('codeReviewCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest, $sanitize) ->
   marked.setOptions(gfm: true)
   $scope.showDetail = false
+
+  renderHtml = () ->
+    $scope.codeReviewHtml = marked($scope.review.detail)
+
+  $scope.$on 'render-html-from-detail', () ->
+    renderHtml()
 
   setShowDetail = () ->
     if $location.absUrl().match /code-reviews/
@@ -59,19 +32,11 @@ controllers.controller('codeReviewCtrl', ($scope, $rootScope, $modal, $location,
   $scope.editReviewRequest = () ->
     modalInstance = $modal.open(
       templateUrl: 'editCodeReview.html'
-      controller: 'editCodeReviewCtrl'
+      controller: 'editCodeReviewModal'
       size: 'md'
       resolve:
-        reviewRequestId: () ->
-          $attrs.reviewRequestId
-        reviewRequestDetailHtml: () ->
-          $attrs.reviewRequestDetailHtml
-        reviewRequestDetailRaw: () ->
-          $attrs.reviewRequestDetailRaw
-        reviewRequestValue: () ->
-          $attrs.reviewRequestValue
-        reviewRequestTitle: () ->
-          $attrs.reviewRequestTitle
+        codeReview: () ->
+          $scope.review
     )
 
   $scope.confirmReviewOffer = (modalPurpose, reviewRequestId, size) ->
@@ -92,30 +57,49 @@ controllers.controller('codeReviewCtrl', ($scope, $rootScope, $modal, $location,
       )
 )
 
-controllers.controller('editCodeReviewCtrl', ($scope, $rootScope, $modalInstance, User, reviewRequestId, reviewRequestDetailRaw, reviewRequestDetailHtml, reviewRequestValue, reviewRequestTitle, ReviewRequest) -> 
-  $scope.reviewRequest = {}
+controllers.controller('createCodeReviewModal', ($scope, $rootScope, $modalInstance, $modal, ReviewRequest) ->
+  $scope.codeReview = {}
+  $scope.values = $rootScope.values 
+  $scope.codeReview.value = $scope.values[0]
 
-  $scope.reviewRequest.id = reviewRequestId
-  $scope.reviewRequest.detailHtml = reviewRequestDetailHtml
-  $scope.reviewRequest.detailRaw = reviewRequestDetailRaw
-  $scope.reviewRequest.title = reviewRequestTitle
+  $scope.createReviewRequest = () ->
+    ReviewRequest.create($scope.codeReview).then () ->
+      $modalInstance.dismiss('cancel');
+
+  $scope.cancel = () ->
+    $modalInstance.dismiss('cancel');
+)
+
+controllers.controller('createCodeReview', ($scope, $rootScope, $modal, User) ->
+  $scope.requestCodeReview = () ->
+    if $rootScope.authorizedUser == true
+      modalInstance = $modal.open(
+        templateUrl: 'requestCodeReview.html'
+        controller: 'createCodeReviewModal'
+      )
+    else
+      modalInstance = $modal.open(
+        templateUrl: 'pleaseLogin.html'
+        controller: 'genericModalCtrl'
+      )
+)
+
+
+controllers.controller('editCodeReviewModal', ($scope, $rootScope, $modalInstance, User, codeReview, ReviewRequest) -> 
+  $scope.codeReview = codeReview
   $scope.values = $rootScope.values 
 
   $scope.values.forEach (ele, i) ->
-    if ele.value == reviewRequestValue / 100
-      $scope.reviewRequest.value = $scope.values[i].value
+    if ele.value == codeReview.value / 100
+      $scope.codeReview.value = $scope.values[i].value
 
   $scope.editReviewRequest = () ->
-    ReviewRequest.update($scope.reviewRequest).then () ->
-      $scope.reviewRequest = ReviewRequest.codeReviews[reviewRequestId]
-      $scope.reviewRequest.detailRaw = $scope.reviewRequest.detail
-      $scope.reviewRequest.value = $scope.reviewRequest.value
-      $rootScope.$broadcast 'review-request-updated'
+    ReviewRequest.update($scope.codeReview).then () ->
+      $rootScope.$broadcast 'render-html-from-detail'
       $modalInstance.dismiss('cancel')
 
   $scope.cancel = () ->
     $modalInstance.dismiss('cancel')
-
 )
 
 controllers.controller('offerCodeReviewCtrl', ($rootScope, $scope, $modalInstance, reviewRequestId, Offer) ->

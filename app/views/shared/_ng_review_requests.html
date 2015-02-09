@@ -17,7 +17,7 @@
         </span>
       </div>
       <span class='request-actions'>
-        <div class='request-detail' ng-show="showDetail" ng-bind-html="review.detail">
+        <div class='request-detail' ng-show="showDetail" ng-bind-html="codeReviewHtml">
         </div>
         <div class="request-controls">
           <button class='btn btn-default tools summary' ng-click="toggleDetail()">
@@ -36,8 +36,8 @@
               Offered
             </span>
           </button>
-          <button class='btn btn-default tools' class='disabled' ng-disabled="true" showifowner="{{review.id}}">
-            You Own This
+          <button class='btn btn-default tools accept' ng-click="editReviewRequest()" showifowner="{{review.id}}">
+            Edit
           </button>
         </div>
       </span>

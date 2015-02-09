@@ -25,7 +25,6 @@ angular.module('App.services', [] )
           url: '/api/reviews.json'
         .then (response) =>
           @allCodeReviews = response.data
-          console.log @allCodeReviews
       userHasOffered: (reviewRequestId) ->
         deferred = $q.defer()
         $http
@@ -57,9 +56,7 @@ angular.module('App.services', [] )
         .then (response) =>
           if response.status == 200
             @allCodeReviews.unshift response.data.review_request
-            console.log @allCodeReviews
-      update: (codeReview) ->
-        codeReview.detail = codeReview.detailRaw
+      update: (codeReview, indexOfCodeReview) ->
         codeReview.value = (codeReview.value * 100)
         $http
           method: 'put'
@@ -67,7 +64,6 @@ angular.module('App.services', [] )
           data:
             code_review: codeReview
         .then (response) =>
-          @codeReviews[response.data.code_review.id] = response.data.code_review
     return ReviewRequest
 
   .factory 'Offer', ($q, $http) ->
