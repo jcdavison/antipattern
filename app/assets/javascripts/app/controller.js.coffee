@@ -74,6 +74,7 @@ controllers.controller('deleteCodeReviewModal', ($scope, $rootScope, $modalInsta
     ReviewRequest.delete(codeReview).then (response) ->
       if response.status == 200
         $rootScope.$broadcast 'codeReviewDeleted', codeReview
+        $modalInstance.dismiss('cancel')
 
   $scope.cancel = () ->
     $modalInstance.dismiss('cancel')
