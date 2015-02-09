@@ -17,6 +17,7 @@ controllers.controller('codeReviewCtrl', ($scope, $rootScope, $modal, $location,
 
   renderHtml = () ->
     $scope.codeReviewHtml = marked($scope.review.detail)
+  renderHtml()
 
   $scope.$on 'render-html-from-detail', () ->
     renderHtml()
@@ -64,6 +65,7 @@ controllers.controller('createCodeReviewModal', ($scope, $rootScope, $modalInsta
 
   $scope.createReviewRequest = () ->
     ReviewRequest.create($scope.codeReview).then () ->
+      $rootScope.$broadcast 'render-html-from-detail'
       $modalInstance.dismiss('cancel');
 
   $scope.cancel = () ->
