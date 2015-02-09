@@ -3,7 +3,7 @@ class Api::ReviewsController < ApplicationController
   respond_to :json
 
   def index
-    @code_reviews = ReviewRequest.all
+    @code_reviews = ReviewRequest.all_active
     render 'api/reviews/reviews'
   end
 
@@ -33,7 +33,8 @@ class Api::ReviewsController < ApplicationController
 
   def destroy
     @code_review = ReviewRequest.find_by(id: params[:id])
-    if @code_review.destroy
+    @code_review.deleted = true
+    if @code_review.save
       head :ok
     else
       head :forbidden
