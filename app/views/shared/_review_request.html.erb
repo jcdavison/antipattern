@@ -1,8 +1,9 @@
-<div class="review-request" ng-controller="reviewRequestCtrl" setReviewRequestId review-Request-ID="<%= review.id %>" setReviewRequestDetailRaw review-Request-Detail-Raw="<%= review.detail %>" setReviewRequestValue review-request-value="<%= review.value %>" setReviewRequestTitle review-Request-Title="<%= review.title %>">
+<div class="review-request" ng-controller="reviewRequestCtrl" review-Request-ID="<%= review.id %>" review-Request-Detail="<%= review.detail %>" review-request-value="<%= review.value %>" review-Request-Title="<%= review.title %>">
 
   <div class="request-summary clearfix">
     <div class="row">
       <div class='col-sm-12'>
+
         <span class='title pull-right'><a href="/code-reviews/{{reviewRequest.id}}">{{reviewRequest.title}}</a></span> 
       </div>
     </div>

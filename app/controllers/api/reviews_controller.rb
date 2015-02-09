@@ -2,10 +2,15 @@ class Api::ReviewsController < ApplicationController
   before_filter :authenticate_user!
   respond_to :json
 
+  def index
+    @code_reviews = ReviewRequest.all
+    render 'api/reviews/reviews'
+  end
+
   def create
     @review_request = ReviewRequest.new(code_review_params.merge(user_id: current_user.id))
     if @review_request.save
-      render 'api/reviews/review'
+      render 'api/reviews/create'
     else
       head :forbidden
     end
