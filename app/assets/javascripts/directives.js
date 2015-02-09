@@ -27,8 +27,8 @@ directives.directive('showifowner', [ 'ReviewRequest', function(ReviewRequest) {
     },
     link: function (scope, element, attrs) {
       ReviewRequest.ownedByCurrentUser(scope.showifowner).then( function (response) { 
-        if (response.owned_by == true) {
-          element.show();
+        if (response.owned_by != true) {
+          element.hide();
         }
       });
     }
