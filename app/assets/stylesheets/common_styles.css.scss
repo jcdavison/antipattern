@@ -356,3 +356,9 @@ section.offer {
     font-size: 1.2em;
   }
 }
+
+// ANGULAR
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
