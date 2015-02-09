@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get 'reviews', to: 'reviews#index'
     post 'reviews', to: 'reviews#create'
     put 'reviews', to: 'reviews#update'
+    delete 'reviews/:id', to: 'reviews#destroy'
     get 'has_offered', to: 'offers#has_offered'
     get 'owned_by', to: 'reviews#owned_by'
     get 'decision_registered', to: 'offers#decision_registered'

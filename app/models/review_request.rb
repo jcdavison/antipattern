@@ -3,6 +3,8 @@ class ReviewRequest < ActiveRecord::Base
   validates_presence_of :value, :detail, :user_id, :title
   has_many :offers
 
+  scope :all_active, -> {where(deleted: false)}
+
   def display_value
     (value.to_f / 100)
   end

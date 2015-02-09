@@ -14,7 +14,7 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, Revie
 controllers.controller('codeReviewCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest, $sanitize) ->
   marked.setOptions(gfm: true)
   $scope.showDetail = false
-  $scope.shouldHideEdit = true
+  $scope.shouldHideOwnerTools = true
 
   renderHtml = () ->
     $scope.codeReviewHtml = marked($scope.review.detail)
@@ -56,6 +56,28 @@ controllers.controller('codeReviewCtrl', ($scope, $rootScope, $modal, $location,
         templateUrl: 'pleaseLogin.html'
         controller: 'genericModalCtrl'
       )
+
+  $scope.showDeleteModal = () ->
+    modalInstance = $modal.open(
+      templateUrl: 'deleteCodeReview.html'
+      controller: 'deleteCodeReviewModal'
+      size: 'md'
+      resolve:
+        codeReview: () ->
+          $scope.review
+    )
+
+)
+
+controllers.controller('deleteCodeReviewModal', ($scope, $rootScope, $modalInstance, $modal, ReviewRequest, codeReview) ->
+  $scope.delete = () ->
+    ReviewRequest.delete(codeReview).then (response) ->
+      if response.status == 200
+        $rootScope.$broadcast 'codeReviewDeleted', codeReview
+        $modalInstance.dismiss('cancel')
+
+  $scope.cancel = () ->
+    $modalInstance.dismiss('cancel')
 )
 
 controllers.controller('createCodeReviewModal', ($scope, $rootScope, $modalInstance, $modal, ReviewRequest) ->
