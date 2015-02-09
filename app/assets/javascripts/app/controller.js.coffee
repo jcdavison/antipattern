@@ -14,6 +14,7 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, Revie
 controllers.controller('codeReviewCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest, $sanitize) ->
   marked.setOptions(gfm: true)
   $scope.showDetail = false
+  $scope.shouldHideEdit = true
 
   renderHtml = () ->
     $scope.codeReviewHtml = marked($scope.review.detail)
@@ -31,6 +32,7 @@ controllers.controller('codeReviewCtrl', ($scope, $rootScope, $modal, $location,
     $scope.showDetail = ! $scope.showDetail
 
   $scope.editReviewRequest = () ->
+    console.log $scope.waffles
     modalInstance = $modal.open(
       templateUrl: 'editCodeReview.html'
       controller: 'editCodeReviewModal'

@@ -23,12 +23,13 @@ directives.directive('showifowner', [ 'ReviewRequest', function(ReviewRequest) {
   return {
     restrict: 'A',
     scope: {
-      showifowner: '@'
+      showifowner: '@',
+      displaySetting: '='
     },
     link: function (scope, element, attrs) {
       ReviewRequest.ownedByCurrentUser(scope.showifowner).then( function (response) { 
-        if (response.owned_by != true) {
-          element.hide();
+        if (response.owned_by == true) {
+          scope.$parent.shouldShowEdit = true
         }
       });
     }
