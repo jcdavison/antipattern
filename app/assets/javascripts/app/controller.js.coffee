@@ -32,7 +32,6 @@ controllers.controller('codeReviewCtrl', ($scope, $rootScope, $modal, $location,
     $scope.showDetail = ! $scope.showDetail
 
   $scope.editReviewRequest = () ->
-    console.log $scope.waffles
     modalInstance = $modal.open(
       templateUrl: 'editCodeReview.html'
       controller: 'editCodeReviewModal'
@@ -42,17 +41,16 @@ controllers.controller('codeReviewCtrl', ($scope, $rootScope, $modal, $location,
           $scope.review
     )
 
-  $scope.confirmReviewOffer = (modalPurpose, reviewRequestId, size) ->
+  $scope.confirmReviewOffer = () ->
     if $rootScope.authorizedUser == true
-      if modalPurpose == 'submitOffer'
-        modalInstance = $modal.open(
-          templateUrl: 'submitOffer.html'
-          controller: 'offerCodeReviewCtrl'
-          size: size
-          resolve:
-            reviewRequestId: () ->
-              reviewRequestId
-        )
+      modalInstance = $modal.open(
+        templateUrl: 'submitOffer.html'
+        controller: 'offerCodeReviewModal'
+        size: 'md'
+        resolve:
+          codeReview: () ->
+            $scope.review
+      )
     else
       modalInstance = $modal.open(
         templateUrl: 'pleaseLogin.html'
@@ -106,18 +104,18 @@ controllers.controller('editCodeReviewModal', ($scope, $rootScope, $modalInstanc
     $modalInstance.dismiss('cancel')
 )
 
-controllers.controller('offerCodeReviewCtrl', ($rootScope, $scope, $modalInstance, reviewRequestId, Offer) ->
+controllers.controller('offerCodeReviewModal', ($rootScope, $scope, $modalInstance, codeReview, Offer) ->
+  $scope.display = 'instructions'
   $scope.cancel = () ->
     $modalInstance.dismiss('cancel')
 
-  setDisplayStatus = () ->
-    $scope.display_status = Offer.display_status
-  setDisplayStatus()
-
   $scope.offerCodeReview = () ->
-    Offer.submit(reviewRequestId).then (r) ->
-      $rootScope.$broadcast 'review-offer-created'
-      setDisplayStatus()
+    Offer.submit(codeReview.id).then (r) ->
+      if r.status == 200
+        $scope.display = 'offer-success'
+        $rootScope.$broadcast 'offer-success'
+      else
+        $scope.display = 'offer-failure'
 )
 
 controllers.controller('offerCtrl', ($rootScope, $scope, Offer, $attrs) ->

@@ -26,15 +26,11 @@ angular.module('App.services', [] )
         .then (response) =>
           @allCodeReviews = response.data
       userHasOffered: (reviewRequestId) ->
-        deferred = $q.defer()
         $http
           method: 'get' 
           url: "/api/has_offered?id=#{reviewRequestId}"
-        .success (response) =>
-          deferred.resolve(response)
-        .error (response) =>
-          deferred.reject(response)
-        return deferred.promise
+        .then (response) =>
+          return response
       ownedByCurrentUser: (reviewRequestId) ->
         deferred = $q.defer()
         $http
@@ -68,24 +64,15 @@ angular.module('App.services', [] )
 
   .factory 'Offer', ($q, $http) ->
     Offer = 
-      display_status: 'instructions'
-      accept_status: null
-      state: null
       submit: (reviewRequestId) ->
-        deferred = $q.defer()
         data = 
           reviewRequestId: reviewRequestId
         $http
           method: 'post' 
           url: '/api/offers'
           data: data
-        .success (response) =>
-          @display_status = 'confirmation'
-          deferred.resolve(response)
-        .error (response) =>
-          @display_status = 'error'
-          deferred.reject(response)
-        return deferred.promise
+        .then (response) ->
+          return response
       checkStatus: (offerId) ->
         deferred = $q.defer()
         $http
