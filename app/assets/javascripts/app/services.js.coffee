@@ -18,7 +18,13 @@ angular.module('App.services', [] )
   .factory 'ReviewRequest', ($q, $http) ->
     ReviewRequest = 
       accepted: null
-      recentlyCreated: []
+      allCodeReviews: []
+      getAll: () ->
+        $http
+          method: 'get'
+          url: '/api/reviews.json'
+        .then (response) =>
+          @allCodeReviews = response.data
       userHasOffered: (reviewRequestId) ->
         deferred = $q.defer()
         $http
@@ -39,22 +45,25 @@ angular.module('App.services', [] )
         .error (response) =>
           deferred.reject(response)
         return deferred.promise
-
       create: (codeReview) ->
-        deferred = $q.defer()
+        codeReview.value = codeReview.value.value * 100
         data =
-          review_request: codeReview
+          code_review: codeReview
         $http
           method: 'post' 
           url: '/api/reviews.json'
           data: data
-        .success (response) =>
-          @accepted = true
-          @recentlyCreated.unshift response.review_request
-          deferred.resolve(response.review_request)
-        .error (response) =>
-          deferred.reject(response)
-        return deferred.promise
+        .then (response) =>
+          if response.status == 200
+            @allCodeReviews.unshift response.data.review_request
+      update: (codeReview, indexOfCodeReview) ->
+        codeReview.value = (codeReview.value * 100)
+        $http
+          method: 'put'
+          url: '/api/reviews.json'
+          data:
+            code_review: codeReview
+        .then (response) =>
     return ReviewRequest
 
   .factory 'Offer', ($q, $http) ->

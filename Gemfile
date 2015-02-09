@@ -32,6 +32,7 @@ gem 'angularjs-rails', '~> 1.3.36'
 gem 'angular-ui-bootstrap-rails'
 gem 'ngmin-rails', '~> 0.4.0'
 gem 'redcarpet'
+gem 'marked-rails'
 
 # js
 gem 'coffee-rails', '~> 4.0.0'

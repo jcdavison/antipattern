@@ -1,22 +1,23 @@
-<div class="review-request" ng-controller="reviewRequestCtrl" setReviewRequestId review-Request-ID="<%= review.id %>">
+<div class="review-request" ng-controller="reviewRequestCtrl" review-Request-ID="<%= review.id %>" review-Request-Detail="<%= review.detail %>" review-request-value="<%= review.value %>" review-Request-Title="<%= review.title %>">
+
   <div class="request-summary clearfix">
     <div class="row">
       <div class='col-sm-12'>
-        <span class='title pull-right'><%= link_to review.title, code_review_path(review) %></span> 
+
+        <span class='title pull-right'><a href="/code-reviews/{{reviewRequest.id}}">{{reviewRequest.title}}</a></span> 
       </div>
     </div>
   </div>
+
   <div class="clearfix">
-    <span class='value medium-small blue'>Offered Value: <%= review.display_value %></span>
+    <span class='value medium-small blue'>Offered Value: ${{reviewRequest.value/100}} </span>
     <span class='requested-by medium-small padded'>
       Requested By: <%= link_to review.user.name, review.user.github_profile, target: 'new' %> <%= image_tag review.user.profile_pic, class: 'profile' %>
     </span>
-
   </div>
 
   <span class='request-actions'>
-    <div class='request-detail' ng-show="showDetail">
-      <%= markdown_to_html review.detail %>
+    <div class='request-detail' ng-show="showDetail" ng-bind-html="reviewRequest.detailHtml">
     </div>
     <div class="request-controls">
       <button class='btn btn-default tools summary' ng-click="toggleDetail()">
@@ -27,15 +28,17 @@
           Hide Details
         </span>
       </button>
-      <button class='btn btn-default tools' ng-click="confirmReviewOffer('submitOffer', '<%= review.id %>')" ng-class='{disabled: hasOffered || ownedByCurrentUser, summary: !hasOffered}' ng-disabled="hasOffered">
+      <button class='btn btn-default tools' ng-click="confirmReviewOffer('submitOffer', '<%= review.id %>')" ng-class='{disabled: hasOffered || ownedByCurrentUser, summary: !hasOffered}' ng-disabled="hasOffered" ng-hide='ownedByCurrentUser'>
         <span ng-hide='hasOffered || ownedByCurrentUser'>
           Offer Code Review
         </span>
         <span ng-show='hasOffered'>
           Offered
         </span>
-        <span ng-show='ownedByCurrentUser'>
-          You Own This
+      </button>
+      <button class='btn btn-default tools' ng-click="editReviewRequest()" ng-show='ownedByCurrentUser'>
+        <span>
+          Edit
         </span>
       </button>
     </div>

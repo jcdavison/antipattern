@@ -2,10 +2,15 @@ class Api::ReviewsController < ApplicationController
   before_filter :authenticate_user!
   respond_to :json
 
+  def index
+    @code_reviews = ReviewRequest.all
+    render 'api/reviews/reviews'
+  end
+
   def create
-    @review_request = ReviewRequest.new(review_request_params.merge(user_id: current_user.id))
+    @review_request = ReviewRequest.new(code_review_params.merge(user_id: current_user.id))
     if @review_request.save
-      render 'api/reviews/review'
+      render 'api/reviews/create'
     else
       head :forbidden
     end
@@ -17,9 +22,18 @@ class Api::ReviewsController < ApplicationController
     render json: { owned_by: owned_by}
   end
 
+  def update
+    @code_review = ReviewRequest.find_by(user_id: current_user.id, id: params[:code_review][:id])
+    if @code_review.update_attributes(code_review_params)
+      render 'api/reviews/update'
+    else
+      head :forbidden
+    end
+  end
+
   private
 
-  def review_request_params
-    params.require(:review_request).permit(:title, :detail, :value)
-  end
+    def code_review_params
+      params.require(:code_review).compact.permit(:id, :title, :detail, :value)
+    end
 end

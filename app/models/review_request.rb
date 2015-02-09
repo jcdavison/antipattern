@@ -4,7 +4,7 @@ class ReviewRequest < ActiveRecord::Base
   has_many :offers
 
   def display_value
-    '$' << (value.to_f / 100).to_s
+    (value.to_f / 100)
   end
 
   def has_offers?

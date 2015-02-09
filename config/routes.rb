@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   namespace :api do
     post 'offers', to: 'offers#create'
     post 'offer_decisions', to: 'offers#update'
+    get 'reviews', to: 'reviews#index'
     post 'reviews', to: 'reviews#create'
+    put 'reviews', to: 'reviews#update'
     get 'has_offered', to: 'offers#has_offered'
     get 'owned_by', to: 'reviews#owned_by'
     get 'decision_registered', to: 'offers#decision_registered'

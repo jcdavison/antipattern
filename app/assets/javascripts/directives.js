@@ -18,24 +18,37 @@ directives.directive('ngFocus', [function() {
   }
 }]);
 
-directives.directive('setReviewRequestId', [function() {
-    return {
-      scope : {
-          reviewRequestId : '@reviewRequestId',
-      },
-      controller: function($scope, $element, $attrs){
-          $scope.reviewRequestId = $attrs.reviewRequestId
-      }
+directives.directive('showifowner', [ 'ReviewRequest', function(ReviewRequest) {
+  var IS_OWNER = false
+  return {
+    restrict: 'A',
+    scope: {
+      showifowner: '@',
+      displaySetting: '='
+    },
+    link: function (scope, element, attrs) {
+      ReviewRequest.ownedByCurrentUser(scope.showifowner).then( function (response) { 
+        if (response.owned_by == true) {
+          scope.$parent.shouldShowEdit = true
+        }
+      });
     }
+  }
 }]);
 
-directives.directive('setOfferId', [function() {
-    return {
-      scope : {
-          offerId : '@offerId',
-      },
-      controller: function($scope, $element, $attrs){
-          $scope.offerId = $attrs.offerId
-      }
+directives.directive('hideifowner', [ 'ReviewRequest', function(ReviewRequest) {
+  var IS_OWNER = false
+  return {
+    restrict: 'A',
+    scope: {
+      hideifowner: '@'
+    },
+    link: function (scope, element, attrs) {
+      ReviewRequest.ownedByCurrentUser(scope.hideifowner).then( function (response) { 
+        if (response.owned_by == true) {
+          element.hide();
+        }
+      });
     }
+  }
 }]);

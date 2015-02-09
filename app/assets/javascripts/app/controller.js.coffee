@@ -5,73 +5,42 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, Revie
     if response.success
       $rootScope.$broadcast 'authorized-user'
 
-  $scope.newReviewRequests = []
+  ReviewRequest.getAll().then () ->
+    $scope.allCodeReviews = ReviewRequest.allCodeReviews
 
-  $scope.$on 'review-request-created', () ->
-    $scope.newReviewRequests = ReviewRequest.recentlyCreated
+  $rootScope.values = [ {value: 10}, {value: 25}, {value: 50} ]
 )
 
-controllers.controller('createCodeReviewCtrl', ($scope, $rootScope, $modalInstance, $modal, ReviewRequest) ->
-  $scope.codeReview = {}
-  $scope.reviewRequests = []
-
-  setAcceptStatus = () ->
-    $scope.accepted = ReviewRequest.accepted
-  setAcceptStatus()
-
-  $scope.createReviewRequest = () ->
-    ReviewRequest.create($scope.codeReview).then (newReviewRequest) ->
-      $rootScope.$broadcast 'review-request-created'
-      setAcceptStatus()
-      $modalInstance.dismiss('cancel');
-
-  $scope.cancel = () ->
-    $modalInstance.dismiss('cancel');
-)
-
-controllers.controller('requestCodeReview', ($scope, $rootScope, $modal, User) ->
-  $scope.requestCodeReview = () ->
-    if $rootScope.authorizedUser == true
-      modalInstance = $modal.open(
-        templateUrl: 'requestCodeReview.html'
-        controller: 'createCodeReviewCtrl'
-      )
-    else
-      modalInstance = $modal.open(
-        templateUrl: 'pleaseLogin.html'
-        controller: 'genericModalCtrl'
-      )
-)
-
-controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest) ->
-  $scope.reviewRequest = {}
+controllers.controller('codeReviewCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest, $sanitize) ->
+  marked.setOptions(gfm: true)
   $scope.showDetail = false
-  $scope.hasOffered = false
-  $scope.ownedByCurrentUser = false
+  $scope.shouldHideEdit = true
 
-  ownedByCurrentUser = () ->
-    ReviewRequest.ownedByCurrentUser($attrs.reviewRequestId).then (response) ->
-      $scope.ownedByCurrentUser = response.owned_by
+  renderHtml = () ->
+    $scope.codeReviewHtml = marked($scope.review.detail)
+  renderHtml()
 
-  $scope.$on 'authorized-user', () ->
-    ownedByCurrentUser()
+  $scope.$on 'render-html-from-detail', () ->
+    renderHtml()
 
   setShowDetail = () ->
     if $location.absUrl().match /code-reviews/
       $scope.showDetail = true
   setShowDetail()
 
-  $scope.$on 'review-offer-created', () ->
-    setHasOffered()
-
   $scope.toggleDetail = () ->
     $scope.showDetail = ! $scope.showDetail
 
-  setHasOffered = () ->
-    ReviewRequest.userHasOffered($attrs.reviewRequestId).then (response) ->
-      $scope.hasOffered = response.has_offered
-
-  setHasOffered()
+  $scope.editReviewRequest = () ->
+    console.log $scope.waffles
+    modalInstance = $modal.open(
+      templateUrl: 'editCodeReview.html'
+      controller: 'editCodeReviewModal'
+      size: 'md'
+      resolve:
+        codeReview: () ->
+          $scope.review
+    )
 
   $scope.confirmReviewOffer = (modalPurpose, reviewRequestId, size) ->
     if $rootScope.authorizedUser == true
@@ -91,9 +60,55 @@ controllers.controller('reviewRequestCtrl', ($scope, $rootScope, $modal, $locati
       )
 )
 
-controllers.controller('offerCodeReviewCtrl', ($rootScope, $scope, $modalInstance, reviewRequestId, Offer) ->
+controllers.controller('createCodeReviewModal', ($scope, $rootScope, $modalInstance, $modal, ReviewRequest) ->
+  $scope.codeReview = {}
+  $scope.values = $rootScope.values 
+  $scope.codeReview.value = $scope.values[0]
+
+  $scope.createReviewRequest = () ->
+    ReviewRequest.create($scope.codeReview).then () ->
+      $rootScope.$broadcast 'render-html-from-detail'
+      $modalInstance.dismiss('cancel');
+
   $scope.cancel = () ->
     $modalInstance.dismiss('cancel');
+)
+
+controllers.controller('createCodeReview', ($scope, $rootScope, $modal, User) ->
+  $scope.requestCodeReview = () ->
+    if $rootScope.authorizedUser == true
+      modalInstance = $modal.open(
+        templateUrl: 'requestCodeReview.html'
+        controller: 'createCodeReviewModal'
+      )
+    else
+      modalInstance = $modal.open(
+        templateUrl: 'pleaseLogin.html'
+        controller: 'genericModalCtrl'
+      )
+)
+
+
+controllers.controller('editCodeReviewModal', ($scope, $rootScope, $modalInstance, User, codeReview, ReviewRequest) -> 
+  $scope.codeReview = codeReview
+  $scope.values = $rootScope.values 
+
+  $scope.values.forEach (ele, i) ->
+    if ele.value == codeReview.value / 100
+      $scope.codeReview.value = $scope.values[i].value
+
+  $scope.editReviewRequest = () ->
+    ReviewRequest.update($scope.codeReview).then () ->
+      $rootScope.$broadcast 'render-html-from-detail'
+      $modalInstance.dismiss('cancel')
+
+  $scope.cancel = () ->
+    $modalInstance.dismiss('cancel')
+)
+
+controllers.controller('offerCodeReviewCtrl', ($rootScope, $scope, $modalInstance, reviewRequestId, Offer) ->
+  $scope.cancel = () ->
+    $modalInstance.dismiss('cancel')
 
   setDisplayStatus = () ->
     $scope.display_status = Offer.display_status
