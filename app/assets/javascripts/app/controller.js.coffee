@@ -11,7 +11,7 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, Revie
   $rootScope.values = [ {value: 10}, {value: 25}, {value: 50} ]
 )
 
-controllers.controller('codeReviewCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest, $sanitize) ->
+controllers.controller('codeReviewsCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest, $sanitize) ->
   marked.setOptions(gfm: true)
   $scope.showDetail = false
   $scope.shouldHideOwnerTools = true
@@ -69,6 +69,67 @@ controllers.controller('codeReviewCtrl', ($scope, $rootScope, $modal, $location,
 
 )
 
+
+controllers.controller('showCodeReview', ($routeParams, $scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest, $sanitize) ->
+  ReviewRequest.get($attrs.reviewRequestId).then (response) ->
+    console.log response.data.codeReview
+    $scope.codeReview = response.data.codeReview
+  marked.setOptions(gfm: true)
+  $scope.showDetail = false
+  $scope.shouldHideOwnerTools = true
+
+  # renderHtml = () ->
+  #   $scope.codeReviewHtml = marked($scope.review.detail)
+  # renderHtml()
+
+  # $scope.$on 'render-html-from-detail', () ->
+  #   renderHtml()
+
+  # setShowDetail = () ->
+  #   if $location.absUrl().match /code-reviews/
+  #     $scope.showDetail = true
+  # setShowDetail()
+
+  $scope.toggleDetail = () ->
+    $scope.showDetail = ! $scope.showDetail
+
+  $scope.editReviewRequest = () ->
+    modalInstance = $modal.open(
+      templateUrl: 'editCodeReview.html'
+      controller: 'editCodeReviewModal'
+      size: 'md'
+      resolve:
+        codeReview: () ->
+          $scope.codeReview
+    )
+
+  $scope.confirmReviewOffer = () ->
+    if $rootScope.authorizedUser == true
+      modalInstance = $modal.open(
+        templateUrl: 'submitOffer.html'
+        controller: 'offerCodeReviewModal'
+        size: 'md'
+        resolve:
+          codeReview: () ->
+            $scope.codeReview
+      )
+    else
+      modalInstance = $modal.open(
+        templateUrl: 'pleaseLogin.html'
+        controller: 'genericModalCtrl'
+      )
+
+  # $scope.showDeleteModal = () ->
+  #   modalInstance = $modal.open(
+  #     templateUrl: 'deleteCodeReview.html'
+  #     controller: 'deleteCodeReviewModal'
+  #     size: 'md'
+  #     resolve:
+  #       codeReview: () ->
+  #         $scope.review
+  #   )
+
+)
 controllers.controller('deleteCodeReviewModal', ($scope, $rootScope, $modalInstance, $modal, ReviewRequest, codeReview) ->
   $scope.delete = () ->
     ReviewRequest.delete(codeReview).then (response) ->

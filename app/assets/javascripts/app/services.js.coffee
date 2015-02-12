@@ -25,6 +25,12 @@ angular.module('App.services', [] )
           url: '/api/reviews.json'
         .then (response) =>
           @allCodeReviews = response.data
+      get: (id) ->
+        $http
+          method: 'get'
+          url: "/api/review.json?id=#{id}"
+        .then (response) ->
+          return response
       userHasOffered: (reviewRequestId) ->
         $http
           method: 'get' 
