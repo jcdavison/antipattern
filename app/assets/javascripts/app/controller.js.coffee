@@ -23,11 +23,6 @@ controllers.controller('codeReviewsCtrl', ($scope, $rootScope, $modal, $location
   $scope.$on 'render-html-from-detail', () ->
     renderHtml()
 
-  setShowDetail = () ->
-    if $location.absUrl().match /code-reviews/
-      $scope.showDetail = true
-  setShowDetail()
-
   $scope.toggleDetail = () ->
     $scope.showDetail = ! $scope.showDetail
 
@@ -83,11 +78,6 @@ controllers.controller('showCodeReview', ($routeParams, $scope, $rootScope, $mod
 
   $scope.$on 'render-html-from-detail', () ->
     renderHtml()
-
-  setShowDetail = () ->
-    if $location.absUrl().match /code-reviews/
-      $scope.showDetail = true
-  setShowDetail()
 
   $scope.toggleDetail = () ->
     $scope.showDetail = ! $scope.showDetail
