@@ -1,6 +1,11 @@
 class Api::OffersController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, expcept: [:index]
   respond_to :json
+
+  def index
+    @offers = Offer.where user_id: params[:user_id], review_request_id: params[:code_review_id]
+    render 'api/offers/index'
+  end
 
   def decision_registered
     offer = Offer.find_by(id: params[:id])

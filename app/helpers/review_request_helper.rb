@@ -4,6 +4,14 @@ module ReviewRequestHelper
   end
 
   def is_owner_of? args
-    args[:current_user] ? args[:current_user].id == args[:review_request].user.id : false
+    current_user.id == args[:review_request].user.id
+  end
+
+  def has_offered? args
+    args[:review_request].offers.any? { |offer| offer.user_id == current_user.id }
+  end
+
+  def owned_by_current_user args
+    args[:offers].select { |offer| offer.user_id == current_user.id }
   end
 end

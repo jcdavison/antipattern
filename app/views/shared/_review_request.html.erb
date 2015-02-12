@@ -16,8 +16,7 @@
   </div>
 
   <span class='request-actions'>
-    <div class='request-detail' ng-show='showDetail'>
-      <%= markdown_to_html review.detail %>
+    <div class='request-detail' ng-show='showDetail' ng-bind-html='codeReviewHtml'>
     </div>
     <div class="request-controls">
 

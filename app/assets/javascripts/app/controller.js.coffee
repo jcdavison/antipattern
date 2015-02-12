@@ -74,21 +74,21 @@ controllers.controller('showCodeReview', ($routeParams, $scope, $rootScope, $mod
   ReviewRequest.get($attrs.reviewRequestId).then (response) ->
     console.log response.data.codeReview
     $scope.codeReview = response.data.codeReview
+    renderHtml()
   marked.setOptions(gfm: true)
   $scope.showDetail = false
   $scope.shouldHideOwnerTools = true
 
-  # renderHtml = () ->
-  #   $scope.codeReviewHtml = marked($scope.review.detail)
-  # renderHtml()
+  renderHtml = () ->
+    $scope.codeReviewHtml = marked($scope.codeReview.detail)
 
-  # $scope.$on 'render-html-from-detail', () ->
-  #   renderHtml()
+  $scope.$on 'render-html-from-detail', () ->
+    renderHtml()
 
-  # setShowDetail = () ->
-  #   if $location.absUrl().match /code-reviews/
-  #     $scope.showDetail = true
-  # setShowDetail()
+  setShowDetail = () ->
+    if $location.absUrl().match /code-reviews/
+      $scope.showDetail = true
+  setShowDetail()
 
   $scope.toggleDetail = () ->
     $scope.showDetail = ! $scope.showDetail

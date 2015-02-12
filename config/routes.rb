@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     post 'offer_decisions', to: 'offers#update'
     get 'reviews', to: 'reviews#index'
     get 'review', to: 'reviews#show'
+    get 'offers', to: 'offers#index'
     post 'reviews', to: 'reviews#create'
     put 'reviews', to: 'reviews#update'
     delete 'reviews/:id', to: 'reviews#destroy'

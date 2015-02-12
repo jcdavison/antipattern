@@ -77,6 +77,12 @@ angular.module('App.services', [] )
 
   .factory 'Offer', ($q, $http) ->
     Offer = 
+      getUsers: (codeReviewId, userId) ->
+        $http
+          method: 'get' 
+          url: "/api/offers.json?code_review_id=#{codeReviewId}&user_id=#{userId}"
+        .then (response) ->
+          return response
       submit: (reviewRequestId) ->
         data = 
           reviewRequestId: reviewRequestId
