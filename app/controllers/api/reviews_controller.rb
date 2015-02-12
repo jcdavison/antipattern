@@ -1,10 +1,15 @@
 class Api::ReviewsController < ApplicationController
-  before_filter :authenticate_user!, except: [:index]
+  before_filter :authenticate_user!, except: [:index, :show]
   respond_to :json
 
   def index
     @code_reviews = ReviewRequest.all_active
     render 'api/reviews/reviews'
+  end
+
+  def show
+    @code_review = ReviewRequest.find(params[:id])
+    render 'api/reviews/show'
   end
 
   def create

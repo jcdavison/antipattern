@@ -1,12 +1,12 @@
 <span ng-repeat="review in allCodeReviews">
   <span hideifdeleted="{{review.id}}">
-    <div ng-controller='codeReviewCtrl'>
+    <div ng-controller='codeReviewsCtrl'>
       <div class="review-request" >
 
         <div class="request-summary clearfix">
           <div class="row">
             <div class='col-sm-12'>
-              <span class='title pull-right'>{{review.title}}</span> 
+              <span class='title pull-right'><a href="/code-reviews/{{review.id}}">{{review.title}}</a></span> 
             </div>
           </div>
         </div>
@@ -30,7 +30,7 @@
               </span>
             </button>
 
-            <span hideifoffered reviewid="{{review.id}}" >
+            <span hideifoffered reviewid="{{review.id}}">
               <button class='btn btn-default tools' ng-click="confirmReviewOffer()" ng-class='{disabled: hasOffered , summary: !hasOffered}' hideifowner="{{review.id}}">
                 <span>
                   Offer Code Review

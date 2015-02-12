@@ -7,8 +7,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     post 'offers', to: 'offers#create'
-    post 'offer_decisions', to: 'offers#update'
     get 'reviews', to: 'reviews#index'
+    get 'review', to: 'reviews#show'
+    get 'offers', to: 'offers#index'
+    put 'offers', to: 'offers#update'
+    post 'offers/deliver', to: 'offers#deliver'
     post 'reviews', to: 'reviews#create'
     put 'reviews', to: 'reviews#update'
     delete 'reviews/:id', to: 'reviews#destroy'

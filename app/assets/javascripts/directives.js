@@ -90,3 +90,18 @@ directives.directive('hideifdeleted', [ 'ReviewRequest', function(ReviewRequest)
     }
   }
 }]);
+
+directives.directive('getoffers', [ 'Offer', function(Offer) {
+  return {
+    restrict: 'A',
+    scope: {
+      getowneroffers: '@'
+    },
+    link: function ($scope, element, $attrs) {
+      Offer.getSpecified($attrs.codeReviewId, $attrs.userId).then (function (response) {
+          Offer.userOffers = response.data
+          $scope.$parent.userOffers = Offer.userOffers
+        });
+      }
+    }
+}]);

@@ -1,0 +1,68 @@
+<div class='row'>
+  <div class='col-sm-10 col-sm-offset-2'>
+
+    <div class='row'>
+      <div class='col-sm-10 border-bottom no-left-padding'>
+        <% if is_owner_of? code_review %>
+          <h3>Offers to Review Your Code</h3>
+        <% else %>
+          <h3>Offer's You've Made.</h3>
+        <% end %>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='col-sm-10 text-right no-left-padding no-right-padding' >
+
+        <% if is_owner_of? code_review %>
+          <span getoffers code-review-id="<%= code_review.id %>" user-id="nil">
+        <% else %>
+          <span getoffers code-review-id="<%= code_review.id %>" user-id="<%= current_user.id %>">
+        <% end %>
+
+        <span ng-repeat="offer in userOffers">
+        <span class="text-right" ng-controller='offerCtrl' >
+          <div class="offer" setOfferId offer-ID="{{offer.id}}">
+          <span class="medium-small blue padded"><a href="{{offer.user.profile}}"><img ng-src="{{offer.user.profile_pic}}" class="profile"></a>
+            </span>  
+            <% if is_owner_of? code_review %>
+              <span>
+                <button class='btn btn-default disabled' ng-disabled='true'>{{offer.state}}</button>
+              </span>
+              <span ng-show="offer.state == 'presented'" ng-click="updateOfferState('accept')">
+                <button class='btn btn-default accept'>accept</button>
+              </span>
+              <span ng-show="offer.state == 'accepted'">
+                <button class='btn btn-default disabled' ng-disabled='true'>accepted</button>
+              </span>
+              <span ng-show="offer.state == 'delivered'">
+                <button class='btn btn-default accept' ng-click="updateOfferState('pay')">accept and pay</button>
+              </span>
+              <span ng-show="offer.state == 'delivered'">
+                <button class='btn btn-default delete' ng-click="updateOfferState('dispute')">reject and disupte</button>
+              </span>
+            <% else %>
+              <span>
+                <button class='btn btn-default disabled' ng-disabled='true'>{{offer.state}}</button>
+              </span>
+              <span ng-show="offer.state == 'accepted'">
+                <button class='btn btn-default accept' ng-click="updateOfferState('deliver')">deliver</button>
+              </span>
+              <%# <span ng-show="offer.state == 'delivered'"> %>
+              <%#   <button class='btn btn-default accept' ng-click="acceptCodeReview()">accept and pay</button> %>
+              <%# </span> %>
+              <%# <span ng-show="offer.state == 'delivered'"> %>
+              <%#   <button class='btn btn-default delete' ng-click="rejectCodeReview()">reject and disupte</button> %>
+              <%# </span> %>
+            <% end %>
+
+            <span class="offer-actions">
+            </span>
+
+          </div>
+        </span>
+
+      </div>
+    </div>
+  </div>
+</div>

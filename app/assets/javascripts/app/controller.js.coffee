@@ -1,6 +1,6 @@
 controllers = angular.module('App.controllers', [])
 
-controllers.controller('appController', ($scope, $rootScope, $modal, User, ReviewRequest) ->
+controllers.controller('appController', ($scope, $rootScope, $modal, User, ReviewRequest, Offer, $attrs) ->
   User.isAuthorized().then (response) ->
     if response.success
       $rootScope.$broadcast 'authorized-user'
@@ -11,7 +11,7 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, Revie
   $rootScope.values = [ {value: 10}, {value: 25}, {value: 50} ]
 )
 
-controllers.controller('codeReviewCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest, $sanitize) ->
+controllers.controller('codeReviewsCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest, $sanitize) ->
   marked.setOptions(gfm: true)
   $scope.showDetail = false
   $scope.shouldHideOwnerTools = true
@@ -22,11 +22,6 @@ controllers.controller('codeReviewCtrl', ($scope, $rootScope, $modal, $location,
 
   $scope.$on 'render-html-from-detail', () ->
     renderHtml()
-
-  setShowDetail = () ->
-    if $location.absUrl().match /code-reviews/
-      $scope.showDetail = true
-  setShowDetail()
 
   $scope.toggleDetail = () ->
     $scope.showDetail = ! $scope.showDetail
@@ -69,6 +64,61 @@ controllers.controller('codeReviewCtrl', ($scope, $rootScope, $modal, $location,
 
 )
 
+
+controllers.controller('showCodeReview', ($routeParams, $scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest, $sanitize) ->
+  ReviewRequest.get($attrs.reviewRequestId).then (response) ->
+    $scope.codeReview = response.data.codeReview
+    renderHtml()
+  marked.setOptions(gfm: true)
+  $scope.showDetail = false
+  $scope.shouldHideOwnerTools = true
+
+  renderHtml = () ->
+    $scope.codeReviewHtml = marked($scope.codeReview.detail)
+
+  $scope.$on 'render-html-from-detail', () ->
+    renderHtml()
+
+  $scope.toggleDetail = () ->
+    $scope.showDetail = ! $scope.showDetail
+
+  $scope.editReviewRequest = () ->
+    modalInstance = $modal.open(
+      templateUrl: 'editCodeReview.html'
+      controller: 'editCodeReviewModal'
+      size: 'md'
+      resolve:
+        codeReview: () ->
+          $scope.codeReview
+    )
+
+  $scope.confirmReviewOffer = () ->
+    if $rootScope.authorizedUser == true
+      modalInstance = $modal.open(
+        templateUrl: 'submitOffer.html'
+        controller: 'offerCodeReviewModal'
+        size: 'md'
+        resolve:
+          codeReview: () ->
+            $scope.codeReview
+      )
+    else
+      modalInstance = $modal.open(
+        templateUrl: 'pleaseLogin.html'
+        controller: 'genericModalCtrl'
+      )
+
+  $scope.showDeleteModal = () ->
+    modalInstance = $modal.open(
+      templateUrl: 'deleteCodeReview.html'
+      controller: 'deleteCodeReviewModal'
+      size: 'md'
+      resolve:
+        codeReview: () ->
+          $scope.review
+    )
+
+)
 controllers.controller('deleteCodeReviewModal', ($scope, $rootScope, $modalInstance, $modal, ReviewRequest, codeReview) ->
   $scope.delete = () ->
     ReviewRequest.delete(codeReview).then (response) ->
@@ -142,9 +192,10 @@ controllers.controller('offerCodeReviewModal', ($rootScope, $scope, $modalInstan
 
 controllers.controller('offerCtrl', ($rootScope, $scope, Offer, $attrs) ->
   $scope.acceptStatus = null
-  $scope.registerDecision = (decision, offerId) ->
-    Offer.registerDecision( decision: decision, offerId: offerId).then (response) ->
-      setAcceptStatus()
+
+  $scope.updateOfferState = (newState) ->
+    Offer.updateOfferState( newState: newState, offer: $scope.offer).then (response) ->
+      $scope.offer = response.data.offer
 
   setAcceptStatus = () ->
     Offer.checkStatus($attrs.offerId).then (response) ->
@@ -152,6 +203,10 @@ controllers.controller('offerCtrl', ($rootScope, $scope, Offer, $attrs) ->
 
   $scope.$on 'authorized-user', () ->
     setAcceptStatus()
+
+  $scope.deliverCodeReview = () ->
+    Offer.deliver($scope.offer).then (response) ->
+      $scope.offer = response.data.offer
 )
 
 controllers.controller('genericModalCtrl', ($scope, $modalInstance) ->
