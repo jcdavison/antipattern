@@ -77,7 +77,7 @@ angular.module('App.services', [] )
 
   .factory 'Offer', ($q, $http) ->
     Offer = 
-      getUsers: (codeReviewId, userId) ->
+      getSpecified: (codeReviewId, userId) ->
         $http
           method: 'get' 
           url: "/api/offers.json?code_review_id=#{codeReviewId}&user_id=#{userId}"
@@ -103,18 +103,21 @@ angular.module('App.services', [] )
         .error (response) =>
           deferred.reject(response)
         return deferred.promise
-      registerDecision: (args) ->
-        deferred = $q.defer()
+      updateOfferState: (args) ->
         data = 
-          id: args.offerId
-          decision: args.decision
+          offer: args.offer
+          new_state: args.newState
+        $http
+          method: 'put'
+          url: '/api/offers.json'
+          data: data
+        .then (response) ->
+          return response
+      deliver: (offer) ->
         $http
           method: 'post'
-          url: '/api/offer_decisions'
-          data: data
-        .success (response) =>
-          deferred.resolve(response)
-        .error (response) =>
-          deferred.reject(response)
-        return deferred.promise
+          url: '/api/offers/deliver.json'
+          data: offer
+        .then (response) ->
+          return response
     return Offer

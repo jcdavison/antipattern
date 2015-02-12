@@ -25,6 +25,18 @@ class Offer < ActiveRecord::Base
       end
       transitions from: :presented, to: :rejected
     end
+
+    event :deliver do
+      transitions from: :accepted, to: :delivered
+    end
+
+    event :pay do
+      transitions from: :delivered, to: :paid
+    end
+
+    event :dispute do
+      transitions from: :delivered, to: :disputed
+    end
   end
 
   def notify_acceptance
@@ -48,9 +60,12 @@ class Offer < ActiveRecord::Base
     OfferMailer.notify_of_offer(members).deliver
   end
 
-  def register_decision decision
-    return self.accept! if decision == 'accept'
-    return self.reject! if decision == 'reject'
+  def set_state! new_state
+    return self.accept! if new_state == 'accept'
+    return self.reject! if new_state == 'reject'
+    return self.deliver! if new_state == 'deliver'
+    return self.pay! if new_state == 'pay'
+    return self.dispute! if new_state == 'dispute'
   end
 
 end

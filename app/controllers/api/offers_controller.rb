@@ -3,8 +3,18 @@ class Api::OffersController < ApplicationController
   respond_to :json
 
   def index
-    @offers = Offer.where user_id: params[:user_id], review_request_id: params[:code_review_id]
+    attributes = {user_id: params[:user_id], review_request_id: params[:code_review_id]}.delete_if {|k,v| v == 'nil'}
+    @offers = Offer.where attributes
     render 'api/offers/index'
+  end
+
+  def deliver
+    @offer = Offer.find_by user_id: current_user.id, review_request_id: params[:review_request_id]
+    if @offer.deliver!
+      render 'api/offers/show'
+    else
+      head :forbidden
+    end
   end
 
   def decision_registered
@@ -24,10 +34,10 @@ class Api::OffersController < ApplicationController
   end
 
   def update
-    offer = Offer.find_by_id(params[:id])
-    if offer
-      if offer.register_decision params[:decision]
-        render json: { offer_id: offer.id, accepted: offer.accepted? }, status: 200
+    @offer = Offer.find_by_id(params[:offer][:id])
+    if @offer
+      if @offer.set_state! params[:new_state]
+        render 'api/offers/show'
       else
         head :forbidden
       end

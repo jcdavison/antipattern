@@ -1,5 +1,6 @@
 json.array! @offers do |offer|
-  json.(offer, :review_request_id, :aasm_state)
+  json.(offer, :id, :review_request_id)
+  json.state offer.aasm_state
   json.user do
     json.id offer.user.id
     json.name offer.user.name

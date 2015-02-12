@@ -9,11 +9,5 @@
     </div>
 </div>
 <% if current_user %>
-  <% if is_owner_of?(review_request: @review_request) %>
-    <%= render partial: 'shared/review_owner', locals: {offers: @offers} %>
-  <% end %>
-
-  <% if has_offered?(review_request: @review_request) %>
-    <%= render partial: 'shared/ng_offer_owner', locals: {code_review: @review_request} %>
-  <% end %>
+  <%= render partial: 'shared/ng_offer_owner', locals: {code_review: @review_request} %>
 <% end %>

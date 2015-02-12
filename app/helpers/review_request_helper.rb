@@ -3,8 +3,8 @@ module ReviewRequestHelper
     Redcarpet::Markdown.new(Redcarpet::Render::HTML, fenced_code_blocks: true).render(content).html_safe
   end
 
-  def is_owner_of? args
-    current_user.id == args[:review_request].user.id
+  def is_owner_of? code_review
+    current_user.id == code_review.user.id
   end
 
   def has_offered? args
