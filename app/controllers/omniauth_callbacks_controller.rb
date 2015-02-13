@@ -26,4 +26,15 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       finish_signup_path(resource)
     end
   end
+
+  def venmo
+    VenmoPmt.set_on_omniauth_callback provider, current_user
+    redirect_to profile_path(current_user)
+  end
+
+  private
+  def provider
+    request.env['omniauth.auth']
+  end
+
 end

@@ -14,6 +14,7 @@ gem 'devise', '~> 3.4.1'
 gem 'devise-async'
 gem 'omniauth'
 gem 'omniauth-github', '~> 1.1.2'
+gem 'omniauth-venmo'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.1.0'

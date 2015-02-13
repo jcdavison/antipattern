@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
 
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
+  post 'users/auth/venmo/callback' => 'omniauth_callbacks#venmo'
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
   get '/code-review-offers/:id', to: 'review_requests#show', as: 'code_review_offer'
   get '/code-reviews/:id', to: 'review_requests#show', as: 'code_review'
+  get '/profiles/:id', to: 'users#show', as: 'profile'
 
   namespace :api do
     post 'offers', to: 'offers#create'

@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :identities, dependent: :destroy
   has_many :review_requests, dependent: :destroy
   has_many :offers, dependent: :destroy
+  has_many :venmo_pmts
 
 
   def self.find_for_oauth(auth, signed_in_resource = nil)
@@ -46,5 +47,9 @@ class User < ActiveRecord::Base
 
   def email_verified?
     self.email && self.email !~ TEMP_EMAIL_REGEX
+  end
+
+  def authorized_venmo?
+    ! venmo_pmts.find_by(user_id: id).nil?
   end
 end
