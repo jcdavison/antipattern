@@ -27,37 +27,56 @@ class Offer < ActiveRecord::Base
     end
 
     event :deliver do
+      before do 
+        notify_delivery
+      end
       transitions from: :accepted, to: :delivered
     end
 
     event :pay do
+      before do 
+        notify_paid
+      end
       transitions from: :delivered, to: :paid
     end
 
     event :dispute do
+      before do 
+        notify_dispute
+      end
       transitions from: :delivered, to: :disputed
     end
   end
 
-  def notify_acceptance
+  def recipients
     offer_owner = user
     review_request_owner = review_request.user
-    recipients = {offer_owner: offer_owner, review_request_owner: review_request_owner}
+    code_review = review_request
+    {offer_owner: offer_owner, review_request_owner: review_request_owner, code_review: code_review, offer: self}
+  end
+
+  def notify_delivery
+    OfferMailer.notify_delivery(recipients).deliver
+  end
+
+  def notify_dispute
+    OfferMailer.notify_dispute(recipients).deliver
+  end
+
+  def notify_paid
+    OfferMailer.notify_pay(recipients).deliver
+  end
+
+  def notify_acceptance
     OfferMailer.notify_acceptance(recipients).deliver
   end
 
   def notify_rejection
-    offer_owner = user
-    review_request_owner = review_request.user
-    recipients = {offer_owner: offer_owner, review_request_owner: review_request_owner}
     OfferMailer.notify_rejection(recipients).deliver
   end
 
   def notify_of_offer
-    review_request_owner = User.find ReviewRequest.find(review_request_id).user_id
-    offer_owner = User.find user_id
-    members = {offer_owner: offer_owner, review_request_owner: review_request_owner, review_request_id: review_request_id}
-    OfferMailer.notify_of_offer(members).deliver
+    OfferMailer.notify_of_offer(recipients).deliver
   end
 
   def set_state! new_state
