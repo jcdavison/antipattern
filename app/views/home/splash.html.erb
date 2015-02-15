@@ -1,14 +1,35 @@
-<div class="centered top-margined">
-  <span class='medium grey'>
-    A Community of Developers dedicated to Code Review.
-  </span>
+<div class="container">
+  <div class="row">
+    <div class='col-sm-12'>
+      <div class="centered title">
+        <span class='medium light-grey'>
+          A Community of Developers dedicated to Code Review.
+        </span>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="home-hero centered">
   <div class="home-hero-code-review">
   </div>
 </div>
-<div class="centered top-margined">
-  <span class='medium grey'>
-    Every Code Review is an opportunity to Learn and Teach.
-  </span>
+
+<div class="container">
+
+  <div class="row">
+    <div class='col-sm-12 centered'>
+        <%= link_to 'JOIN', user_omniauth_authorize_path(:github), class: 'medium join' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class='col-sm-12'>
+      <div class="centered title">
+        <span class='medium grey'>
+          Every Code Review is an opportunity to Learn and Teach.
+        </span>
+      </div>
+    </div>
+  </div>
+
 </div>
