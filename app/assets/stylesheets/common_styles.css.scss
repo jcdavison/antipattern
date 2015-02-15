@@ -149,36 +149,12 @@ textarea.error, input.error {
   border: 1px solid $red;
 }
 
-#hero {
-  position: relative;
-  overflow: hidden;
-  background-size: 100%;
-}
-
-.home-content {
-  position: relative;
-}
-
 .home-hero {
   position: relative;
   overflow: hidden;
   background: white url('hero.jpg') no-repeat center center;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  -webkit-background-size: cover;
   background-size: cover;
   margin: 1em 0;
-}
-
-.home-hero-title {
-  background-color: black;
-  border-radius: 2px;
-  color: white;
-  font-size: 2.8em;
-  padding-right: .5em;
-  text-align: right;
-  display: inline-block;
-  vertical-align: top;
 }
 
 .home-hero-code-review {
@@ -186,75 +162,10 @@ textarea.error, input.error {
   overflow: hidden;
   display: inline-block;
   vertical-align: top;
-}
-
-.home-sign-in {
-  background-color: black;
-  border-radius: 2px;
-  line-height: 1.6;
-  position: relative;
-  padding: 0 .5em;
-  display: inline-block;
-  vertical-align: top;
-  a {
-    color: white;
-  }
-  a:hover {
-    text-decoration: none;
-    color: $gold;
-  }
-}
-
-@media (min-width: 1770px) {
-  .home-hero {
-      -webkit-background-size: 100% !important;
-      -moz-background-size: 100% !important;
-      -ms-background-size: 100% !important;
-      -o-background-size: 100% !important;
-      background-size: 100% !important
-  }
-
-  .home-hero-title {
-    width: 45%;
-    margin-top: 13.6em;
-    line-height: 2.3;
-  }
-
-  .home-hero-code-review {
-    background: white url('angular-review.png') no-repeat center center;
-    width: 940px;
-    height: 445px;
-    margin: 2em 0;
-  }
-
-  .home-sign-in {
-    margin-left: 26.5em;
-    margin-top: 1em;
-    line-height: 2.3;
-    font-size: 3em;
-  }
-}
-
-
-@media (max-width: 1366px) {
-  .home-hero-title {
-    width: 49%;
-    margin-top: 10.6em;
-    line-height: 2.1;
-  }
-  .home-hero-slider {
-    height: 515px;
-    width: 490px;
-    margin-top: 2em;
-    margin-left: 5em;
-    background: white url('codereview2.jpg') no-repeat center center;
-  }
-  .home-sign-in {
-    line-height: 2.1;
-    margin-left: 21em;
-    margin-top: .35em;
-    font-size: 2.8em;
-  }
+  background: white url('angular-review.png') no-repeat center center;
+  width: 940px;
+  height: 445px;
+  margin: 2em 0;
 }
 
 .user-pic {
