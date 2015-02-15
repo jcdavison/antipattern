@@ -31,7 +31,7 @@ class OfferMailer < ActionMailer::Base
     @offer_owner = recipients[:offer_owner]
     @review_request_owner = recipients[:review_request_owner]
     @code_review = recipients[:code_review]
-    to = [ @offer_owner.email, @review_request_owner.email ]
+    to = @review_request_owner.email
     subject = 'Antipattern.io Code Review delivery'
     mail to: to, from: FROM, subject: subject
   end
