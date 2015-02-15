@@ -1,0 +1,14 @@
+<html>
+  <body>
+    <h3>A Code Review has been delivered,</h3>
+
+    <p><%= @offer_owner.name %>, has delivered your Code Review.
+
+    <p>Please visit <%= link_to code_review_url(@code_review), code_review_url(@code_review) %> and click the 'Accept' button to confirm you accept the Code Review.</p> 
+
+    <p>Thanks,</p>
+
+    <p><a href="https://github.com/jcdavison">John Davison, Antipattern.io Founder</a></p>
+    <p><a href="mailto:jd@antipattern.io?subject=code review offer help">email antipattern.io support</a></p>
+  </body>
+</html>
