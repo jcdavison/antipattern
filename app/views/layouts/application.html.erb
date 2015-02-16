@@ -2,13 +2,13 @@
 <html lang="en" ng-app="App">
 <head>
   <title>Antipattern</title>
-  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= csrf_meta_tags %>
 </head>
 <body ng-controller="appController">
   <%= render 'shared/navigation' %>
   <%= yield %>
-  <div class="center-block centered">
+  <div class="centered top-margined">
     <a href="http://github.com/jcdavison" target="new">Antipattern.io Built by John Davison</a>
   </div>
   <%= render 'shared/modals/ng_modals' %>

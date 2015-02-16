@@ -1,14 +1,37 @@
-<div class='contain'>
-  <div class="contain-scroll">
-    <div class="home-hero">
-      <div class="home-hero-title">
-        A marketplace for Code Reviews.
+<div class="container">
+  <div class="row">
+    <div class='col-sm-12'>
+      <div class="centered splash">
+        <span class='medium light-grey'>
+          Every Code Review is an opportunity to Learn and Teach.
+        </span>
       </div>
-      <div class="home-hero-slider">
+    </div>
+  </div>
+</div>
+
+<div class="home-hero centered">
+  <div class="home-hero-code-review">
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class='col-sm-12'>
+      <div class="centered splash">
+        <span class='medium light-grey'>
+          We are a community optimized for Code Reviews.
+        </span>
       </div>
-      <div class="home-sign-in">
-        <%= link_to "Sign In with Github", user_omniauth_authorize_path(provider: :github) %>
-      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class='col-sm-12 centered footer-row'>
+        <%= link_to 'JOIN', user_omniauth_authorize_path(:github), class: 'medium join' %>
     </div>
   </div>
 </div>

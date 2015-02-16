@@ -7,6 +7,8 @@ $blue: hsl(210, 68%, 42%);
 $green: rgb(120, 151, 120);
 $light_green: rgba(120, 151, 120, 0.2);
 $light_grey: rgba(121, 121, 151, .5);
+$light_blue: hsla(210, 68%, 42%, .5);
+$very_light_grey: rgba(121, 121, 151, .3);
 $light_red: rgba(207, 78, 66, .5);
 $link_color: $green;
 $gold: #FEFE00;
@@ -19,7 +21,7 @@ $text-color: $grey;
 $link-hover-color: $grey;
 $font-size-small: 20px;
 
-button.btn-default.accept {
+button.btn-default.accept, {
   border-color: $green;
   background-color: $white;
   color: $green;
@@ -91,12 +93,29 @@ $font-family-base: "TitilliumWeb-Regular";
 // FONT
 // @import url(http://fonts.googleapis.com/css?family=Oxygen:400,700);
 
+a.join {
+  border: 1px solid $green;
+  border-radius: 1px;
+  color: $green;
+  padding: 4px 16px;
+  line-height: 1.8em;
+  &:hover {
+    text-decoration: none;
+    color: $white;
+    background-color: $green;
+  }
+}
+
 .top-margined {
   margin: 1em 0;
 }
 
 .light-grey {
   color: $light_grey;
+}
+
+.very-light-grey {
+  color: $very_light_grey;
 }
 
 .centered {
@@ -112,6 +131,10 @@ $font-family-base: "TitilliumWeb-Regular";
 
 .blue {
   color: $blue;
+}
+
+.light-blue {
+  color: $light_blue;
 }
 
 .medium {
@@ -145,133 +168,26 @@ html, body {
   border: 1px black solid;
 }
 
-.contain {
-  position: fixed;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 3;
-}
-
-.contain .contain-scroll {
-    position: relative;
-    height: 100%;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 50px
-}
-
 textarea.error, input.error {
   border: 1px solid $red;
-}
-
-#hero {
-  position: relative;
-  overflow: hidden;
-  background-size: 100%;
-}
-
-.home-content {
-  position: relative;
 }
 
 .home-hero {
   position: relative;
   overflow: hidden;
   background: white url('hero.jpg') no-repeat center center;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  -webkit-background-size: cover;
-  background-size: cover
+  background-size: cover;
 }
 
-.home-hero-title {
-  background-color: black;
-  border-radius: 2px;
-  color: white;
-  font-size: 2.8em;
-  padding-right: .5em;
-  text-align: right;
-  display: inline-block;
-  vertical-align: top;
-}
-
-.home-hero-slider {
+.home-hero-code-review {
   position: relative;
   overflow: hidden;
   display: inline-block;
   vertical-align: top;
-}
-
-.home-sign-in {
-  background-color: black;
-  border-radius: 2px;
-  line-height: 1.6;
-  position: relative;
-  padding: 0 .5em;
-  display: inline-block;
-  vertical-align: top;
-  a {
-    color: white;
-  }
-  a:hover {
-    text-decoration: none;
-    color: $gold;
-  }
-}
-
-@media (min-width: 1770px) {
-  .home-hero {
-      -webkit-background-size: 100% !important;
-      -moz-background-size: 100% !important;
-      -ms-background-size: 100% !important;
-      -o-background-size: 100% !important;
-      background-size: 100% !important
-  }
-
-  .home-hero-title {
-    width: 45%;
-    margin-top: 13.6em;
-    line-height: 2.3;
-  }
-
-  .home-hero-slider {
-    background: white url('codereview2-full.jpg') no-repeat center center;
-    height: 732px;
-    width: 700px;
-    margin-top: 4em;
-    margin-left: 5em;
-  }
-
-  .home-sign-in {
-    margin-left: 26.5em;
-    margin-top: 1em;
-    line-height: 2.3;
-    font-size: 3em;
-  }
-}
-
-
-@media (max-width: 1366px) {
-  .home-hero-title {
-    width: 49%;
-    margin-top: 10.6em;
-    line-height: 2.1;
-  }
-  .home-hero-slider {
-    height: 515px;
-    width: 490px;
-    margin-top: 2em;
-    margin-left: 5em;
-    background: white url('codereview2.jpg') no-repeat center center;
-  }
-  .home-sign-in {
-    line-height: 2.1;
-    margin-left: 21em;
-    margin-top: .35em;
-    font-size: 2.8em;
-  }
+  background: white url('angular-review.png') no-repeat center center;
+  width: 940px;
+  height: 445px;
+  margin: 2em 0;
 }
 
 .user-pic {
@@ -315,8 +231,9 @@ textarea.error, input.error {
   font-size: 1.4em;
 }
 
-.title {
-  font-size: 2.8em;
+.splash {
+  position: relative;
+  margin: 1em 0;
 }
 
 .octocat {
@@ -342,6 +259,7 @@ section.offer {
 .profile {
   height: 2.6em;
   border-radius: 5px;
+  border: 1px solid $grey;
 } 
 
 // Create Review
@@ -371,4 +289,10 @@ a.venmo {
 
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important;
+}
+
+// LAYOUT
+
+.footer-row {
+  margin-bottom: 2em;
 }
