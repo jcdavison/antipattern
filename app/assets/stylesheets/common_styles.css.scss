@@ -7,6 +7,7 @@ $blue: hsl(210, 68%, 42%);
 $green: rgb(120, 151, 120);
 $light_green: rgba(120, 151, 120, 0.2);
 $light_grey: rgba(121, 121, 151, .5);
+$light_blue: hsla(210, 68%, 42%, .5);
 $very_light_grey: rgba(121, 121, 151, .3);
 $light_red: rgba(207, 78, 66, .5);
 $link_color: $green;
@@ -97,7 +98,7 @@ a.join {
   border-radius: 1px;
   color: $green;
   padding: 4px 16px;
-  line-height: 3.5em;
+  line-height: 1.8em;
   &:hover {
     text-decoration: none;
     color: $white;
@@ -130,6 +131,10 @@ a.join {
 
 .blue {
   color: $blue;
+}
+
+.light-blue {
+  color: $light_blue;
 }
 
 .medium {
@@ -254,6 +259,7 @@ section.offer {
 .profile {
   height: 2.6em;
   border-radius: 5px;
+  border: 1px solid $grey;
 } 
 
 // Create Review
@@ -283,4 +289,10 @@ a.venmo {
 
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important;
+}
+
+// LAYOUT
+
+.footer-row {
+  margin-bottom: 2em;
 }
