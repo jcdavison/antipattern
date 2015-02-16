@@ -1,15 +1,16 @@
 <% if current_user %>
   <ul class="nav navbar-nav navbar-left">
-    <li><%= link_to "signed in as #{current_user.email}", profile_path(current_user), class: 'hover-blue' %></li>
     <li><%= link_to "PROFILE", profile_path(current_user), class: 'hover-blue' %></li>
+    <li><%= link_to "BLOG", 'http://blog.antipattern.io', class: 'hover-blue', target: 'new' %></li>
     <li><%= link_to 'SIGN OUT', destroy_user_session_path, method: :delete, class: 'hover-blue' %></li>
   </ul>
 <% else %>
   <ul class="nav navbar-nav navbar-left">
+    <li><%= link_to "BLOG", 'http://blog.antipattern.io', class: 'hover-blue', target: 'new' %></li>
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sign In<span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <%= link_to "Sign In with Github", user_omniauth_authorize_path(provider: :github) %>
+        <li><%= link_to "Sign In with Github", user_omniauth_authorize_path(provider: :github) %></li>
       </ul>
     </li>
   </ul>
