@@ -1,8 +1,8 @@
 <% if current_user %>
   <ul class="nav navbar-nav navbar-left">
-    <li><%= link_to "signed in as #{current_user.email}", profile_path(current_user) %></li>
-    <li><%= link_to "PROFILE", profile_path(current_user) %></li>
-    <li><%= link_to 'SIGN OUT', destroy_user_session_path, method: :delete %></li>
+    <li><%= link_to "signed in as #{current_user.email}", profile_path(current_user), class: 'hover-blue' %></li>
+    <li><%= link_to "PROFILE", profile_path(current_user), class: 'hover-blue' %></li>
+    <li><%= link_to 'SIGN OUT', destroy_user_session_path, method: :delete, class: 'hover-blue' %></li>
   </ul>
 <% else %>
   <ul class="nav navbar-nav navbar-left">
