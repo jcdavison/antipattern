@@ -233,7 +233,7 @@ textarea.error, input.error {
 
 .splash {
   position: relative;
-  margin: 1em 0;
+  margin: 2em 0;
 }
 
 .octocat {
@@ -261,6 +261,12 @@ section.offer {
   border-radius: 5px;
   border: 1px solid $grey;
 } 
+
+.product-display {
+  border: 1px solid $very-light-grey;
+  border-radius: 3px;
+  width: 950px;
+}
 
 // Create Review
 
