@@ -3,7 +3,7 @@
     <div class='col-sm-12'>
       <% if current_user.authorized_venmo? %>
         <div class='medium blue centered'> You have connected a VenMo account and your profile is complete.</div>
-        <div class="centered top-margined"><a href="/"><img src="http://cl.ly/image/2w0M2d0X3a2R/Image%202015-02-12%20at%205.58.50%20PM.png"></a></div>
+        <div class="centered top-margined"><a href="/"><%= image_tag 'launch.jpg' %></a></div>
       <% else %>
         <div class="small green">In order to participate in the marketplace, you need to connect a venmo account so you can pay and be paid.  We'll open this up to stripe and paypal integrations but for the immediate alpha phase, 'venmo is for prototyping'.</div>
         <div class="centered"><%= link_to 'authorize venmo', user_omniauth_authorize_path(:venmo), class: 'btn btn-success accept venmo' %></div>
