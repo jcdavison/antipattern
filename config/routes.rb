@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
 
-  match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
-  post 'users/auth/venmo/callback' => 'omniauth_callbacks#venmo'
-  devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
+  devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }, :skip => [:registrations, :sessions]
   get '/code-review-offers/:id', to: 'review_requests#show', as: 'code_review_offer'
   get '/code-reviews/:id', to: 'review_requests#show', as: 'code_review'
   get '/profiles/:id', to: 'users#show', as: 'profile'
@@ -23,6 +21,7 @@ Rails.application.routes.draw do
   end
 
   devise_scope :user do
+    delete '/users/sign_out', to: 'devise/sessions#destroy', as: 'destroy_user_session'
     get '/api/authorized_user' => 'users/sessions#authorized_user'
     get '/code-reviews', to: 'home#index'
 
