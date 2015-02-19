@@ -49,7 +49,4 @@ class User < ActiveRecord::Base
     self.email && self.email !~ TEMP_EMAIL_REGEX
   end
 
-  def authorized_venmo?
-    ! venmo_pmts.find_by(user_id: id).nil?
-  end
 end
