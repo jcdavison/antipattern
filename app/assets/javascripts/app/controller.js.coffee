@@ -11,6 +11,20 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, Revie
   $rootScope.values = [ {value: 10}, {value: 25}, {value: 50} ]
 )
 
+
+controllers.controller('userController', ($scope, $rootScope, $modal, User, ReviewRequest, Offer, $attrs) ->
+  $scope.cardDetails = {}
+  $scope.cardError = ""
+  $scope.conductStripeFlow = () ->
+    data = {number: $scope.cardDetails.number, cvc: $scope.cardDetails.cvc, exp_month: $scope.cardDetails.month, exp_year: $scope.cardDetails.year}
+    Stripe.card.createToken data ,  (status, response) ->  
+      console.log response
+      setErrorMessage(response.error) if status != 200
+  setErrorMessage = (error) ->
+    $scope.cardError = error.message
+    $scope.$digest()
+)
+
 controllers.controller('codeReviewsCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest, $sanitize) ->
   marked.setOptions(gfm: true)
   $scope.showDetail = false
