@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :review_requests, dependent: :destroy
   has_many :offers, dependent: :destroy
   has_many :venmo_pmts
+  has_one :wallet
 
 
   def self.find_for_oauth(auth, signed_in_resource = nil)
