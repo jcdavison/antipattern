@@ -1,10 +1,9 @@
 class Wallet < ActiveRecord::Base
   belongs_to :user
-  DESCRIPTION = "Antipattern.io Code Review Community Member"
 
   def set_stripe_customer_id
     begin
-      customer = Stripe::Customer.create(source: self.stripe_token, description: DESCRIPTION)
+      customer = Stripe::Customer.create(source: self.stripe_token, description: self.user.name)
       self.stripe_customer_id = customer.id
       self.save
     rescue => e

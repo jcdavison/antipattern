@@ -25,8 +25,10 @@ controllers.controller('userController', ($scope, $rootScope, $modal, User, Revi
 
   $scope.showForm = () ->
     $scope.hasToken = false
+    $scope.submitted = false
 
   $scope.conductStripeFlow = () ->
+    $scope.submitted = true
     data = 
       number: $scope.cardDetails.number 
       cvc: $scope.cardDetails.cvc 
