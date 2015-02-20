@@ -16,6 +16,9 @@ gem 'omniauth'
 gem 'omniauth-github', '~> 1.1.2'
 gem 'omniauth-venmo'
 
+#pmts
+gem 'stripe'
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.1.0'
   gem 'factory_girl_rails', '~> 4.5.0'

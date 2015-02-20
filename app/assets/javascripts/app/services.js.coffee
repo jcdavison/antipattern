@@ -12,8 +12,25 @@ angular.module('App.services', [] )
         .error (response) =>
           deferred.reject(response)
         return deferred.promise
-
     return User
+  
+  .factory 'Wallet', ($q, $http, $rootScope) ->
+    Wallet = 
+      setToken: (token) ->
+        $http
+          method: 'post' 
+          data: 
+            stripe_token: token
+          url: '/api/tokens'
+        .then (response) ->
+          return response
+      validCustomerId: () ->
+        $http
+          method: 'get'
+          url: '/api/tokens'
+        .then (response) ->
+          return response
+    return Wallet
 
   .factory 'ReviewRequest', ($q, $http) ->
     ReviewRequest = 

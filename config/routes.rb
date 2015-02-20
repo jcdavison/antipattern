@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     get 'has_offered', to: 'offers#has_offered'
     get 'owned_by', to: 'reviews#owned_by'
     get 'decision_registered', to: 'offers#decision_registered'
+    get 'tokens', to: 'tokens#show'
+    post 'tokens', to: 'tokens#create'
   end
 
   devise_scope :user do
