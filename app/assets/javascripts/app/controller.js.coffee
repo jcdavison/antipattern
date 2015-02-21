@@ -13,11 +13,6 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, Revie
 
 
 controllers.controller('userController', ($scope, $rootScope, $modal, User, ReviewRequest, Offer, $attrs, Wallet) ->
-  $scope.cardDetails = {}
-  $scope.cardError = ""
-  setErrorMessage = (error) ->
-    $scope.cardError = error.message
-    $scope.$digest()
 
   $scope.$on 'authorized-user', () ->
     Wallet.validCustomerId().then () ->
@@ -27,20 +22,6 @@ controllers.controller('userController', ($scope, $rootScope, $modal, User, Revi
     $scope.hasToken = false
     $scope.submitted = false
 
-  $scope.conductStripeFlow = () ->
-    $scope.submitted = true
-    data = 
-      number: $scope.cardDetails.number 
-      cvc: $scope.cardDetails.cvc 
-      exp_month: $scope.cardDetails.month 
-      exp_year: $scope.cardDetails.year
-
-    Stripe.card.createToken data ,  (status, response) ->  
-      if status == 200
-        Wallet.setToken(response.id).then (r) ->
-          $scope.hasToken = true
-      else
-        setErrorMessage(response.error)
 )
 
 controllers.controller('codeReviewsCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest, $sanitize) ->

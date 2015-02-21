@@ -9,67 +9,9 @@
         </div>
       </span>
       <span ng-hide="hasToken">
-        <span class="medium-small grey">Please add a credit card to participate in the marketplace.</span>
-        <form novalidate name="credit_card" ng-model="cardDetails" ng-submit="conductStripeFlow()" class="form-horizontal top-margined" >
-
-          <div class="form-group">
-            <label class="col-sm-4 control-label">Card Number</label>
-            <div class="col-sm-4">
-              <input type="text" required ng-focus name="number" ng-model="cardDetails.number" class="form-control" ng-class="{error: credit_card.number.$dirty && credit_card.number.$invalid}" ng-minlength="16" ng-maxlength="16" ng-pattern="/\d{16}/" />
-            </div>
-            <label class="error control-label" ng-show="credit_card.number.$dirty && credit_card.number.$invalid && !credit_card.number.$focused">
-              <span ng-show="credit_card.number.$error.required" class="red">please enter a credit card number</span>
-              <span ng-show="credit_card.number.$error.pattern" class="red">please enter a complete credit card number</span>
-            </label>
-          </div>
-
-          <div class="form-group">
-            <label class="col-sm-4 control-label">CVC Code (e.x., 345)</label>
-            <div class="col-sm-2">
-              <input type="text" required ng-focus name="cvc" ng-model="cardDetails.cvc" class="form-control" ng-class="{error: credit_card.cvc.$dirty && credit_card.cvc.$invalid}" ng-minlength='3' ng-maxlength='3' ng-pattern="/\d{3}/" />
-            </div>
-            <label class="error control-label" ng-show="credit_card.cvc.$dirty && credit_card.cvc.$invalid && !credit_card.cvc.$focused">
-              <span ng-show="credit_card.cvc.$error.pattern" class="red">please enter a cvc</span>
-            </label>
-          </div>
-
-          <div class="form-group">
-            <label class="col-sm-4 control-label">Exp Month (e.x., 10)</label>
-            <div class="col-sm-2">
-              <input type="text" required ng-focus name="month" ng-model="cardDetails.month" class="form-control" ng-class="{error: credit_card.month.$dirty && credit_card.month.$invalid}" ng-minlength='2' ng-maxlength='2' ng-pattern="/\d{2}/" />
-            </div>
-            <label class="error control-label" ng-show="credit_card.month.$dirty && credit_card.month.$invalid && !credit_card.month.$focused">
-              <span ng-show="credit_card.month.$error.pattern" class="red">please enter a month</span>
-            </label>
-          </div>
-
-          <div class="form-group">
-            <label class="col-sm-4 control-label">Exp Year(e.x., 2016)</label>
-            <div class="col-sm-2">
-              <input type="text" required ng-focus name="year" ng-model="cardDetails.year" class="form-control" ng-class="{error: credit_card.year.$dirty && credit_card.year.$invalid}" ng-minlength='4' ng-maxlength='4' ng-pattern="/\d{4}/" />
-            </div>
-            <label class="error control-label" ng-show="credit_card.year.$dirty && credit_card.year.$invalid && !credit_card.year.$focused">
-              <span ng-show="credit_card.year.$error.pattern" class="red">please enter a year</span>
-            </label>
-          </div>
-
-          <div class="form-group" ng-show="cardError">
-            <div class="col-sm-4 alert alert-danger col-sm-offset-4" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              {{cardError}}
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="col-sm-4 control-label"></label>
-            <div class="col-sm-2">
-              <button type="submit" ng-class="{'accept': credit_card.$valid}" ng-disabled="credit_card.$invalid || submitted == true" class="btn btn-default">
-                <span ng-show="credit_card.$invalid">Enter Info</span>
-                <span ng-show="credit_card.$valid">Submit Info</span>
-              </button>
-            </div>
-          </div>
-        </form>
+        <div class="medium-small grey centered padded">Please authorize a credit card for marketplace transactions.</div>
+        <div class="medium-small grey centered padded"><%= link_to 'STRIPE CONNECT', user_omniauth_authorize_path(:stripe_connect), class: 'stripe-connect' %></div>
+        
       </span>
 
     </div>
