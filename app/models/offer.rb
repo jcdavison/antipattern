@@ -3,6 +3,9 @@ class Offer < ActiveRecord::Base
   validates_presence_of :review_request_id, :user_id
   belongs_to :review_request
   belongs_to :user
+  has_many :payments
+
+  TRANSACTION_FEE = 0.03
 
   aasm do
     state :presented, :initial => true, :before_enter => :notify_of_offer
@@ -58,7 +61,15 @@ class Offer < ActiveRecord::Base
   end
 
   def execute_payment
-    p 'do stuff related to payment'
+    Payment.process(offer: self)
+  end
+
+  def transaction_fee
+    (self.review_request.value.to_f * TRANSACTION_FEE).to_i
+  end
+
+  def gross_payment_value
+    (self.review_request.value - transaction_fee).to_i
   end
 
   def recipients
