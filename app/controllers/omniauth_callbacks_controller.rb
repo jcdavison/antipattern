@@ -38,12 +38,16 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   private
-  def provider
-    request.env['omniauth.auth']
-  end
+    def provider
+      request.env['omniauth.auth']
+    end
 
-  def wallet_params
-    {stripe_uid: provider[:uid], stripe_code: params[:code], stripe_refresh_token: provider[:credentials][:refresh_token], stripe_publishable_key: provider[:info][:stripe_publishable_key], stripe_scope: provider[:info][:scope], user_id: current_user.id}
-  end
-
+    def wallet_params
+      { stripe_uid: provider[:uid], 
+      stripe_access_token: provider[:credentials][:token], 
+      stripe_refresh_token: provider[:credentials][:refresh_token], 
+      stripe_publishable_key: provider[:info][:stripe_publishable_key], 
+      stripe_scope: provider[:info][:scope], 
+      user_id: current_user.id }
+    end
 end
