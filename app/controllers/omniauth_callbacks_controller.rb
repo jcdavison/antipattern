@@ -34,7 +34,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     else
       Wallet.new(wallet_params).save
     end
-    redirect_to profile_path(current_user)
+    redirect_to profile_url(current_user, protocol: 'http')
   end
 
   private
