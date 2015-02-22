@@ -130,4 +130,13 @@ angular.module('App.services', [] )
           data: offer
         .then (response) ->
           return response
+      setPaymentDetail: (args) ->
+        $http
+          method: 'post'
+          url: '/api/offers/payments.json'
+          data: 
+            proportion_to_donate: args.proportionToDonate
+            offer: args.offer
+        .then (response) ->
+          return response
     return Offer

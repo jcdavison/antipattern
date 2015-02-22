@@ -7,4 +7,8 @@ json.array! @offers do |offer|
     json.profile offer.user.github_profile
     json.profile_pic offer.user.profile_pic
   end
+  json.code_review do
+    json.display_value offer.review_request.display_value
+    json.value offer.review_request.value
+  end
 end

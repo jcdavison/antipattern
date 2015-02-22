@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150222003553) do
+ActiveRecord::Schema.define(version: 20150222082433) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20150222003553) do
     t.string   "aasm_state"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "fund_a_coder"
   end
 
   create_table "review_requests", force: true do |t|

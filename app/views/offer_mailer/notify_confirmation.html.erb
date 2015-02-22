@@ -1,0 +1,15 @@
+<html>
+  <body>
+    <h3>Congratuations! Your Code Review has been accepted.</h3>
+
+    <p><%= @review_request_owner.name %>, has accepted your code review. </p>
+    <p>In order to receive the $<%= @code_review.display_value %> payment for your Code Review, please visit <%= link_to code_review_url(@code_review), code_review_url(@code_review) %> and click the 'set payment terms' button.</p> 
+    <p>If you don't visit the above link within 24 hours, don't worry, we will pay you the full value of the Code Review but you won't have the opportunity to participate in the <a href="http://blog.antipattern.io/articles/fund-a-coder/">Fund-A-Coder</a> program.
+
+    <p>Thanks and please contact me if anything is unclear,</p>
+
+    <p><a href="https://github.com/jcdavison">John Davison, Antipattern.io Founder</a></p>
+    <p><a href="mailto:jd@antipattern.io?subject=code review offer help">email antipattern.io support</a></p>
+  </body>
+</html>
+

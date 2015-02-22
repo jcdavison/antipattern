@@ -93,6 +93,14 @@ $font-family-base: "TitilliumWeb-Regular";
 // FONT
 // @import url(http://fonts.googleapis.com/css?family=Oxygen:400,700);
 
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
 a.join, a.stripe-connect, a.continue {
   border: 1px solid $green;
   border-radius: 1px;
@@ -131,6 +139,10 @@ a.join, a.stripe-connect, a.continue {
 
 .blue {
   color: $blue;
+}
+
+.green {
+  color: $green;
 }
 
 .red {
@@ -306,4 +318,17 @@ a.venmo {
 
 .footer-row {
   margin-bottom: 2em;
+}
+
+// SLIDER 
+
+.slider {
+  // width: 640px;
+  padding: .2em; 
+  margin: 1em .2em;
+}
+
+.slider-summary {
+  line-height: 3.1em;
+  color: $green;
 }

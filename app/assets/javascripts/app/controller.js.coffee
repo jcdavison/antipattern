@@ -13,7 +13,6 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, Revie
   $rootScope.values = [ {value: 10}, {value: 25}, {value: 50} ]
 )
 
-
 controllers.controller('userController', ($scope, $rootScope, $modal, User, ReviewRequest, Offer, $attrs, Wallet) ->
 
   $scope.$on 'authorized-user', () ->
@@ -23,7 +22,6 @@ controllers.controller('userController', ($scope, $rootScope, $modal, User, Revi
   $scope.showForm = () ->
     $scope.hasToken = false
     $scope.submitted = false
-
 )
 
 controllers.controller('codeReviewsCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest, $sanitize) ->
@@ -76,9 +74,7 @@ controllers.controller('codeReviewsCtrl', ($scope, $rootScope, $modal, $location
         codeReview: () ->
           $scope.review
     )
-
 )
-
 
 controllers.controller('showCodeReview', ($routeParams, $scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest, $sanitize) ->
   ReviewRequest.get($attrs.reviewRequestId).then (response) ->
@@ -205,12 +201,56 @@ controllers.controller('offerCodeReviewModal', ($rootScope, $scope, $modalInstan
         $scope.display = 'offer-failure'
 )
 
+controllers.controller('paymentCollectionCtrl', ($rootScope, $scope, Offer, offer, User, $modalInstance) ->
+  $scope.offer = offer
+  $scope.offerValue = offer.code_review.display_value
+  $scope.collect = $scope.offerValue
+  $scope.fundACoder = 0
+  $scope.proportionToDonate = 0
+
+  $scope.slider =
+    'options': 
+      stop: (event, ui) ->
+        percentToFund = percentage($scope.proportionToDonate)
+        setValueToCollect(percentToFund)
+        setValueToFund(percentToFund)
+        $scope.$digest()
+
+  $scope.setPaymentDetail = () ->
+    $scope.detailsubmitted = true
+    args = {}
+    args.proportionToDonate = $scope.proportionToDonate 
+    args.offer = $scope.offer
+    Offer.setPaymentDetail(args).then (response) ->
+      $scope.offer = response.data.offer
+      $rootScope.$broadcast 'showpaid-true'
+      $scope.cancel()
+
+  $scope.cancel = () ->
+    $modalInstance.dismiss('cancel');
+
+  percentage = (proportion) ->
+    proportion / 100
+
+  setValueToCollect = (percentToFund) ->
+    $scope.collect = roundToTwo( ( (1 - percentToFund) * $scope.offerValue))
+
+  setValueToFund = (percentToFund) ->
+    $scope.fundACoder = roundToTwo((percentToFund * $scope.offerValue))
+
+  roundToTwo = (num) ->
+    +(Math.round(num + "e+2") + "e-2")
+)
+
 controllers.controller('offerCtrl', ($rootScope, $scope, Offer, $attrs, User, $modal) ->
   $scope.acceptStatus = null
 
+  $scope.$on 'showpaid-true', () ->
+    $scope.offer.state = 'paid'
+    $scope.showpaid = true
+
   $scope.updateOfferState = (newState) ->
     if User.hasPmtToken == null && newState.match /deliver|accept/
-      console.log "reject offer"
       modalInstance = $modal.open(
         templateUrl: 'pleaseCompleteProfile.html'
         controller: 'genericModalCtrl'
@@ -219,6 +259,20 @@ controllers.controller('offerCtrl', ($rootScope, $scope, Offer, $attrs, User, $m
       Offer.updateOfferState( newState: newState, offer: $scope.offer).then (response) ->
         $scope.offer = response.data.offer
 
+  $scope.setPmtCollectionDetails = () ->
+    if User.hasPmtToken == null
+      modalInstance = $modal.open(
+        templateUrl: 'pleaseCompleteProfile.html'
+        controller: 'genericModalCtrl'
+      )
+    else
+      modalInstance = $modal.open(
+        templateUrl: 'setPmtCollectionDetail.html'
+        controller: 'paymentCollectionCtrl'
+        resolve:
+          offer: () ->
+            $scope.offer
+      )
   setAcceptStatus = () ->
     Offer.checkStatus($attrs.offerId).then (response) ->
       $scope.acceptStatus = Offer.accept_status

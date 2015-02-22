@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     get 'decision_registered', to: 'offers#decision_registered'
     get 'tokens', to: 'tokens#show'
     post 'tokens', to: 'tokens#create'
+    post 'offers/payments', to: 'offers#payments'
   end
 
   devise_scope :user do

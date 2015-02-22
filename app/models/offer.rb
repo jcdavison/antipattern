@@ -10,6 +10,7 @@ class Offer < ActiveRecord::Base
     state :rejected
     state :delivered
     state :disputed
+    state :confirmed
     state :paid
 
     event :accept do
@@ -33,11 +34,19 @@ class Offer < ActiveRecord::Base
       transitions from: :accepted, to: :delivered
     end
 
+    event :confirm do
+      before do 
+        notify_confirmation
+      end
+      transitions from: :delivered, to: :confirmed
+    end
+
     event :pay do
       before do 
+        execute_payment
         notify_paid
       end
-      transitions from: :delivered, to: :paid
+      transitions from: :confirmed, to: :paid
     end
 
     event :dispute do
@@ -46,6 +55,10 @@ class Offer < ActiveRecord::Base
       end
       transitions from: :delivered, to: :disputed
     end
+  end
+
+  def execute_payment
+    p 'do stuff related to payment'
   end
 
   def recipients
@@ -75,6 +88,10 @@ class Offer < ActiveRecord::Base
     OfferMailer.notify_rejection(recipients).deliver
   end
 
+  def notify_confirmation
+    OfferMailer.notify_confirmation(recipients).deliver
+  end
+
   def notify_of_offer
     OfferMailer.notify_of_offer(recipients).deliver
   end
@@ -85,6 +102,7 @@ class Offer < ActiveRecord::Base
     return self.deliver! if new_state == 'deliver'
     return self.pay! if new_state == 'pay'
     return self.dispute! if new_state == 'dispute'
+    return self.confirm! if new_state == 'confirmed'
   end
 
 end
