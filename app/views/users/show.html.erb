@@ -1,17 +1,21 @@
 <div class='container' ng-controller="userController">
   <div class='row'>
     <div class='col-sm-8 col-sm-offset-2'>
-      <span ng-show="hasToken" class="blue medium-small">
-        <div>You have a valid stripe account connected.</div>
-        <div>Please <%= link_to 'give or post a code review', authenticated_root_path %> and have a great day.</div>
-        <div class="centered">
-          <button class="btn btn-default accept" ng-click="showForm()">Update Credit Card Info</button>
-        </div>
-      </span>
-      <span ng-hide="hasToken">
+
+      <span ng-hide="stripeConnected">
         <div class="medium-small grey centered padded">Please authorize a credit card for marketplace transactions.</div>
         <div class="medium-small grey centered padded"><%= link_to 'STRIPE CONNECT', user_omniauth_authorize_path(:stripe_connect), class: 'stripe-connect' %></div>
-        
+      </span>
+
+      <span ng-show="stripeConnected" class="blue medium-small">
+        <span ng-hide="validCreditCard" ng-show="showCreditCard">
+          <%= render partial: 'shared/credit_card_detail' %>
+        </span>
+        <span ng-show="validCreditCard" ng-hide="showCreditCard">
+          You have a valid credit card connected. <button ng-click="showCreditCardForm()" class="btn btn-default accept">re-enter credit card</button>
+        </span>
+        <div>You have a valid stripe account connected. <%= link_to 'RE-CONNECT STRIPE', user_omniauth_authorize_path(:stripe_connect), class: 'stripe-connect' %> </div>
+
       </span>
 
     </div>

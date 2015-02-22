@@ -1,7 +1,7 @@
 angular.module('App.services', [] )
   .factory 'User', ($q, $http, $rootScope) ->
     User = 
-      hasPmtToken: null 
+      hasStripeAccount: null 
       isAuthorized: () ->
         deferred = $q.defer()
         $http
@@ -17,10 +17,18 @@ angular.module('App.services', [] )
   
   .factory 'Wallet', ($q, $http, $rootScope) ->
     Wallet = 
-      hasValidToken: () ->
+      setCcToken: (token) ->
+        $http
+          method: 'post' 
+          data: 
+            stripe_cc_token: token
+          url: '/api/tokens'
+        .then (response) ->
+          return response
+      validateDetail: (detail) ->
         $http
           method: 'get'
-          url: '/api/tokens'
+          url: "/api/tokens?detail=#{detail}"
         .then (response) ->
           return response
     return Wallet

@@ -3,8 +3,8 @@ controllers = angular.module('App.controllers', [])
 controllers.controller('appController', ($scope, $rootScope, $modal, User, ReviewRequest, Offer, $attrs, Wallet) ->
   User.isAuthorized().then (response) ->
     if response.success
-      Wallet.hasValidToken().then () ->
-        User.hasPmtToken = true
+      Wallet.validateDetail('stripeAccount').then () ->
+        User.hasStripeAccount = true
       $rootScope.$broadcast 'authorized-user'
 
   ReviewRequest.getAll().then () ->
@@ -15,13 +15,46 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, Revie
 
 controllers.controller('userController', ($scope, $rootScope, $modal, User, ReviewRequest, Offer, $attrs, Wallet) ->
 
+  $scope.cardDetails = {}
+  $scope.cardError = ""
+  setErrorMessage = (error) ->
+    $scope.cardError = error.message
+    $scope.$digest()
+
+  validateStripeAccount = () ->
+    Wallet.validateDetail('stripeAccount').then () ->
+      $scope.stripeConnected = true
+
+  validateCreditCard = () ->
+    Wallet.validateDetail('creditCard').then () ->
+      $scope.validCreditCard = true
+
   $scope.$on 'authorized-user', () ->
-    Wallet.hasValidToken().then () ->
-      $scope.hasToken = true
+    validateStripeAccount()
+    validateCreditCard()
+
+  $scope.showCreditCardForm = () ->
+    $scope.showCreditCard = true
+    console.log $scope.showCreditCard
 
   $scope.showForm = () ->
-    $scope.hasToken = false
+    $scope.stripeConnected = false
     $scope.submitted = false
+
+  $scope.conductStripeFlow = () ->
+    $scope.submitted = true
+    data = 
+      number: $scope.cardDetails.number 
+      cvc: $scope.cardDetails.cvc 
+      exp_month: $scope.cardDetails.month 
+      exp_year: $scope.cardDetails.year
+
+    Stripe.card.createToken data ,  (status, response) ->  
+      if status == 200
+        Wallet.setCcToken(response.id).then (r) ->
+          $scope.hasValidCC = true
+      else
+        setErrorMessage(response.error)
 )
 
 controllers.controller('codeReviewsCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest, $sanitize) ->
@@ -250,7 +283,7 @@ controllers.controller('offerCtrl', ($rootScope, $scope, Offer, $attrs, User, $m
     $scope.showpaid = true
 
   $scope.updateOfferState = (newState) ->
-    if User.hasPmtToken == null && newState.match /deliver|accept/
+    if User.hasStripeAccount == null && newState.match /deliver|accept/
       modalInstance = $modal.open(
         templateUrl: 'pleaseCompleteProfile.html'
         controller: 'genericModalCtrl'
@@ -260,7 +293,7 @@ controllers.controller('offerCtrl', ($rootScope, $scope, Offer, $attrs, User, $m
         $scope.offer = response.data.offer
 
   $scope.setPmtCollectionDetails = () ->
-    if User.hasPmtToken == null
+    if User.hasStripeAccount == null
       modalInstance = $modal.open(
         templateUrl: 'pleaseCompleteProfile.html'
         controller: 'genericModalCtrl'
