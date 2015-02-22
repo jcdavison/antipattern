@@ -1,8 +1,10 @@
 controllers = angular.module('App.controllers', [])
 
-controllers.controller('appController', ($scope, $rootScope, $modal, User, ReviewRequest, Offer, $attrs) ->
+controllers.controller('appController', ($scope, $rootScope, $modal, User, ReviewRequest, Offer, $attrs, Wallet) ->
   User.isAuthorized().then (response) ->
     if response.success
+      Wallet.hasValidToken().then () ->
+        User.hasPmtToken = true
       $rootScope.$broadcast 'authorized-user'
 
   ReviewRequest.getAll().then () ->
@@ -15,7 +17,7 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, Revie
 controllers.controller('userController', ($scope, $rootScope, $modal, User, ReviewRequest, Offer, $attrs, Wallet) ->
 
   $scope.$on 'authorized-user', () ->
-    Wallet.validCustomerId().then () ->
+    Wallet.hasValidToken().then () ->
       $scope.hasToken = true
 
   $scope.showForm = () ->
@@ -203,12 +205,19 @@ controllers.controller('offerCodeReviewModal', ($rootScope, $scope, $modalInstan
         $scope.display = 'offer-failure'
 )
 
-controllers.controller('offerCtrl', ($rootScope, $scope, Offer, $attrs) ->
+controllers.controller('offerCtrl', ($rootScope, $scope, Offer, $attrs, User, $modal) ->
   $scope.acceptStatus = null
 
   $scope.updateOfferState = (newState) ->
-    Offer.updateOfferState( newState: newState, offer: $scope.offer).then (response) ->
-      $scope.offer = response.data.offer
+    if User.hasPmtToken == null && newState.match /deliver|accept/
+      console.log "reject offer"
+      modalInstance = $modal.open(
+        templateUrl: 'pleaseCompleteProfile.html'
+        controller: 'genericModalCtrl'
+      )
+    else
+      Offer.updateOfferState( newState: newState, offer: $scope.offer).then (response) ->
+        $scope.offer = response.data.offer
 
   setAcceptStatus = () ->
     Offer.checkStatus($attrs.offerId).then (response) ->
@@ -216,10 +225,6 @@ controllers.controller('offerCtrl', ($rootScope, $scope, Offer, $attrs) ->
 
   $scope.$on 'authorized-user', () ->
     setAcceptStatus()
-
-  $scope.deliverCodeReview = () ->
-    Offer.deliver($scope.offer).then (response) ->
-      $scope.offer = response.data.offer
 )
 
 controllers.controller('genericModalCtrl', ($scope, $modalInstance) ->

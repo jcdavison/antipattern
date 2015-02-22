@@ -1,6 +1,7 @@
 angular.module('App.services', [] )
   .factory 'User', ($q, $http, $rootScope) ->
     User = 
+      hasPmtToken: null 
       isAuthorized: () ->
         deferred = $q.defer()
         $http
@@ -16,7 +17,7 @@ angular.module('App.services', [] )
   
   .factory 'Wallet', ($q, $http, $rootScope) ->
     Wallet = 
-      validCustomerId: () ->
+      hasValidToken: () ->
         $http
           method: 'get'
           url: '/api/tokens'
