@@ -16,14 +16,6 @@ angular.module('App.services', [] )
   
   .factory 'Wallet', ($q, $http, $rootScope) ->
     Wallet = 
-      setToken: (token) ->
-        $http
-          method: 'post' 
-          data: 
-            stripe_token: token
-          url: '/api/tokens'
-        .then (response) ->
-          return response
       validCustomerId: () ->
         $http
           method: 'get'

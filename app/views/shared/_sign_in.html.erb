@@ -1,7 +1,7 @@
 <% if current_user %>
   <ul class="nav navbar-nav navbar-left">
     <li><%= link_to "BLOG", 'http://blog.antipattern.io', class: 'hover-blue', target: 'new' %></li>
-    <li><%= link_to "PROFILE", profile_url(current_user, protocol: 'https'), class: 'hover-blue' %></li>
+    <li><%= link_to "PROFILE", profile_url(current_user), class: 'hover-blue' %></li>
     <li><%= link_to 'SIGN OUT', destroy_user_session_path, method: :delete, class: 'hover-blue' %></li>
   </ul>
 <% else %>

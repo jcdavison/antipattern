@@ -14,7 +14,7 @@ gem 'devise', '~> 3.4.1'
 gem 'devise-async'
 gem 'omniauth'
 gem 'omniauth-github', '~> 1.1.2'
-gem 'omniauth-venmo'
+gem 'omniauth-stripe-connect'
 
 #pmts
 gem 'stripe'
