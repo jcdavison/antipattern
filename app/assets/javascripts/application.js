@@ -1,5 +1,6 @@
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui/slider
 //= require bootstrap-sprockets
 //= require angular
 //= require angular-mocks
@@ -8,4 +9,5 @@
 //= require angular-ui-bootstrap-tpls
 //= require marked
 //= require select
+//= require slider
 //= require_tree .

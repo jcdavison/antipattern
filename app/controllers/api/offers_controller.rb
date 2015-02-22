@@ -52,4 +52,14 @@ class Api::OffersController < ApplicationController
     render json: { has_offered: has_offered }, status: 200
   end
 
+  def payments
+    @offer = Offer.find_by(id: params[:offer][:id])
+    @offer.fund_a_coder = params[:proportion_to_donate]
+    if @offer.save && @offer.pay!
+      render 'api/offers/show'
+    else
+      head :forbidden
+    end
+  end
+
 end

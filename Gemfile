@@ -41,6 +41,7 @@ gem 'marked-rails'
 # js
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'uglifier', '>= 1.3.0'
 
 # heroku

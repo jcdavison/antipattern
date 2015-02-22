@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150222003553) do
+ActiveRecord::Schema.define(version: 20150222215922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,17 @@ ActiveRecord::Schema.define(version: 20150222003553) do
     t.integer  "review_request_id"
     t.integer  "user_id"
     t.string   "aasm_state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "fund_a_coder"
+  end
+
+  create_table "payments", force: true do |t|
+    t.integer  "offer_id"
+    t.integer  "from_id"
+    t.integer  "to_id"
+    t.string   "description"
+    t.integer  "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -79,6 +90,8 @@ ActiveRecord::Schema.define(version: 20150222003553) do
     t.string   "stripe_publishable_key"
     t.string   "stripe_scope"
     t.string   "stripe_access_token"
+    t.string   "stripe_cc_token"
+    t.string   "stripe_cc_id"
   end
 
 end

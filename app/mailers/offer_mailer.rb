@@ -52,4 +52,13 @@ class OfferMailer < ActionMailer::Base
     @offer = recipients[:offer]
     mail to: 'jd@startuplandia.io', from: FROM, subject: 'Antipattern dispute'
   end
+
+  def notify_confirmation recipients
+    @offer_owner = recipients[:offer_owner]
+    @code_review = recipients[:code_review]
+    @review_request_owner = recipients[:review_request_owner]
+    @offer = recipients[:offer]
+    to = @offer_owner.email
+    mail to: to, from: FROM, subject: 'Antipattern CodeReview Confirmation'
+  end
 end
