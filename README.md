@@ -1,9 +1,5 @@
-TODO
+### http://antipattern.io
 
-- [ ] refactor review-request naming both on server and client
+The Community For Code Review
 
-- [ ] markdown isn't doing a good job of parsing ruby, fix it
-
-- [ ] a user shouldn't see submit offer on their own reviews
-
-- [ ] insert newly created review requests into dom
+http://blog.antipattern.io
