@@ -2,9 +2,10 @@ class Api::TokensController < ApplicationController
   before_filter :authenticate_user!
 
   def show
-    if current_user.wallet.validate(params[:detail])
-      head :ok
-    else
+    wallet = current_user.wallet
+    begin
+      render json: {valid: wallet.validate(params[:detail])}, status: 200
+    rescue
       head :forbidden
     end
   end

@@ -33,7 +33,7 @@ angular.module('App.services', [] )
           method: 'get'
           url: "/api/tokens?detail=#{detail}"
         .then (response) ->
-          return response
+          return response.data
     return Wallet
 
   .factory 'ReviewRequest', ($q, $http) ->

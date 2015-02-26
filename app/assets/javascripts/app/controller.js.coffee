@@ -22,12 +22,12 @@ controllers.controller('userController', ($scope, $rootScope, $modal, User, Revi
     $scope.$digest()
 
   validateStripeAccount = () ->
-    Wallet.validateDetail('stripeAccount').then () ->
-      $scope.stripeConnected = true
+    Wallet.validateDetail('stripeAccount').then (response) ->
+      $scope.stripeConnected = response.valid
 
   validateCreditCard = () ->
-    Wallet.validateDetail('creditCard').then () ->
-      $scope.validCreditCard = true
+    Wallet.validateDetail('creditCard').then (response) ->
+      $scope.validCreditCard = response.valid
 
   $scope.$on 'authorized-user', () ->
     validateStripeAccount()
