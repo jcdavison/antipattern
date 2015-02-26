@@ -34,8 +34,7 @@ controllers.controller('userController', ($scope, $rootScope, $modal, User, Revi
     validateCreditCard()
 
   $scope.showCreditCardForm = () ->
-    $scope.showCreditCard = true
-    console.log $scope.showCreditCard
+    $scope.validCreditCard = false
 
   $scope.showForm = () ->
     $scope.stripeConnected = false
@@ -52,7 +51,7 @@ controllers.controller('userController', ($scope, $rootScope, $modal, User, Revi
     Stripe.card.createToken data ,  (status, response) ->  
       if status == 200
         Wallet.setCcToken(response.id).then (r) ->
-          $scope.hasValidCC = true
+          $scope.validCreditCard = Wallet.validCreditCard
       else
         setErrorMessage(response.error)
 )

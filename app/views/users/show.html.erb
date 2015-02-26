@@ -2,21 +2,31 @@
   <div class='row'>
     <div class='col-sm-8 col-sm-offset-2'>
 
-      <span ng-hide="stripeConnected">
-        <div class="medium-small grey centered padded">Please authorize a credit card for marketplace transactions.</div>
-        <div class="medium-small grey centered padded"><%= link_to 'STRIPE CONNECT', user_omniauth_authorize_path(:stripe_connect), class: 'stripe-connect' %></div>
-      </span>
-
-      <span ng-show="stripeConnected" class="blue medium-small">
-        <span ng-hide="validCreditCard" ng-show="showCreditCard">
+      <div ng-show="stripeConnected" class="medium-small padded top-margined">
+        <span ng-show="validCreditCard">
+          <div class="blue padded top-margined">
+            Your Profile is Complete.  Please visit the <%= link_to "feed and give a code review.", authenticated_root_path %> 
+          </div>
+          You have a valid credit card connected <a href="#" ng-click="showCreditCardForm()" class="stripe-connect">RE-ENTER CREDIT CARD INFO</a>
+        </span>
+        <span ng-hide="validCreditCard">
+          <div class="grey centered">Please enter a valid credit card </div>
           <%= render partial: 'shared/credit_card_detail' %>
         </span>
-        <span ng-show="validCreditCard" ng-hide="showCreditCard">
-          You have a valid credit card connected. <button ng-click="showCreditCardForm()" class="btn btn-default accept">re-enter credit card</button>
-        </span>
-        <div>You have a valid stripe account connected. <%= link_to 'RE-CONNECT STRIPE', user_omniauth_authorize_path(:stripe_connect), class: 'stripe-connect' %> </div>
+      </div>
 
-      </span>
+      <div class="grey medium-small padded top-margined" ng-show="stripeConnected">
+        You have a valid stripe account connected. 
+        <%= link_to 'RE-CONNECT STRIPE', user_omniauth_authorize_path(:stripe_connect), class: 'stripe-connect' %> 
+      </div>
+      <div ng-hide="stripeConnected" class="padded top-margined">
+        <div class="medium-small grey centered padded">
+          Please connect an active stripe account to facilitate marketplace transactions.
+        </div>
+        <div class="medium-small grey centered padded">
+          <%= link_to 'STRIPE CONNECT', user_omniauth_authorize_path(:stripe_connect), class: 'stripe-connect' %>
+        </div>
+      </div>
 
     </div>
   </div>
