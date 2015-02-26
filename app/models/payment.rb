@@ -2,7 +2,7 @@ class Payment < ActiveRecord::Base
   belongs_to :offer
   FUND_A_CODER_DESC = "AntiPattern.io Fund A Coder"
   FUND_A_CODER_UID = ENV['STRIPE_FUNDACODER_UID']
-  ANTIPATTERN_UID = ENV['STRIPE_FUNDACODER_UID']
+  ANTIPATTERN_UID = ENV['STRIPE_ANTIPATTERN_UID']
   MARKET_TRANSACTION_DESC = "Market Transaction"
   TRANSACTION_FEE = 0.03
 
