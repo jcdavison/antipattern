@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150222215922) do
+ActiveRecord::Schema.define(version: 20150226054132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(version: 20150222215922) do
 
   create_table "payments", force: true do |t|
     t.integer  "offer_id"
-    t.integer  "from_id"
-    t.integer  "to_id"
+    t.integer  "from_user_id"
+    t.integer  "to_user_id"
     t.string   "description"
     t.integer  "value"
     t.datetime "created_at"
@@ -91,7 +91,8 @@ ActiveRecord::Schema.define(version: 20150222215922) do
     t.string   "stripe_scope"
     t.string   "stripe_access_token"
     t.string   "stripe_cc_token"
-    t.string   "stripe_cc_id"
+    t.string   "stripe_customer_id"
+    t.string   "stripe_card_id"
   end
 
 end

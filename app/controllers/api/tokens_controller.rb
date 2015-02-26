@@ -14,11 +14,11 @@ class Api::TokensController < ApplicationController
     wallet = current_user.wallet 
     if wallet
       wallet.update_attributes stripe_cc_token: params[:stripe_cc_token]
-      wallet.set_stripe_cc_id
+      wallet.set_stripe_detail
       head :ok
     else
       wallet = Wallet.new stripe_cc_token: params[:stripe_cc_token], user_id: current_user.id
-      if wallet.save && wallet.set_stripe_cc_id
+      if wallet.save && wallet.set_stripe_detail
         head :ok
       else
         head :forbidden
