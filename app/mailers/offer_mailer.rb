@@ -6,7 +6,7 @@ class OfferMailer < ActionMailer::Base
     @review_request_owner = recipients[:review_request_owner]
     @review_request_id = recipients[:code_review].id
     to = @review_request_owner.email
-    subject = 'Antipattern.io Code Review offer'
+    subject = 'Antipattern.io offer to Code Review'
     mail to: to, from: FROM, subject: subject
   end
 
@@ -15,7 +15,7 @@ class OfferMailer < ActionMailer::Base
     @review_request_owner = recipients[:review_request_owner]
     @code_review = recipients[:code_review]
     to = [ @offer_owner.email, @review_request_owner.email ]
-    subject = 'Antipattern.io Code Review offer acceptance'
+    subject = 'Antipattern.io offer to Code Review Accepted'
     mail to: to, from: FROM, subject: subject
   end
 
@@ -41,7 +41,7 @@ class OfferMailer < ActionMailer::Base
     @review_request_owner = recipients[:review_request_owner]
     @code_review = recipients[:code_review]
     to = @offer_owner.email
-    subject = 'Antipattern.io Code Review acceptance and pmt'
+    subject = 'Antipattern.io Code Review Payment'
     mail to: to, from: FROM, subject: subject
   end
 
