@@ -17,9 +17,10 @@ class Wallet < ActiveRecord::Base
     end
   end
 
-  def set_stripe_cc_id
+  def set_stripe_detail
     response = Stripe::Customer.create(source: self.stripe_cc_token, description: self.user.email)
-    self.stripe_cc_id = response[:id]
+    self.stripe_customer_id = response[:id]
+    self.stripe_card_id = response[:default_source]
     self.save
   end
 end

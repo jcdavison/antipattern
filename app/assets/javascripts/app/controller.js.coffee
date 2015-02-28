@@ -10,7 +10,7 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, Revie
   ReviewRequest.getAll().then () ->
     $scope.allCodeReviews = ReviewRequest.allCodeReviews
 
-  $rootScope.values = [ {value: 10}, {value: 25}, {value: 50} ]
+  $rootScope.values = [ {value: 20}, {value: 50}, {value: 75} ]
 )
 
 controllers.controller('userController', ($scope, $rootScope, $modal, User, ReviewRequest, Offer, $attrs, Wallet) ->
@@ -22,20 +22,19 @@ controllers.controller('userController', ($scope, $rootScope, $modal, User, Revi
     $scope.$digest()
 
   validateStripeAccount = () ->
-    Wallet.validateDetail('stripeAccount').then () ->
-      $scope.stripeConnected = true
+    Wallet.validateDetail('stripeAccount').then (response) ->
+      $scope.stripeConnected = response.valid
 
   validateCreditCard = () ->
-    Wallet.validateDetail('creditCard').then () ->
-      $scope.validCreditCard = true
+    Wallet.validateDetail('creditCard').then (response) ->
+      $scope.validCreditCard = response.valid
 
   $scope.$on 'authorized-user', () ->
     validateStripeAccount()
     validateCreditCard()
 
   $scope.showCreditCardForm = () ->
-    $scope.showCreditCard = true
-    console.log $scope.showCreditCard
+    $scope.validCreditCard = false
 
   $scope.showForm = () ->
     $scope.stripeConnected = false
@@ -52,7 +51,7 @@ controllers.controller('userController', ($scope, $rootScope, $modal, User, Revi
     Stripe.card.createToken data ,  (status, response) ->  
       if status == 200
         Wallet.setCcToken(response.id).then (r) ->
-          $scope.hasValidCC = true
+          $scope.validCreditCard = Wallet.validCreditCard
       else
         setErrorMessage(response.error)
 )

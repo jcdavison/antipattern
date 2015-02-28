@@ -5,8 +5,6 @@ class Offer < ActiveRecord::Base
   belongs_to :user
   has_many :payments
 
-  TRANSACTION_FEE = 0.03
-
   aasm do
     state :presented, :initial => true, :before_enter => :notify_of_offer
     state :accepted
@@ -114,6 +112,10 @@ class Offer < ActiveRecord::Base
     return self.pay! if new_state == 'pay'
     return self.dispute! if new_state == 'dispute'
     return self.confirm! if new_state == 'confirmed'
+  end
+
+  def value
+    review_request.value
   end
 
 end

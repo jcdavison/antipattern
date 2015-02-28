@@ -17,20 +17,23 @@ angular.module('App.services', [] )
   
   .factory 'Wallet', ($q, $http, $rootScope) ->
     Wallet = 
+      validCreditCard: true
       setCcToken: (token) ->
         $http
           method: 'post' 
           data: 
             stripe_cc_token: token
           url: '/api/tokens'
-        .then (response) ->
+        .then (response) =>
+          if response.status == 200
+            @validCreditCard == true
           return response
       validateDetail: (detail) ->
         $http
           method: 'get'
           url: "/api/tokens?detail=#{detail}"
         .then (response) ->
-          return response
+          return response.data
     return Wallet
 
   .factory 'ReviewRequest', ($q, $http) ->
