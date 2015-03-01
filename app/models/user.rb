@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_many :offers, dependent: :destroy
   has_many :venmo_pmts
   has_one :wallet
-
+  has_and_belongs_to_many :notification_channels
 
   def self.find_for_oauth(auth, signed_in_resource = nil)
     identity = Identity.find_for_oauth(auth)
