@@ -1,23 +1,26 @@
 <div id="add-email" class="container">
-  <h1>Add Email</h1>
-  <%= form_for(current_user, :as => 'user', :url => finish_signup_path(current_user), :html => { role: 'form'}) do |f| %>
-    <% if @show_errors && current_user.errors.any? %>
-      <div id="error_explanation">
-        <% current_user.errors.full_messages.each do |msg| %>
-          <%= msg %><br>
+  <div class='row'>
+    <div class='col-sm-8 col-sm-offset-2'>
+      <div class="medium-small">In order to use Antipattern.io, we need your email address.  Your github account's oauth callback didn't provide one to us.</div>
+      <%= form_for(current_user, :as => 'user', :url => finish_signup_path(current_user), :html => { role: 'form'}) do |f| %>
+        <% if @show_errors && current_user.errors.any? %>
+          <div id="error_explanation">
+            <% current_user.errors.full_messages.each do |msg| %>
+              <%= msg %><br>
+            <% end %>
+          </div>
         <% end %>
-      </div>
-    <% end %>
-    <div class="form-group">
-      <%= f.label :email %>
-      <div class="controls">
-        <%= f.text_field :email, :autofocus => true, :value => '', class: 'form-control input-lg', placeholder: 'Example: email@me.com' %>
-        <p class="help-block">Please confirm your email address. No spam.</p>
-      </div>
+        <div class="form-group">
+          <%= f.label :email %>
+          <div class="controls">
+            <%= f.text_field :email, :autofocus => true, :value => '', class: 'form-control input-lg', placeholder: 'Example: email@me.com' %>
+            <p class="help-block">Please confirm your email address. No spam.</p>
+          </div>
+        </div>
+        <div class="actions">
+          <%= f.submit 'Continue', :class => 'btn btn-primary' %>
+        </div>
+      <% end %>
     </div>
-    <div class="actions">
-      <%= f.submit 'Continue', :class => 'btn btn-primary' %>
-    </div>
-  <% end %>
+  </div>
 </div>
-
