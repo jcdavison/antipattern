@@ -158,7 +158,7 @@ controllers.controller('showCodeReview', ($routeParams, $scope, $rootScope, $mod
       size: 'md'
       resolve:
         codeReview: () ->
-          $scope.review
+          $scope.review || $scope.codeReview
     )
 
 )
@@ -168,9 +168,14 @@ controllers.controller('deleteCodeReviewModal', ($scope, $rootScope, $modalInsta
       if response.status == 200
         $rootScope.$broadcast 'codeReviewDeleted', codeReview
         $modalInstance.dismiss('cancel')
+        redirectIf()
 
   $scope.cancel = () ->
     $modalInstance.dismiss('cancel')
+
+  redirectIf = () ->
+    if window.location.pathname.match /code-reviews\/\d*/
+      window.location.pathname = "/"
 )
 
 controllers.controller('createCodeReviewModal', ($scope, $rootScope, $modalInstance, $modal, ReviewRequest) ->
