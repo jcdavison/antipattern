@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :finish_signup]
 
-  def show
+  def profile
   end
 
   def edit
