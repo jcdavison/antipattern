@@ -1,5 +1,5 @@
 json.code_review do
-  json.(@code_review, :title, :id, :value )
+  json.(@code_review, :title, :id)
   json.detail @code_review.detail
   json.user do
     json.name @code_review.user.name

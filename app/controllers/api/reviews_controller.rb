@@ -49,6 +49,6 @@ class Api::ReviewsController < ApplicationController
   private
 
     def code_review_params
-      params.require(:code_review).compact.permit(:id, :title, :detail, :value)
+      params.require(:code_review).compact.permit(:id, :title, :detail)
     end
 end
