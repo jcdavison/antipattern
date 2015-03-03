@@ -32,7 +32,7 @@
               <button ng-show="offer.state == 'presented'" popover-placement="bottom" popover="{{offer.note}}" class="btn btn-default">note from offerer</button>
             <% end %>
             <span ng-hide='showpaid'>
-              offer state: <button class='btn btn-default disabled' ng-disabled='true'>{{offer.state}}</button>
+              offer status: <button class='btn btn-default disabled' ng-disabled='true'>{{offer.state}}</button>
             </span>
             <% if is_owner_of? code_review %>
               <span ng-show="offer.state == 'presented' || offer.state == 'delivered'">
@@ -42,10 +42,9 @@
                 <button class='btn btn-default accept'>accept offer</button>
               </span>
               <span ng-show="offer.state == 'delivered'">
-                <button class='btn btn-default accept' ng-click="updateOfferState('confirmed')">accept and pay</button>
-              </span>
-              <span ng-show="offer.state == 'delivered'">
-                <button class='btn btn-default delete' ng-click="updateOfferState('dispute')">reject and dispute</button>
+                <button class='btn btn-default accept' ng-click="updateOfferState('confirmed')">accept</button>
+                or
+                <button class='btn btn-default delete' ng-click="updateOfferState('dispute')">dispute</button>
               </span>
             <% else %>
               <span ng-show="offer.state == 'accepted' || offer.state == 'confirmed'">

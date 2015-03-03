@@ -99,7 +99,8 @@ class Offer < ActiveRecord::Base
   end
 
   def notify_confirmation
-    OfferMailer.notify_confirmation(recipients).deliver
+    OfferMailer.notify_confirmation(recipients).deliver if value > 0
+    OfferMailer.notify_karma(recipients).deliver if value == 0
   end
 
   def notify_of_offer
@@ -118,5 +119,9 @@ class Offer < ActiveRecord::Base
   def set_karma
     self.karma = (value == 0)
     self.save
+  end
+
+  def display_value
+    (value.to_f / 100).round(2)
   end
 end

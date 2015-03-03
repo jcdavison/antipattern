@@ -61,4 +61,13 @@ class OfferMailer < ActionMailer::Base
     to = @offer_owner.email
     mail to: to, from: FROM, subject: 'Antipattern CodeReview Confirmation'
   end
+
+  def notify_karma recipients
+    @offer_owner = recipients[:offer_owner]
+    @code_review = recipients[:code_review]
+    @code_review_owner = recipients[:code_review_owner]
+    @offer = recipients[:offer]
+    to = @offer_owner.email
+    mail to: to, from: FROM, subject: 'Antipattern CodeReview Karma Confirmation'
+  end
 end

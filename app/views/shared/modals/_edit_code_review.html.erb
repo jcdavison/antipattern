@@ -19,15 +19,10 @@
       <div class="row">
         <div class="col-md-11">
           <div class="pull-right">
-            <label class="friendly-margin">value:</label>
-            <select ng-model="codeReview.value" ng-options="ele.value as ele.value for ele in values" name="value" required class="friendly-margin pull-right">
-            </select>
-            <br/>
             <button type="submit" class="btn btn-default tools accept friendly-margin pull-right" ng-disabled="code_review.$invalid">
               <span ng-show="code_review.title.$invalid">enter title</span>
               <span ng-show="code_review.title.$valid && code_review.detail.$invalid">enter detail</span>
-              <span ng-show="code_review.detail.$valid && code_review.value.$invalid">select value</span>
-              <span ng-show="code_review.$valid">submit review</span>
+              <span ng-show="code_review.$valid">save edits</span>
               <span ng-hide="accepted" class="grey"><%= fa_icon 'gears' %></span>
               <span ng-show="accepted" class="green"><%= fa_icon 'check' %></span>
             </button>

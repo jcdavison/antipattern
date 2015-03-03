@@ -251,7 +251,7 @@ controllers.controller('offerCodeReviewModal', ($rootScope, $scope, $modalInstan
 
 controllers.controller('paymentCollectionCtrl', ($rootScope, $scope, Offer, offer, User, $modalInstance) ->
   $scope.offer = offer
-  $scope.offerValue = offer.code_review.display_value
+  $scope.offerValue = (offer.value / 100)
   $scope.collect = $scope.offerValue
   $scope.fundACoder = 0
   $scope.proportionToDonate = 0
@@ -298,13 +298,13 @@ controllers.controller('offerCtrl', ($rootScope, $scope, Offer, $attrs, User, $m
     $scope.showpaid = true
 
   $scope.updateOfferState = (newState) ->
-    if User.hasStripeAccount == null && newState.match /deliver|accept/
+    if User.hasStripeAccount == null && newState.match /deliver|accept/ && $scope.offer.value != 0
       modalInstance = $modal.open(
         templateUrl: 'pleaseCompleteProfile.html'
         controller: 'genericModalCtrl'
       )
     else
-      Offer.updateOfferState( newState: newState, offer: $scope.offer).then (response) ->
+      Offer.updateOfferState(newState: newState, offer: $scope.offer).then (response) ->
         $scope.offer = response.data.offer
 
   $scope.setPmtCollectionDetails = () ->
