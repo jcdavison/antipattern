@@ -1,9 +1,11 @@
 class Offer < ActiveRecord::Base
   include AASM
-  validates_presence_of :code_review_id, :user_id
+  validates_presence_of :code_review_id, :user_id, :value
   belongs_to :code_review
   belongs_to :user
   has_many :payments
+
+  after_create :set_karma
 
   aasm do
     state :presented, :initial => true, :before_enter => :notify_of_offer
@@ -97,7 +99,8 @@ class Offer < ActiveRecord::Base
   end
 
   def notify_confirmation
-    OfferMailer.notify_confirmation(recipients).deliver
+    OfferMailer.notify_confirmation(recipients).deliver if value > 0
+    OfferMailer.notify_karma(recipients).deliver if value == 0
   end
 
   def notify_of_offer
@@ -113,7 +116,12 @@ class Offer < ActiveRecord::Base
     return self.confirm! if new_state == 'confirmed'
   end
 
-  def value
-    code_review.value
+  def set_karma
+    self.karma = (value == 0)
+    self.save
+  end
+
+  def display_value
+    (value.to_f / 100).round(2)
   end
 end

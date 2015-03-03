@@ -1,5 +1,5 @@
 json.array! @code_reviews do |code_review|
-  json.(code_review, :title, :id, :value, :detail)
+  json.(code_review, :title, :id, :detail)
   json.user do
     json.name code_review.user.name
     json.profile code_review.user.github_profile

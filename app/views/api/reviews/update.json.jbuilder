@@ -1,3 +1,3 @@
 json.code_review do
-  json.(@code_review, :title, :id, :value, :detail )
+  json.(@code_review, :title, :id, :detail )
 end

@@ -10,7 +10,7 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, CodeR
   CodeReview.getAll().then () ->
     $scope.allCodeReviews = CodeReview.allCodeReviews
 
-  $rootScope.values = [ {value: 25} ]
+  $rootScope.values = [ {title: 'Good Karma', value: 0}, {title: '$25.00', value: 2500}, {title: '$50.00', value: 5000}, {title: '$75.00', value: 7500} ]
 
   $scope.showFaq = () ->
     modalInstance = $modal.open(
@@ -187,7 +187,6 @@ controllers.controller('deleteCodeReviewModal', ($scope, $rootScope, $modalInsta
 
 controllers.controller('createCodeReviewModal', ($scope, $rootScope, $modalInstance, $modal, CodeReview) ->
   $scope.codeReview = {}
-  $scope.values = $rootScope.values 
   $scope.codeReview.value = $scope.values[0]
 
   $scope.createCodeReview = () ->
@@ -232,22 +231,27 @@ controllers.controller('editCodeReviewModal', ($scope, $rootScope, $modalInstanc
 )
 
 controllers.controller('offerCodeReviewModal', ($rootScope, $scope, $modalInstance, codeReview, Offer) ->
-  $scope.display = 'instructions'
+  $scope.newOffer = {code_review_id: codeReview.id}
+
+  $scope.values = $rootScope.values 
+  $scope.display = 'offer-submit'
   $scope.cancel = () ->
     $modalInstance.dismiss('cancel')
+  $scope.codeReview = codeReview
 
   $scope.offerCodeReview = () ->
-    Offer.submit(codeReview.id).then (r) ->
+    $scope.display = 'submitting'
+    Offer.submit($scope.newOffer).then (r) ->
       if r.status == 200
         $scope.display = 'offer-success'
         $rootScope.$broadcast 'offer-success'
       else
-        $scope.display = 'offer-failure'
+        $scope.display = 'offer-error'
 )
 
 controllers.controller('paymentCollectionCtrl', ($rootScope, $scope, Offer, offer, User, $modalInstance) ->
   $scope.offer = offer
-  $scope.offerValue = offer.code_review.display_value
+  $scope.offerValue = (offer.value / 100)
   $scope.collect = $scope.offerValue
   $scope.fundACoder = 0
   $scope.proportionToDonate = 0
@@ -294,13 +298,13 @@ controllers.controller('offerCtrl', ($rootScope, $scope, Offer, $attrs, User, $m
     $scope.showpaid = true
 
   $scope.updateOfferState = (newState) ->
-    if User.hasStripeAccount == null && newState.match /deliver|accept/
+    if User.hasStripeAccount == null && newState.match /deliver|accept/ && $scope.offer.value != 0
       modalInstance = $modal.open(
         templateUrl: 'pleaseCompleteProfile.html'
         controller: 'genericModalCtrl'
       )
     else
-      Offer.updateOfferState( newState: newState, offer: $scope.offer).then (response) ->
+      Offer.updateOfferState(newState: newState, offer: $scope.offer).then (response) ->
         $scope.offer = response.data.offer
 
   $scope.setPmtCollectionDetails = () ->

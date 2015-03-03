@@ -97,6 +97,10 @@ $font-family-base: "TitilliumWeb-Regular";
   text-align: left;
 }
 
+i.jumbo {
+  font-size: 15em;
+}
+
 .text-right {
   text-align: right;
 }
@@ -151,6 +155,10 @@ a.join, a.stripe-connect, a.continue {
 
 .light-blue {
   color: $light_blue;
+}
+
+.light-red {
+  color: $light_red;
 }
 
 .medium {

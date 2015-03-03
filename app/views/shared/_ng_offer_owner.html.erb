@@ -24,28 +24,42 @@
         <span class="text-right" ng-controller='offerCtrl' >
           <div class="offer" setOfferId offer-ID="{{offer.id}}">
           <span class="medium-small blue padded"><a href="{{offer.user.profile}}"><img ng-src="{{offer.user.profile_pic}}" class="profile"></a>
-            </span>  
+            <span ng-show="offer.karma == false">value: ${{offer.value / 100}}</span>
+            <span ng-show="offer.karma == true">value: good karma  </span>
+          </span>  
+
+            <% if is_owner_of? code_review %>
+              <button ng-show="offer.state == 'presented'" popover-placement="bottom" popover="{{offer.note}}" class="btn btn-default">note from offerer</button>
+            <% end %>
             <span ng-hide='showpaid'>
-              <button class='btn btn-default disabled' ng-disabled='true'>{{offer.state}}</button>
+              offer status: <button class='btn btn-default disabled' ng-disabled='true'>{{offer.state}}</button>
             </span>
             <% if is_owner_of? code_review %>
+              <span ng-show="offer.state == 'presented' || offer.state == 'delivered'">
+                take action: 
+              </span>
               <span ng-show="offer.state == 'presented'" ng-click="updateOfferState('accept')">
                 <button class='btn btn-default accept'>accept offer</button>
               </span>
               <span ng-show="offer.state == 'delivered'">
-                <button class='btn btn-default accept' ng-click="updateOfferState('confirmed')">accept and pay</button>
-              </span>
-              <span ng-show="offer.state == 'delivered'">
-                <button class='btn btn-default delete' ng-click="updateOfferState('dispute')">reject and dispute</button>
+                <button class='btn btn-default accept' ng-click="updateOfferState('confirmed')">accept</button>
+                or
+                <button class='btn btn-default delete' ng-click="updateOfferState('dispute')">dispute</button>
               </span>
             <% else %>
+              <span ng-show="offer.state == 'accepted' || offer.state == 'confirmed'">
+                take action: 
+              </span>
               <span ng-show="offer.state == 'accepted'">
                 <button class='btn btn-default accept' ng-click="updateOfferState('deliver')">deliver</button>
               </span>
               <span ng-show="offer.state == 'confirmed'" ng-disabled="detailsubmitted">
-                <button class='btn btn-default accept' ng-click="setPmtCollectionDetails()">set payment detail</button>
+                <button class='btn btn-default accept' ng-click="setPmtCollectionDetails()" ng-show="offer.value != 0">set payment detail</button>
               </span>
-              <span ng-show="showpaid"
+              <span ng-show="offer.value==0">
+                <button class='btn btn-default accept' ng-disabled="true">+ Karma</button>
+              </span>
+              <span ng-show="showpaid">
                 <button class='btn btn-default disabled' ng-disabled='true'>offer paid!</button>
               </span>
             <% end %>
