@@ -11,4 +11,8 @@ class NotificationChannel < ActiveRecord::Base
       NotificationMailer.send(name.to_sym, args).deliver
     end
   end
+
+  def self.subscribe args
+    NotificationChannel.find_by(name: args[:name]).subscribers << args[:subscriber]
+  end
 end
