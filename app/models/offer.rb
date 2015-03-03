@@ -5,6 +5,8 @@ class Offer < ActiveRecord::Base
   belongs_to :user
   has_many :payments
 
+  after_create :set_karma
+
   aasm do
     state :presented, :initial => true, :before_enter => :notify_of_offer
     state :accepted
@@ -111,5 +113,10 @@ class Offer < ActiveRecord::Base
     return self.pay! if new_state == 'pay'
     return self.dispute! if new_state == 'dispute'
     return self.confirm! if new_state == 'confirmed'
+  end
+
+  def set_karma
+    self.karma = (value == 0)
+    self.save
   end
 end

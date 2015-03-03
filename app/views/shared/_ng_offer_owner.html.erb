@@ -24,6 +24,8 @@
         <span class="text-right" ng-controller='offerCtrl' >
           <div class="offer" setOfferId offer-ID="{{offer.id}}">
           <span class="medium-small blue padded"><a href="{{offer.user.profile}}"><img ng-src="{{offer.user.profile_pic}}" class="profile"></a>
+            <span ng-show="offer.karma == false">value: ${{offer.value / 100}}</span>
+            <span ng-show="offer.karma == true">value: good karma  </span>
             </span>  
             <span ng-hide='showpaid'>
               <button class='btn btn-default disabled' ng-disabled='true'>{{offer.state}}</button>
