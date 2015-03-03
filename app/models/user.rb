@@ -9,9 +9,8 @@ class User < ActiveRecord::Base
   has_many :identities, dependent: :destroy
   has_many :review_requests, dependent: :destroy
   has_many :offers, dependent: :destroy
-  has_many :venmo_pmts
-  has_one :wallet
-  has_and_belongs_to_many :notification_channels
+  has_one :wallet, dependent: :destroy
+  has_and_belongs_to_many :notification_channels, dependent: :destroy
 
   after_create :subscribe_new_code_reviews
 
