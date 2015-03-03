@@ -6,11 +6,11 @@ class Payment < ActiveRecord::Base
   SERVICE_FEE_DESC = "AntiPattern.io Service Fee"
   FUND_A_CODER_UID = ENV['STRIPE_FUNDACODER_UID']
   ANTIPATTERN_UID = ENV['STRIPE_ANTIPATTERN_UID']
-  TRANSACTION_FEE = 0.03
+  TRANSACTION_FEE = 0.05
 
   def self.process args
     payment_detail = { offer_id: args[:offer].id, 
-      from_user_id: args[:offer].review_request.user.id, 
+      from_user_id: args[:offer].code_review.user.id, 
       to_user_id: args[:offer].user_id }
     payment = Payment.new(payment_detail)
     payment.pay! args
@@ -26,7 +26,7 @@ class Payment < ActiveRecord::Base
     return unless args[:offer].fund_a_coder && args[:offer].fund_a_coder > 0
     amount = net_contribution_value args
     pay_to_wallet = specific_wallet FUND_A_CODER_UID
-    charge_from_wallet = args[:offer].review_request.user.wallet
+    charge_from_wallet = args[:offer].code_review.user.wallet
     description = FUND_A_CODER_DESC 
     payment_args = { amount: amount,
       pay_to_wallet: pay_to_wallet,
@@ -38,7 +38,7 @@ class Payment < ActiveRecord::Base
   def regular_transaction_pmt args
     amount = net_regular_payment_value args
     pay_to_wallet = args[:offer].user.wallet
-    charge_from_wallet = args[:offer].review_request.user.wallet
+    charge_from_wallet = args[:offer].code_review.user.wallet
     description = MARKET_TRANSACTION_DESC 
     payment_args = { amount: amount,
       pay_to_wallet: pay_to_wallet,
@@ -50,7 +50,7 @@ class Payment < ActiveRecord::Base
   def service_fee_pmt args
     amount = net_service_fee args
     pay_to_wallet = specific_wallet ANTIPATTERN_UID
-    charge_from_wallet = args[:offer].review_request.user.wallet
+    charge_from_wallet = args[:offer].code_review.user.wallet
     description = SERVICE_FEE_DESC 
     payment_args = { amount: amount,
       pay_to_wallet: pay_to_wallet,

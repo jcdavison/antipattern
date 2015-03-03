@@ -1,7 +1,7 @@
 class Offer < ActiveRecord::Base
   include AASM
-  validates_presence_of :review_request_id, :user_id
-  belongs_to :review_request
+  validates_presence_of :code_review_id, :user_id
+  belongs_to :code_review
   belongs_to :user
   has_many :payments
 
@@ -63,18 +63,18 @@ class Offer < ActiveRecord::Base
   end
 
   def transaction_fee
-    (self.review_request.value.to_f * TRANSACTION_FEE).to_i
+    (self.code_review.value.to_f * TRANSACTION_FEE).to_i
   end
 
   def gross_payment_value
-    (self.review_request.value - transaction_fee).to_i
+    (self.code_review.value - transaction_fee).to_i
   end
 
   def recipients
     offer_owner = user
-    review_request_owner = review_request.user
-    code_review = review_request
-    {offer_owner: offer_owner, review_request_owner: review_request_owner, code_review: code_review, offer: self}
+    code_review_owner = code_review.user
+    code_review = code_review
+    {offer_owner: offer_owner, code_review_owner: code_review_owner, code_review: code_review, offer: self}
   end
 
   def notify_delivery
@@ -115,7 +115,6 @@ class Offer < ActiveRecord::Base
   end
 
   def value
-    review_request.value
+    code_review.value
   end
-
 end

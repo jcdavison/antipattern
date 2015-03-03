@@ -1,7 +1,6 @@
 FactoryGirl.define do
-  factory :review_request do
+  factory :code_review do
     value 1
-detail "MyText"
+    detail "MyText"
   end
-
 end

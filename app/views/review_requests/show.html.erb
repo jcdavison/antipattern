@@ -3,11 +3,11 @@
     <div class='col-sm-10 col-sm-offset-2'>
       <div class='row'>
         <div class='col-sm-10 text-right no-left-padding no-right-padding'>
-          <%= render partial: 'shared/review_request', locals: {review: @review_request} %>
+          <%= render partial: 'shared/code_review', locals: {review: @code_review} %>
         </div>
       </div>
     </div>
 </div>
 <% if current_user %>
-  <%= render partial: 'shared/ng_offer_owner', locals: {code_review: @review_request} %>
+  <%= render partial: 'shared/ng_offer_owner', locals: {code_review: @code_review} %>
 <% end %>

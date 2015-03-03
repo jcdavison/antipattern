@@ -1,8 +1,8 @@
 <html>
   <body>
-    <h3>Hi <%= @review_request_owner.name %>,</h3>
+    <h3>Hi <%= @code_review_owner.name %>,</h3>
 
-    <p><%= link_to @offer_owner.name, @offer_owner.github_profile %>, would like to review your code.  Visit <%= link_to(code_review_offer_url(@review_request_id), code_review_offer_url(@review_request_id) ) %> to accept or decline the offer.</p>
+    <p><%= link_to @offer_owner.name, @offer_owner.github_profile %>, would like to review your code.  Visit <%= link_to(code_review_offer_url(@code_review_id), code_review_offer_url(@code_review_id) ) %> to accept or decline the offer.</p>
 
     <p>Thanks,</p>
 

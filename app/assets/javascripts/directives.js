@@ -18,7 +18,7 @@ directives.directive('ngFocus', [function() {
   }
 }]);
 
-directives.directive('showifowner', [ 'ReviewRequest', function(ReviewRequest) {
+directives.directive('showifowner', [ 'CodeReview', function(CodeReview) {
   return {
     restrict: 'A',
     scope: {
@@ -26,7 +26,7 @@ directives.directive('showifowner', [ 'ReviewRequest', function(ReviewRequest) {
       displaySetting: '='
     },
     link: function (scope, element, attrs) {
-      ReviewRequest.ownedByCurrentUser(scope.showifowner).then( function (response) { 
+      CodeReview.ownedByCurrentUser(scope.showifowner).then( function (response) { 
         if (response.owned_by == true) {
           scope.$parent.shouldHideOwnerTools = false
         }
@@ -35,14 +35,14 @@ directives.directive('showifowner', [ 'ReviewRequest', function(ReviewRequest) {
   }
 }]);
 
-directives.directive('hideifowner', [ 'ReviewRequest', function(ReviewRequest) {
+directives.directive('hideifowner', [ 'CodeReview', function(CodeReview) {
   return {
     restrict: 'A',
     scope: {
       hideifowner: '@'
     },
     link: function (scope, element, attrs) {
-      ReviewRequest.ownedByCurrentUser(scope.hideifowner).then( function (response) { 
+      CodeReview.ownedByCurrentUser(scope.hideifowner).then( function (response) { 
         if (response.owned_by == true) {
           element.hide();
         }
@@ -51,20 +51,20 @@ directives.directive('hideifowner', [ 'ReviewRequest', function(ReviewRequest) {
   }
 }]);
 
-directives.directive('hideifoffered', [ 'ReviewRequest', function(ReviewRequest) {
+directives.directive('hideifoffered', [ 'CodeReview', function(CodeReview) {
   return {
     restrict: 'A',
     scope: {
       reviewid: '@'
     },
     link: function ($scope, element, $attrs) {
-      ReviewRequest.userHasOffered($scope.reviewid).then( function (response) { 
+      CodeReview.userHasOffered($scope.reviewid).then( function (response) { 
         if(response.data.has_offered == true) {
           element.hide();
         }
       });
       $scope.$on('offer-success', function () {
-        ReviewRequest.userHasOffered($scope.reviewid).then( function (response) { 
+        CodeReview.userHasOffered($scope.reviewid).then( function (response) { 
           if(response.data.has_offered == true) {
             element.hide();
           }
@@ -75,7 +75,7 @@ directives.directive('hideifoffered', [ 'ReviewRequest', function(ReviewRequest)
 }]);
 
 
-directives.directive('hideifdeleted', [ 'ReviewRequest', function(ReviewRequest) {
+directives.directive('hideifdeleted', [ 'CodeReview', function(CodeReview) {
   return {
     restrict: 'A',
     scope: {

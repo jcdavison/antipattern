@@ -1,9 +1,9 @@
-json.review_request do
-  json.(@review_request, :title, :id, :value )
-  json.detail @review_request.detail
+json.code_review do
+  json.(@code_review, :title, :id, :value )
+  json.detail @code_review.detail
   json.user do
-    json.name @review_request.user.name
-    json.profile @review_request.user.github_profile
-    json.profile_pic @review_request.user.profile_pic
+    json.name @code_review.user.name
+    json.profile @code_review.user.github_profile
+    json.profile_pic @code_review.user.profile_pic
   end
 end
