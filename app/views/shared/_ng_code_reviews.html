@@ -1,7 +1,7 @@
 <span ng-repeat="review in allCodeReviews">
   <span hideifdeleted="{{review.id}}">
     <div ng-controller='codeReviewsCtrl'>
-      <div class="review-request" >
+      <div class="code-review" >
 
         <div class="request-summary clearfix">
           <div class="row">
@@ -18,7 +18,7 @@
           </span>
         </div>
         <span class='request-actions'>
-          <div class='request-detail' ng-show="showDetail" ng-bind-html="codeReviewHtml">
+          <div class='code-review-detail' ng-show="showDetail" ng-bind-html="codeReviewHtml">
           </div>
           <div class="request-controls">
             <button class='btn btn-default tools summary' ng-click="toggleDetail()">

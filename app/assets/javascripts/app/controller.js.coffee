@@ -116,7 +116,7 @@ controllers.controller('codeReviewsCtrl', ($scope, $rootScope, $modal, $location
 )
 
 controllers.controller('showCodeReview', ($routeParams, $scope, $rootScope, $modal, $location, User, $attrs, CodeReview, $sanitize) ->
-  CodeReview.get($attrs.reviewRequestId).then (response) ->
+  CodeReview.get($attrs.codeReviewId).then (response) ->
     $scope.codeReview = response.data.codeReview
     renderHtml()
   marked.setOptions(gfm: true)

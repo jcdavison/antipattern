@@ -24,7 +24,7 @@ class Api::OffersController < ApplicationController
   end
 
   def create
-    code_review_id = params[:reviewRequestId].to_i
+    code_review_id = params[:codeReviewId].to_i
     offer = Offer.new code_review_id: code_review_id, user_id: current_user.id
     if offer.save
       render json: { offer: offer.to_json }, status: 200

@@ -52,17 +52,17 @@ angular.module('App.services', [] )
           url: "/api/review.json?id=#{id}"
         .then (response) ->
           return response
-      userHasOffered: (reviewRequestId) ->
+      userHasOffered: (codeReviewId) ->
         $http
           method: 'get' 
-          url: "/api/has_offered?id=#{reviewRequestId}"
+          url: "/api/has_offered?id=#{codeReviewId}"
         .then (response) =>
           return response
-      ownedByCurrentUser: (reviewRequestId) ->
+      ownedByCurrentUser: (codeReviewId) ->
         deferred = $q.defer()
         $http
           method: 'get' 
-          url: "/api/owned_by?id=#{reviewRequestId}"
+          url: "/api/owned_by?id=#{codeReviewId}"
         .success (response) =>
           deferred.resolve(response)
         .error (response) =>
@@ -104,9 +104,9 @@ angular.module('App.services', [] )
           url: "/api/offers.json?code_review_id=#{codeReviewId}&user_id=#{userId}"
         .then (response) ->
           return response
-      submit: (reviewRequestId) ->
+      submit: (codeReviewId) ->
         data = 
-          reviewRequestId: reviewRequestId
+          codeReviewId: codeReviewId
         $http
           method: 'post' 
           url: '/api/offers'

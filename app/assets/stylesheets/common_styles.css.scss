@@ -213,7 +213,7 @@ textarea.error, input.error {
   border: solid 1px $grey;
 }
 
-.review-request, .offer {
+.code-review, .offer {
   padding: .2em 0 .2em .2em;
   margin: 5px 0;
   div {
@@ -287,13 +287,13 @@ section.offer {
 
 // Create Review
 
-#review-request {
+#code-review {
   .review-title {
     width: 27.2em;
   }
 }
 
-.request-detail {
+.code-review-detail {
   img {
     max-width: 100%;
   }
