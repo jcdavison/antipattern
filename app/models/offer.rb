@@ -73,7 +73,6 @@ class Offer < ActiveRecord::Base
   def recipients
     offer_owner = user
     code_review_owner = code_review.user
-    code_review = code_review
     {offer_owner: offer_owner, code_review_owner: code_review_owner, code_review: code_review, offer: self}
   end
 
