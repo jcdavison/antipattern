@@ -6,7 +6,7 @@ class Payment < ActiveRecord::Base
   SERVICE_FEE_DESC = "AntiPattern.io Service Fee"
   FUND_A_CODER_UID = ENV['STRIPE_FUNDACODER_UID']
   ANTIPATTERN_UID = ENV['STRIPE_ANTIPATTERN_UID']
-  TRANSACTION_FEE = 0.03
+  TRANSACTION_FEE = 0.05
 
   def self.process args
     payment_detail = { offer_id: args[:offer].id, 

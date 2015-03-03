@@ -10,7 +10,7 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, CodeR
   CodeReview.getAll().then () ->
     $scope.allCodeReviews = CodeReview.allCodeReviews
 
-  $rootScope.values = [ {value: 20}, {value: 50}, {value: 75} ]
+  $rootScope.values = [ {value: 25} ]
 )
 
 controllers.controller('userController', ($scope, $rootScope, $modal, User, CodeReview, Offer, $attrs, Wallet) ->
