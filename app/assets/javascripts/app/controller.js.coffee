@@ -10,7 +10,7 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, CodeR
   CodeReview.getAll().then () ->
     $scope.allCodeReviews = CodeReview.allCodeReviews
 
-  $rootScope.values = [ {title: '$25.00', value: 2500}, {title: '$50.00', value: 5000}, {title: '$75.00', value: 7500} ]
+  $rootScope.values = [ {title: 'Good Karma', value: 0}, {title: '$25.00', value: 2500}, {title: '$50.00', value: 5000}, {title: '$75.00', value: 7500} ]
 
   $scope.showFaq = () ->
     modalInstance = $modal.open(
@@ -234,18 +234,19 @@ controllers.controller('offerCodeReviewModal', ($rootScope, $scope, $modalInstan
   $scope.newOffer = {code_review_id: codeReview.id}
 
   $scope.values = $rootScope.values 
-  $scope.display = 'instructions'
+  $scope.display = 'offer-submit'
   $scope.cancel = () ->
     $modalInstance.dismiss('cancel')
   $scope.codeReview = codeReview
 
   $scope.offerCodeReview = () ->
+    $scope.display = 'submitting'
     Offer.submit($scope.newOffer).then (r) ->
       if r.status == 200
         $scope.display = 'offer-success'
         $rootScope.$broadcast 'offer-success'
       else
-        $scope.display = 'offer-failure'
+        $scope.display = 'offer-error'
 )
 
 controllers.controller('paymentCollectionCtrl', ($rootScope, $scope, Offer, offer, User, $modalInstance) ->
