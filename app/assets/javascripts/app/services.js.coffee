@@ -104,9 +104,9 @@ angular.module('App.services', [] )
           url: "/api/offers.json?code_review_id=#{codeReviewId}&user_id=#{userId}"
         .then (response) ->
           return response
-      submit: (codeReviewId) ->
+      submit: (newOffer) ->
         data = 
-          codeReviewId: codeReviewId
+          offer: newOffer
         $http
           method: 'post' 
           url: '/api/offers'

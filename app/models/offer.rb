@@ -1,6 +1,6 @@
 class Offer < ActiveRecord::Base
   include AASM
-  validates_presence_of :code_review_id, :user_id
+  validates_presence_of :code_review_id, :user_id, :value
   belongs_to :code_review
   belongs_to :user
   has_many :payments
@@ -111,9 +111,5 @@ class Offer < ActiveRecord::Base
     return self.pay! if new_state == 'pay'
     return self.dispute! if new_state == 'dispute'
     return self.confirm! if new_state == 'confirmed'
-  end
-
-  def value
-    code_review.value
   end
 end

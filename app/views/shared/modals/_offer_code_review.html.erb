@@ -1,0 +1,38 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <span class='modal-title blue medium'>Offer A Code Review</span>
+    <h4 class='modal-title red' ng-show='articleSubmitError()'>There was a problem, please try again.</h4>
+  </div>
+  <div class="modal-body clearfix">
+    <form novalidate name="offer" ng-submit="offerCodeReview()" ng-model="newOffer">
+      <span class="medium-small text-left">
+        <div class="centered">Dear {{codeReview.user.name}} <img ng-src="{{codeReview.user.profile_pic}}" class="profile">,</div>
+        <div class="centered">I'd like to review your code <%= fa_icon 'smile-o' %>.</div>
+        <div class="centered">I'm the right person for this because...</div>
+      </span>
+
+      <div class="centered top-margined"><textarea required ng-focus name="note" cols="60" rows="5" ng-model="newOffer.note" ng-class="{error: offer.note.$dirty && offer.note.$invalid}" placeholder="markdown friendly" ng-minlength=5 /></div>
+      <div class="medium-small centered">In exchange for my time, I'd like <select ng-model="newOffer.value" ng-options="ele.value as ele.title for ele in values" name="value" required class="friendly-margin" /></div>
+      <div class="medium-small centered">Thanks and have a great day, <%= image_tag current_user.profile_pic, class: 'profile' %></div>
+      <div class="centered">
+        <button type="submit" class='btn btn-default tools accept' ng-disabled="offer.$invalid">
+
+          <span ng-show="offer.note.$invalid">enter a note</span>
+          <span ng-show="offer.note.$valid && offer.value.$invalid">enter a value</span>
+          <span ng-show="offer.$valid">Offer Code Review</span>
+        </button>
+      </div>
+    </form>
+    <%# <div class="medium-small text-right" ng-show="display == 'offer-success'" ng-hide="display != 'offer-success'"> %>
+    <%#   <div>Your offer has been received.</div> %>
+    <%#   <div>The owner must now accept or decline</div> %>
+    <%#   <div>You will receive email notification of their choice</div> %>
+    <%#   <h3><a href="mailto:jd@antipattern.io">email antipatten.io for help</a></h3> %>
+    <%# </div> %>
+    <%# <div class="medium-small text-right" ng-show="display == 'offer-failure'"> %>
+    <%#   there was a serious problem, with the api, it is the architect's fault %>
+    <%#   <h3><a href="mailto:jd@antipattern.io">email antipatten.io for help</a></h3> %>
+    <%# </div> %>
+  </div>
+</div>
