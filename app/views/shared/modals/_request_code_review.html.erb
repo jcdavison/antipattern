@@ -5,15 +5,15 @@
   </div>
 
   <div class="modal-body">
-    <form novalidate name="review_request" ng-submit="createReviewRequest()" id="review-request">
+    <form novalidate name="code_review" ng-submit="createCodeReview()" id="review-request">
       <div class="row">
         <div class="col-md-11">
-          <input type="text" required ng-focus name="title" ng-model="codeReview.title" class="review-title pull-right friendly-margin" ng-class="{error: review_request.title.$dirty && review_request.title.$invalid}" placeholder="Title" ng-minlength=5 />
+          <input type="text" required ng-focus name="title" ng-model="codeReview.title" class="review-title pull-right friendly-margin" ng-class="{error: code_review.title.$dirty && code_review.title.$invalid}" placeholder="Title" ng-minlength=5 />
         </div>
       </div>
       <div class="row">
         <div class="col-md-11">
-          <textarea required ng-focus name="detail" cols="60" rows="8" ng-model="codeReview.detail" class="pull-right friendly-margin" ng-class="{error: review_request.detail.$dirty && review_request.detail.$invalid}" placeholder="add relevant details, markdown friendly :)" ng-minlength=5 />
+          <textarea required ng-focus name="detail" cols="60" rows="8" ng-model="codeReview.detail" class="pull-right friendly-margin" ng-class="{error: code_review.detail.$dirty && code_review.detail.$invalid}" placeholder="add relevant details, markdown friendly :)" ng-minlength=5 />
         </div>
       </div>
       <div class="row">
@@ -23,11 +23,11 @@
             <select ng-model="codeReview.value" ng-options="ele.value for ele in values" name="value" required class="friendly-margin pull-right">
             </select>
             <br/>
-            <button type="submit" class="btn btn-default tools accept friendly-margin pull-right" ng-disabled="review_request.$invalid">
-              <span ng-show="review_request.title.$invalid">enter title</span>
-              <span ng-show="review_request.title.$valid && review_request.detail.$invalid">enter detail</span>
-              <span ng-show="review_request.detail.$valid && review_request.value.$invalid">select value</span>
-              <span ng-show="review_request.$valid">submit review</span>
+            <button type="submit" class="btn btn-default tools accept friendly-margin pull-right" ng-disabled="code_review.$invalid">
+              <span ng-show="code_review.title.$invalid">enter title</span>
+              <span ng-show="code_review.title.$valid && code_review.detail.$invalid">enter detail</span>
+              <span ng-show="code_review.detail.$valid && code_review.value.$invalid">select value</span>
+              <span ng-show="code_review.$valid">submit review</span>
               <span ng-hide="accepted" class="grey"><%= fa_icon 'gears' %></span>
               <span ng-show="accepted" class="green"><%= fa_icon 'check' %></span>
             </button>

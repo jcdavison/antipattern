@@ -1,19 +1,19 @@
 controllers = angular.module('App.controllers', [])
 
-controllers.controller('appController', ($scope, $rootScope, $modal, User, ReviewRequest, Offer, $attrs, Wallet) ->
+controllers.controller('appController', ($scope, $rootScope, $modal, User, CodeReview, Offer, $attrs, Wallet) ->
   User.isAuthorized().then (response) ->
     if response.success
       Wallet.validateDetail('stripeAccount').then () ->
         User.hasStripeAccount = true
       $rootScope.$broadcast 'authorized-user'
 
-  ReviewRequest.getAll().then () ->
-    $scope.allCodeReviews = ReviewRequest.allCodeReviews
+  CodeReview.getAll().then () ->
+    $scope.allCodeReviews = CodeReview.allCodeReviews
 
   $rootScope.values = [ {value: 20}, {value: 50}, {value: 75} ]
 )
 
-controllers.controller('userController', ($scope, $rootScope, $modal, User, ReviewRequest, Offer, $attrs, Wallet) ->
+controllers.controller('userController', ($scope, $rootScope, $modal, User, CodeReview, Offer, $attrs, Wallet) ->
 
   $scope.cardDetails = {}
   $scope.cardError = ""
@@ -56,7 +56,7 @@ controllers.controller('userController', ($scope, $rootScope, $modal, User, Revi
         setErrorMessage(response.error)
 )
 
-controllers.controller('codeReviewsCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest, $sanitize) ->
+controllers.controller('codeReviewsCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, CodeReview, $sanitize) ->
   marked.setOptions(gfm: true)
   $scope.showDetail = false
   $scope.shouldHideOwnerTools = true
@@ -71,7 +71,7 @@ controllers.controller('codeReviewsCtrl', ($scope, $rootScope, $modal, $location
   $scope.toggleDetail = () ->
     $scope.showDetail = ! $scope.showDetail
 
-  $scope.editReviewRequest = () ->
+  $scope.editCodeReview = () ->
     modalInstance = $modal.open(
       templateUrl: 'editCodeReview.html'
       controller: 'editCodeReviewModal'
@@ -108,8 +108,8 @@ controllers.controller('codeReviewsCtrl', ($scope, $rootScope, $modal, $location
     )
 )
 
-controllers.controller('showCodeReview', ($routeParams, $scope, $rootScope, $modal, $location, User, $attrs, ReviewRequest, $sanitize) ->
-  ReviewRequest.get($attrs.reviewRequestId).then (response) ->
+controllers.controller('showCodeReview', ($routeParams, $scope, $rootScope, $modal, $location, User, $attrs, CodeReview, $sanitize) ->
+  CodeReview.get($attrs.reviewRequestId).then (response) ->
     $scope.codeReview = response.data.codeReview
     renderHtml()
   marked.setOptions(gfm: true)
@@ -125,7 +125,7 @@ controllers.controller('showCodeReview', ($routeParams, $scope, $rootScope, $mod
   $scope.toggleDetail = () ->
     $scope.showDetail = ! $scope.showDetail
 
-  $scope.editReviewRequest = () ->
+  $scope.editCodeReview = () ->
     modalInstance = $modal.open(
       templateUrl: 'editCodeReview.html'
       controller: 'editCodeReviewModal'
@@ -162,9 +162,9 @@ controllers.controller('showCodeReview', ($routeParams, $scope, $rootScope, $mod
     )
 
 )
-controllers.controller('deleteCodeReviewModal', ($scope, $rootScope, $modalInstance, $modal, ReviewRequest, codeReview) ->
+controllers.controller('deleteCodeReviewModal', ($scope, $rootScope, $modalInstance, $modal, CodeReview, codeReview) ->
   $scope.delete = () ->
-    ReviewRequest.delete(codeReview).then (response) ->
+    CodeReview.delete(codeReview).then (response) ->
       if response.status == 200
         $rootScope.$broadcast 'codeReviewDeleted', codeReview
         $modalInstance.dismiss('cancel')
@@ -178,13 +178,13 @@ controllers.controller('deleteCodeReviewModal', ($scope, $rootScope, $modalInsta
       window.location.pathname = "/"
 )
 
-controllers.controller('createCodeReviewModal', ($scope, $rootScope, $modalInstance, $modal, ReviewRequest) ->
+controllers.controller('createCodeReviewModal', ($scope, $rootScope, $modalInstance, $modal, CodeReview) ->
   $scope.codeReview = {}
   $scope.values = $rootScope.values 
   $scope.codeReview.value = $scope.values[0]
 
-  $scope.createReviewRequest = () ->
-    ReviewRequest.create($scope.codeReview).then () ->
+  $scope.createCodeReview = () ->
+    CodeReview.create($scope.codeReview).then () ->
       $rootScope.$broadcast 'render-html-from-detail'
       $modalInstance.dismiss('cancel');
 
@@ -207,7 +207,7 @@ controllers.controller('createCodeReview', ($scope, $rootScope, $modal, User) ->
 )
 
 
-controllers.controller('editCodeReviewModal', ($scope, $rootScope, $modalInstance, User, codeReview, ReviewRequest) -> 
+controllers.controller('editCodeReviewModal', ($scope, $rootScope, $modalInstance, User, codeReview, CodeReview) -> 
   $scope.codeReview = codeReview
   $scope.values = $rootScope.values 
 
@@ -215,8 +215,8 @@ controllers.controller('editCodeReviewModal', ($scope, $rootScope, $modalInstanc
     if ele.value == codeReview.value / 100
       $scope.codeReview.value = $scope.values[i].value
 
-  $scope.editReviewRequest = () ->
-    ReviewRequest.update($scope.codeReview).then () ->
+  $scope.editCodeReview = () ->
+    CodeReview.update($scope.codeReview).then () ->
       $rootScope.$broadcast 'render-html-from-detail'
       $modalInstance.dismiss('cancel')
 

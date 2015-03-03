@@ -36,8 +36,8 @@ angular.module('App.services', [] )
           return response.data
     return Wallet
 
-  .factory 'ReviewRequest', ($q, $http) ->
-    ReviewRequest = 
+  .factory 'CodeReview', ($q, $http) ->
+    CodeReview = 
       accepted: null
       allCodeReviews: []
       getAll: () ->
@@ -78,7 +78,7 @@ angular.module('App.services', [] )
           data: data
         .then (response) =>
           if response.status == 200
-            @allCodeReviews.unshift response.data.review_request
+            @allCodeReviews.unshift response.data.code_review
       update: (codeReview, indexOfCodeReview) ->
         codeReview.value = (codeReview.value * 100)
         $http
@@ -94,7 +94,7 @@ angular.module('App.services', [] )
           url: "/api/reviews/#{codeReview.id}.json"
         .then (response) =>
           return response
-    return ReviewRequest
+    return CodeReview
 
   .factory 'Offer', ($q, $http) ->
     Offer = 
