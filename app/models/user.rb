@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
 
   has_many :identities, dependent: :destroy
-  has_many :review_requests, dependent: :destroy
+  has_many :code_reviews, dependent: :destroy
   has_many :offers, dependent: :destroy
   has_one :wallet, dependent: :destroy
   has_and_belongs_to_many :notification_channels, dependent: :destroy

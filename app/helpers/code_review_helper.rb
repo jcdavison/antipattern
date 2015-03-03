@@ -1,4 +1,4 @@
-module ReviewRequestHelper
+module CodeReviewHelper
   def markdown_to_html content
     Redcarpet::Markdown.new(Redcarpet::Render::HTML, fenced_code_blocks: true).render(content).html_safe
   end
@@ -8,7 +8,7 @@ module ReviewRequestHelper
   end
 
   def has_offered? args
-    args[:review_request].offers.any? { |offer| offer.user_id == current_user.id }
+    args[:code_review].offers.any? { |offer| offer.user_id == current_user.id }
   end
 
   def owned_by_current_user args

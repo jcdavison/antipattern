@@ -2,8 +2,8 @@ Rails.application.routes.draw do
 
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }, :skip => [:registrations, :sessions]
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
-  get '/code-review-offers/:id', to: 'review_requests#show', as: 'code_review_offer'
-  get '/code-reviews/:id', to: 'review_requests#show', as: 'code_review'
+  get '/code-review-offers/:id', to: 'code_reviews#show', as: 'code_review_offer'
+  get '/code-reviews/:id', to: 'code_reviews#show', as: 'code_review'
   get '/profiles/:id', to: 'users#show', as: 'profile'
 
   namespace :api do

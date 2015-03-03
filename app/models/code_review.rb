@@ -1,4 +1,4 @@
-class ReviewRequest < ActiveRecord::Base
+class CodeReview < ActiveRecord::Base
   belongs_to :user
   validates_presence_of :value, :detail, :user_id, :title
   has_many :offers
@@ -15,6 +15,6 @@ class ReviewRequest < ActiveRecord::Base
   end
 
   def notify_new_code_review 
-    NotificationChannel.send! name: 'notify_new_code_review', code_review: self
+    NotificationChannel.send! name: 'new_code_review', code_review: self
   end
 end

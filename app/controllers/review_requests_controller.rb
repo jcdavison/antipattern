@@ -1,8 +1,6 @@
-class ReviewRequestsController < ApplicationController
-
+class CodeReviewsController < ApplicationController
   def show
-    @review_request = ReviewRequest.find params[:id]
-    @offers = @review_request.offers
+    @code_review = CodeReview.find params[:id]
+    @offers = @code_review.offers
   end
-
 end

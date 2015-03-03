@@ -3,13 +3,13 @@ class Api::OffersController < ApplicationController
   respond_to :json
 
   def index
-    attributes = {user_id: params[:user_id], review_request_id: params[:code_review_id]}.delete_if {|k,v| v == 'nil'}
+    attributes = {user_id: params[:user_id], code_review_id: params[:code_review_id]}.delete_if {|k,v| v == 'nil'}
     @offers = Offer.where attributes
     render 'api/offers/index'
   end
 
   def deliver
-    @offer = Offer.find_by user_id: current_user.id, review_request_id: params[:review_request_id]
+    @offer = Offer.find_by user_id: current_user.id, code_review_id: params[:code_review_id]
     if @offer.deliver!
       render 'api/offers/show'
     else
@@ -24,8 +24,8 @@ class Api::OffersController < ApplicationController
   end
 
   def create
-    review_request_id = params[:reviewRequestId].to_i
-    offer = Offer.new review_request_id: review_request_id, user_id: current_user.id
+    code_review_id = params[:reviewRequestId].to_i
+    offer = Offer.new code_review_id: code_review_id, user_id: current_user.id
     if offer.save
       render json: { offer: offer.to_json }, status: 200
     else
@@ -47,8 +47,8 @@ class Api::OffersController < ApplicationController
   end
 
   def has_offered
-    review_request = Offer.find_by(user_id: current_user.id, review_request_id: params[:id])
-    has_offered = !review_request.nil?
+    code_review = Offer.find_by(user_id: current_user.id, code_review_id: params[:id])
+    has_offered = !code_review.nil?
     render json: { has_offered: has_offered }, status: 200
   end
 

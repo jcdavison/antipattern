@@ -3,18 +3,18 @@ class Api::ReviewsController < ApplicationController
   respond_to :json
 
   def index
-    @code_reviews = ReviewRequest.all_active
+    @code_reviews = CodeReview.all_active
     render 'api/reviews/reviews'
   end
 
   def show
-    @code_review = ReviewRequest.find(params[:id])
+    @code_review = CodeReview.find(params[:id])
     render 'api/reviews/show'
   end
 
   def create
-    @review_request = ReviewRequest.new(code_review_params.merge(user_id: current_user.id))
-    if @review_request.save
+    @code_review = CodeReview.new(code_review_params.merge(user_id: current_user.id))
+    if @code_review.save
       render 'api/reviews/create'
     else
       head :forbidden
@@ -22,13 +22,13 @@ class Api::ReviewsController < ApplicationController
   end
 
   def owned_by
-    review_request = ReviewRequest.find_by(user_id: current_user.id, id: params[:id])
-    owned_by = !review_request.nil?
+    code_review = CodeReview.find_by(user_id: current_user.id, id: params[:id])
+    owned_by = !code_review.nil?
     render json: { owned_by: owned_by}
   end
 
   def update
-    @code_review = ReviewRequest.find_by(user_id: current_user.id, id: params[:code_review][:id])
+    @code_review = CodeReview.find_by(user_id: current_user.id, id: params[:code_review][:id])
     if @code_review.update_attributes(code_review_params)
       render 'api/reviews/update'
     else
@@ -37,7 +37,7 @@ class Api::ReviewsController < ApplicationController
   end
 
   def destroy
-    @code_review = ReviewRequest.find_by(id: params[:id])
+    @code_review = CodeReview.find_by(id: params[:id])
     @code_review.deleted = true
     if @code_review.save
       head :ok

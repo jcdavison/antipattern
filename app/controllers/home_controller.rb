@@ -2,17 +2,17 @@ class HomeController < ApplicationController
   layout :set_layout
 
   def index
-    all_review_requests
+    all_code_reviews
   end
 
   def splash
-    all_review_requests
+    all_code_reviews
   end
 
   private
 
-    def all_review_requests
-      @review_requests = ReviewRequest.order 'created_at DESC'
+    def all_code_reviews
+      @code_reviews = CodeReview.order 'created_at DESC'
     end
 
     def set_layout 
