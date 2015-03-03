@@ -11,6 +11,13 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, CodeR
     $scope.allCodeReviews = CodeReview.allCodeReviews
 
   $rootScope.values = [ {value: 25} ]
+
+  $scope.showFaq = () ->
+    modalInstance = $modal.open(
+      templateUrl: 'faq.html'
+      controller: 'genericModalCtrl'
+      size: 'md'
+    )
 )
 
 controllers.controller('userController', ($scope, $rootScope, $modal, User, CodeReview, Offer, $attrs, Wallet) ->
