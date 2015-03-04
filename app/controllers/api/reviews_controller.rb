@@ -15,6 +15,7 @@ class Api::ReviewsController < ApplicationController
   def create
     @code_review = CodeReview.new(code_review_params.merge(user_id: current_user.id))
     if @code_review.save
+      @members_notified = @code_review.notify_subscribers
       render 'api/reviews/create'
     else
       head :forbidden

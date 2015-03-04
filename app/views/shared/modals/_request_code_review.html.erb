@@ -5,30 +5,61 @@
   </div>
 
   <div class="modal-body">
-    <form novalidate name="code_review" ng-submit="createCodeReview()" id="code-review">
-      <div class="row">
-        <div class="col-md-11">
-          <input type="text" required ng-focus name="title" ng-model="codeReview.title" class="review-title pull-right friendly-margin" ng-class="{error: code_review.title.$dirty && code_review.title.$invalid}" placeholder="Title" ng-minlength=5 />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-11">
-          <textarea required ng-focus name="detail" cols="60" rows="8" ng-model="codeReview.detail" class="pull-right friendly-margin" ng-class="{error: code_review.detail.$dirty && code_review.detail.$invalid}" placeholder="add relevant details, markdown friendly :)" ng-minlength=5 />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-11">
-          <div class="pull-right">
-            <button type="submit" class="btn btn-default tools accept friendly-margin pull-right" ng-disabled="code_review.$invalid">
-              <span ng-show="code_review.title.$invalid">enter title</span>
-              <span ng-show="code_review.title.$valid && code_review.detail.$invalid">enter detail</span>
-              <span ng-show="code_review.$valid">submit review</span>
-              <span ng-hide="accepted" class="grey"><%= fa_icon 'gears' %></span>
-              <span ng-show="accepted" class="green"><%= fa_icon 'check' %></span>
-            </button>
+    <div class="row">
+      <div class="col-md-12">
+        <span ng-show="display == 'code-review-submit'">
+          <form novalidate name="code_review" ng-submit="createCodeReview()" id="code-review">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="medium grey centered">Dear AntiPattern.io Community,</div>
+                <div class="centered">
+                  <span ng-repeat="member in communityMembers ">
+                    <img ng-src="{{member.profile_pic}}" class="profile">
+                  </span>
+                </div>
+                <div class="medium-small grey centered">I wrote some code describable as,</div>
+                <input type="text" required ng-focus name="title" ng-model="codeReview.title" class="review-title center-block friendly-margin" ng-class="{error: code_review.title.$dirty && code_review.title.$invalid}" placeholder="give your code review headline" ng-minlength=5 />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="medium-small grey centered">A little bit of detail about this code is,</div>
+                <textarea required ng-focus name="detail" cols="80" rows="10" ng-model="codeReview.detail" class="center-block friendly-margin" ng-class="{error: code_review.detail.$dirty && code_review.detail.$invalid}" placeholder="say some descriptive stuff, markdown friendly, include links to commits if you have them" ng-minlength=5 />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="medium-small grey centered">Will someone give me a solid Code Review?</div>
+                <div class="medium-small grey centered">Sincerely,</div>
+                <div class="medium-small grey centered"><%= image_tag current_user.profile_pic, class: 'profile' %></div>
+                <div class="centered">
+                  <button type="submit" class="btn btn-default tools accept friendly-margin" ng-disabled="code_review.$invalid || submitted">
+                    <span ng-show="code_review.title.$invalid">enter title</span>
+                    <span ng-show="code_review.title.$valid && code_review.detail.$invalid">enter detail</span>
+                    <span ng-show="code_review.$valid">submit review</span>
+                    <span ng-hide="accepted" class="grey"><%= fa_icon 'gears' %></span>
+                    <span ng-show="accepted" class="green"><%= fa_icon 'check' %></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </span>
+        <span ng-show="display == 'code-review-success'">
+          <div class="centered">
+            <div><%= fa_icon 'thumbs-up', class: 'green jumbo' %></div>
           </div>
-        </div>
+          <div class="centered medium-small grey">
+            <div>Your Code Review was successfully created.</div>
+            <div>It can be viewed at:</div>
+            <div><a href="{{summary.code_review_url}}" class="blue">{{summary.code_review_url}}</a></div>
+            <div><span class="blue">{{summary.members_notified}}</span> community member(s) received a notification about it.</div>
+          </div>
+        </span>
+        <span ng-show="display == 'code-review-error'">
+          <%= render 'shared/generic_error' %>
+        </span>
       </div>
-    </form>
+    </div>
   </div>
 </div>

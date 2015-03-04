@@ -2,7 +2,6 @@ class CodeReview < ActiveRecord::Base
   belongs_to :user
   validates_presence_of :detail, :user_id, :title
   has_many :offers
-  after_create :notify_new_code_review
 
   scope :all_active, -> {where(deleted: false)}
 
@@ -10,7 +9,7 @@ class CodeReview < ActiveRecord::Base
     ! offers.empty?
   end
 
-  def notify_new_code_review 
-    NotificationChannel.send! name: 'new_code_review', code_review: self
+  def notify_subscribers 
+    NotificationChannel.send! name: 'new_code_review', code_review: self, skip_user: user
   end
 end

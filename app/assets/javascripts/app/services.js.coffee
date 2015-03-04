@@ -1,18 +1,23 @@
 angular.module('App.services', [] )
   .factory 'User', ($q, $http, $rootScope) ->
     User = 
+      communityMembers: []
       hasStripeAccount: null 
       isAuthorized: () ->
         deferred = $q.defer()
         $http
           method: 'get' 
           url: '/api/authorized_user'
-        .success (response) =>
-          $rootScope.authorizedUser = true
-          deferred.resolve(response)
-        .error (response) =>
-          deferred.reject(response)
-        return deferred.promise
+        .then (response) =>
+          if response.status == 200
+            $rootScope.authorizedUser = true
+          return response
+      getCommunityMembers: () ->
+        $http
+          method: 'get'
+          url: '/api/community_members.json'
+        .then (response) =>
+          @communityMembers = response.data
     return User
   
   .factory 'Wallet', ($q, $http, $rootScope) ->
@@ -69,7 +74,6 @@ angular.module('App.services', [] )
           deferred.reject(response)
         return deferred.promise
       create: (codeReview) ->
-        codeReview.value = codeReview.value.value * 100
         data =
           code_review: codeReview
         $http
@@ -79,6 +83,7 @@ angular.module('App.services', [] )
         .then (response) =>
           if response.status == 200
             @allCodeReviews.unshift response.data.code_review
+          return response
       update: (codeReview, indexOfCodeReview) ->
         codeReview.value = (codeReview.value * 100)
         $http
