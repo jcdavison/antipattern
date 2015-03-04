@@ -2,7 +2,9 @@ controllers = angular.module('App.controllers', [])
 
 controllers.controller('appController', ($scope, $rootScope, $modal, User, CodeReview, Offer, $attrs, Wallet) ->
   User.isAuthorized().then (response) ->
-    if response.success
+    console.log "get Community Members"
+    if response.status == 200
+      User.getCommunityMembers()
       Wallet.validateDetail('stripeAccount').then () ->
         User.hasStripeAccount = true
       $rootScope.$broadcast 'authorized-user'
@@ -185,9 +187,10 @@ controllers.controller('deleteCodeReviewModal', ($scope, $rootScope, $modalInsta
       window.location.pathname = "/"
 )
 
-controllers.controller('createCodeReviewModal', ($scope, $rootScope, $modalInstance, $modal, CodeReview) ->
+controllers.controller('createCodeReviewModal', ($scope, $rootScope, $modalInstance, $modal, CodeReview, User) ->
   $scope.codeReview = {}
   $scope.codeReview.value = $scope.values[0]
+  $scope.communityMembers = User.communityMembers
 
   $scope.createCodeReview = () ->
     CodeReview.create($scope.codeReview).then () ->
@@ -204,6 +207,7 @@ controllers.controller('createCodeReview', ($scope, $rootScope, $modal, User) ->
       modalInstance = $modal.open(
         templateUrl: 'requestCodeReview.html'
         controller: 'createCodeReviewModal'
+        size: 'lg'
       )
     else
       modalInstance = $modal.open(

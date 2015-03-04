@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     get 'tokens', to: 'tokens#show'
     post 'tokens', to: 'tokens#create'
     post 'offers/payments', to: 'offers#payments'
+    get 'community_members', to: 'users#index'
   end
 
   devise_scope :user do

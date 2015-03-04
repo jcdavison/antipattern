@@ -1,18 +1,24 @@
 angular.module('App.services', [] )
   .factory 'User', ($q, $http, $rootScope) ->
     User = 
+      communityMembers: []
       hasStripeAccount: null 
       isAuthorized: () ->
         deferred = $q.defer()
         $http
           method: 'get' 
           url: '/api/authorized_user'
-        .success (response) =>
-          $rootScope.authorizedUser = true
-          deferred.resolve(response)
-        .error (response) =>
-          deferred.reject(response)
-        return deferred.promise
+        .then (response) =>
+          if response.status == 200
+            $rootScope.authorizedUser = true
+          return response
+      getCommunityMembers: () ->
+        $http
+          method: 'get'
+          url: '/api/community_members.json'
+        .then (response) =>
+          console.log response.data
+          @communityMembers = response.data
     return User
   
   .factory 'Wallet', ($q, $http, $rootScope) ->
