@@ -17,7 +17,6 @@ angular.module('App.services', [] )
           method: 'get'
           url: '/api/community_members.json'
         .then (response) =>
-          console.log response.data
           @communityMembers = response.data
     return User
   
@@ -75,7 +74,6 @@ angular.module('App.services', [] )
           deferred.reject(response)
         return deferred.promise
       create: (codeReview) ->
-        codeReview.value = codeReview.value.value * 100
         data =
           code_review: codeReview
         $http
@@ -85,6 +83,7 @@ angular.module('App.services', [] )
         .then (response) =>
           if response.status == 200
             @allCodeReviews.unshift response.data.code_review
+          return response
       update: (codeReview, indexOfCodeReview) ->
         codeReview.value = (codeReview.value * 100)
         $http

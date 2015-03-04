@@ -2,7 +2,6 @@ controllers = angular.module('App.controllers', [])
 
 controllers.controller('appController', ($scope, $rootScope, $modal, User, CodeReview, Offer, $attrs, Wallet) ->
   User.isAuthorized().then (response) ->
-    console.log "get Community Members"
     if response.status == 200
       User.getCommunityMembers()
       Wallet.validateDetail('stripeAccount').then () ->
@@ -191,11 +190,18 @@ controllers.controller('createCodeReviewModal', ($scope, $rootScope, $modalInsta
   $scope.codeReview = {}
   $scope.codeReview.value = $scope.values[0]
   $scope.communityMembers = User.communityMembers
+  $scope.display = 'code-review-submit'
+  $scope.submitted = false
 
   $scope.createCodeReview = () ->
-    CodeReview.create($scope.codeReview).then () ->
-      $rootScope.$broadcast 'render-html-from-detail'
-      $modalInstance.dismiss('cancel');
+    $scope.submitted = true
+    CodeReview.create($scope.codeReview).then (response) ->
+      if response.status == 200 
+        $scope.summary = response.data.code_review.summary
+        $rootScope.$broadcast 'render-html-from-detail'
+        $scope.display = 'code-review-success'
+      else
+        $scope.display = 'code-review-error'
 
   $scope.cancel = () ->
     $modalInstance.dismiss('cancel');

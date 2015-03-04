@@ -35,20 +35,7 @@
       </div>
     </span>
     <span ng-show="display == 'offer-error'">
-      <div class="centered"> 
-        <div><%= fa_icon 'ambulance', class: 'red jumbo' %></div>
-        <div class="medium-small">There was a technical problem, maybe refresh and try again?</div>
-      </div>
+      <%= render 'shared/generic_error' %>
     </span>
-    <%# <div class="medium-small text-right" ng-show="display == 'offer-success'" ng-hide="display != 'offer-success'"> %>
-    <%#   <div>Your offer has been received.</div> %>
-    <%#   <div>The owner must now accept or decline</div> %>
-    <%#   <div>You will receive email notification of their choice</div> %>
-    <%#   <h3><a href="mailto:jd@antipattern.io">email antipatten.io for help</a></h3> %>
-    <%# </div> %>
-    <%# <div class="medium-small text-right" ng-show="display == 'offer-failure'"> %>
-    <%#   there was a serious problem, with the api, it is the architect's fault %>
-    <%#   <h3><a href="mailto:jd@antipattern.io">email antipatten.io for help</a></h3> %>
-    <%# </div> %>
   </div>
 </div>
