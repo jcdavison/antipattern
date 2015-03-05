@@ -5,7 +5,7 @@
         <div class="row">
           <div class='col-sm-12'>
             <span class='medium '><a href="/code-reviews/{{review.id}}">{{review.title}}</a> </span> 
-            Requested By: <a href="{{review.user.github_profile}}">{{review.user.name}} </a><img ng-src="{{review.user.profile_pic}}" class='profile'> 
+            By: <a href="{{review.user.github_profile}}" target="new">{{review.user.name}} <img ng-src="{{review.user.profile_pic}}" class='profile'></a>  
             On: {{review.created_at}}
           </div>
         </div>
