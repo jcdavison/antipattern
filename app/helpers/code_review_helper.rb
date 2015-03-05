@@ -14,4 +14,9 @@ module CodeReviewHelper
   def owned_by_current_user args
     args[:offers].select { |offer| offer.user_id == current_user.id }
   end
+
+
+  def friendly_display date
+    date.strftime '%B %d, %Y'
+  end
 end

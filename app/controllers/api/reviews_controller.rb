@@ -3,8 +3,8 @@ class Api::ReviewsController < ApplicationController
   respond_to :json
 
   def index
-    @code_reviews = CodeReview.all_active
-    render 'api/reviews/reviews'
+    @code_reviews = CodeReview.all_active.order(created_at: :desc)
+    render 'api/reviews/index'
   end
 
   def show

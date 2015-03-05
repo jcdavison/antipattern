@@ -1,0 +1,15 @@
+<span ng-repeat="review in allCodeReviews">
+  <div ng-controller='codeReviewsCtrl'>
+    <div class="code-review">
+      <div class="request-summary clearfix">
+        <div class="row">
+          <div class='col-sm-12'>
+            <span class='medium '><a href="/code-reviews/{{review.id}}">{{review.title}}</a> </span> 
+            Requested By: <a href="{{review.user.github_profile}}">{{review.user.name}} </a><img ng-src="{{review.user.profile_pic}}" class='profile'> 
+            On: {{review.created_at}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</span>
