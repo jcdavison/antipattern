@@ -10,6 +10,7 @@ gem 'aasm', '~> 4.0.8'
 gem 'jbuilder', '~> 2.2.6'
 gem 'honeybadger'
 gem 'rack-ssl-enforcer'
+gem 'octokit', '~> 3.0'
 
 #user auth
 gem 'devise', '~> 3.4.1'
