@@ -1,12 +1,12 @@
 <html>
   <body>
-    <h3>Hi <%= @code_review_owner.name %>,</h3>
-
-    <p><%= link_to @offer_owner.name, @offer_owner.github_profile %>, would like to review your code.  Visit <%= link_to(code_review_offer_url(@code_review_id), code_review_offer_url(@code_review_id) ) %> to accept or decline the offer.</p>
-
+    <h4>Hey There Friendly Devs,</h4>
+    <p><%= link_to github_username(@offer_owner), @offer_owner.github_profile %> offered to review <%= link_to 'some code', code_review_url(@code_review_id) %> posted by <%= link_to github_username(@code_review_owner), @code_review_owner.github_profile %>.</p>  
+    <p>You two should try to coordinate the logisitics of sharing and reviewing code as works best for both of you.</p>
+    <p>Please let me know if I can be of assitance in brokering this process and/or let me know if there is anything I can do.</p>
     <p>Thanks,</p>
-
-    <p><a href="https://github.com/jcdavison">John Davison, Founder, Antipattern.io </a></p>
-    <p><a href="mailto:jd@antipattern.io?subject=code review offer help">email antipattern.io support</a></p>
+    John Davison
+    <br>
+    Lead Maker, Antipattern.io
   </body>
 </html>

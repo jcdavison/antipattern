@@ -25,11 +25,10 @@ class Api::OffersController < ApplicationController
 
   def create
     offer = Offer.new offer_params 
-    if offer.save
-      render json: { offer: offer.to_json }, status: 200
-    else
+    offer.save
+    render json: { offer: offer.to_json }, status: 200
+    rescue
       head :forbidden
-    end
   end
 
   def update

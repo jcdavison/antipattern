@@ -11,7 +11,7 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, CodeR
   CodeReview.getAll().then () ->
     $scope.allCodeReviews = CodeReview.allCodeReviews
 
-  $rootScope.values = [ {title: 'Good Karma', value: 0}, {title: '$25.00', value: 2500}, {title: '$50.00', value: 5000}, {title: '$75.00', value: 7500} ]
+  $rootScope.values = [ {title: 'Good Karma', value: 0} ]
 
   $scope.showFaq = () ->
     modalInstance = $modal.open(
