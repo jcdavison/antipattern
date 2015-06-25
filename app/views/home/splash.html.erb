@@ -30,7 +30,12 @@
 <div class="container">
   <div class="row">
     <div class='col-sm-12 centered top-margined'>
-        <%= link_to 'JOIN', user_omniauth_authorize_path(:github), class: 'medium join' %>
+      <%= link_to 'VIEW CODE REVIEWS', code_reviews_path, class: 'medium join' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-12 centered top-margined'>
+      <%= link_to 'JOIN', user_omniauth_authorize_path(:github), class: 'medium join' %>
     </div>
   </div>
 </div>
