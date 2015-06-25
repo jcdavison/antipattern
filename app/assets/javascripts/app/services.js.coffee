@@ -19,27 +19,6 @@ angular.module('App.services', [] )
         .then (response) =>
           @communityMembers = response.data
     return User
-  
-  .factory 'Wallet', ($q, $http, $rootScope) ->
-    Wallet = 
-      validCreditCard: true
-      setCcToken: (token) ->
-        $http
-          method: 'post' 
-          data: 
-            stripe_cc_token: token
-          url: '/api/tokens'
-        .then (response) =>
-          if response.status == 200
-            @validCreditCard == true
-          return response
-      validateDetail: (detail) ->
-        $http
-          method: 'get'
-          url: "/api/tokens?detail=#{detail}"
-        .then (response) ->
-          return response.data
-    return Wallet
 
   .factory 'CodeReview', ($q, $http) ->
     CodeReview = 
@@ -117,6 +96,7 @@ angular.module('App.services', [] )
           url: '/api/offers'
           data: data
         .then (response) ->
+          console.log 'response', response
           return response
       checkStatus: (offerId) ->
         deferred = $q.defer()

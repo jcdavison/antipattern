@@ -10,7 +10,6 @@ class HomeController < ApplicationController
   end
 
   private
-
     def all_code_reviews
       @code_reviews = CodeReview.order 'created_at DESC'
     end

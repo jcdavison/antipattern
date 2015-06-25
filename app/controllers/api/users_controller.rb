@@ -3,7 +3,7 @@ class Api::UsersController < ApplicationController
   respond_to :json
 
   def index
-    @users = User.first(20).sample(10)
+    @users = User.first(30).sample(15)
     render 'api/users/index'
   end
 end

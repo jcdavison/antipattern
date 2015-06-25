@@ -28,7 +28,7 @@ class Api::OffersController < ApplicationController
     offer.save
     render json: { offer: offer.to_json }, status: 200
     rescue
-      head :forbidden
+      render json: { offer: 'error' }, status: 204
   end
 
   def update

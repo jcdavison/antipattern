@@ -1,11 +1,9 @@
 controllers = angular.module('App.controllers', [])
 
-controllers.controller('appController', ($scope, $rootScope, $modal, User, CodeReview, Offer, $attrs, Wallet) ->
+controllers.controller('appController', ($scope, $rootScope, $modal, User, CodeReview, Offer, $attrs) ->
   User.isAuthorized().then (response) ->
     if response.status == 200
       User.getCommunityMembers()
-      Wallet.validateDetail('stripeAccount').then () ->
-        User.hasStripeAccount = true
       $rootScope.$broadcast 'authorized-user'
 
   CodeReview.getAll().then () ->
@@ -19,49 +17,6 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, CodeR
       controller: 'genericModalCtrl'
       size: 'md'
     )
-)
-
-controllers.controller('userController', ($scope, $rootScope, $modal, User, CodeReview, Offer, $attrs, Wallet) ->
-
-  $scope.cardDetails = {}
-  $scope.cardError = ""
-  setErrorMessage = (error) ->
-    $scope.cardError = error.message
-    $scope.$digest()
-
-  validateStripeAccount = () ->
-    Wallet.validateDetail('stripeAccount').then (response) ->
-      $scope.stripeConnected = response.valid
-
-  validateCreditCard = () ->
-    Wallet.validateDetail('creditCard').then (response) ->
-      $scope.validCreditCard = response.valid
-
-  $scope.$on 'authorized-user', () ->
-    validateStripeAccount()
-    validateCreditCard()
-
-  $scope.showCreditCardForm = () ->
-    $scope.validCreditCard = false
-
-  $scope.showForm = () ->
-    $scope.stripeConnected = false
-    $scope.submitted = false
-
-  $scope.conductStripeFlow = () ->
-    $scope.submitted = true
-    data = 
-      number: $scope.cardDetails.number 
-      cvc: $scope.cardDetails.cvc 
-      exp_month: $scope.cardDetails.month 
-      exp_year: $scope.cardDetails.year
-
-    Stripe.card.createToken data ,  (status, response) ->  
-      if status == 200
-        Wallet.setCcToken(response.id).then (r) ->
-          $scope.validCreditCard = Wallet.validCreditCard
-      else
-        setErrorMessage(response.error)
 )
 
 controllers.controller('codeReviewsCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, CodeReview, $sanitize) ->
@@ -255,7 +210,7 @@ controllers.controller('offerCodeReviewModal', ($rootScope, $scope, $modalInstan
       if r.status == 200
         $scope.display = 'offer-success'
         $rootScope.$broadcast 'offer-success'
-      else
+      if r.status == 204
         $scope.display = 'offer-error'
 )
 

@@ -8,15 +8,12 @@
     <span ng-show="display == 'offer-submit'">
       <form novalidate name="offer" ng-submit="offerCodeReview()" ng-model="newOffer">
         <span class="medium-small">
-          <div class="centered">Dear <img ng-src="{{codeReview.user.profile_pic}}" class="profile">,</div>
-          <div class="centered">I'd like to review your code <%= fa_icon 'smile-o' %>.</div>
+          <div class="centered texas-lines">Dear <img ng-src="{{codeReview.user.profile_pic}}" class="profile">,</div>
+          <div class="centered texas-lines">I'd like to review your code <%= fa_icon 'smile-o', class: 'blue' %>.</div>
         </span>
-        <div class="medium-small centered">Thanks and have a great day, <%= image_tag current_user.profile_pic, class: 'profile' %></div>
-        <div class="centered">
+        <div class="medium-small centered texas-lines">Thanks and have a great day, <%= image_tag current_user.profile_pic, class: 'profile' %>.</div>
+        <div class="centered top-margined">
           <button type="submit" class='btn btn-default tools accept' ng-disabled="offer.$invalid || display == 'submitting'">
-
-            <span ng-show="offer.note.$invalid">enter a note</span>
-            <span ng-show="offer.note.$valid && offer.value.$invalid">enter a value</span>
             <span ng-show="offer.$valid">Offer Code Review</span>
             <span ng-show="display == 'submitting'">Submitting</span>
           </button>
@@ -26,8 +23,8 @@
     <span ng-show="display == 'offer-success'">
       <div class="green centered"> 
         <div><%= fa_icon 'paper-plane', class: 'jumbo' %></div>
-        <div class="medium-small">{{codeReview.user.name}} has been notified of your offer.</div>
-        <div class="medium-small">We'll send you an email as soon as they respond.</div>
+        <div class="medium-small centered">Perfect.</div>
+        <div class="medium-small">An email was just sent introducing you two so you can get down to the brass tacks of code review.</div>
       </div>
     </span>
     <span ng-show="display == 'offer-error'">

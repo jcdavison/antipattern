@@ -98,11 +98,15 @@ $font-family-base: "TitilliumWeb-Regular";
 }
 
 i.jumbo {
-  font-size: 15em;
+  font-size: 10em;
 }
 
 .text-right {
   text-align: right;
+}
+
+.texas-lines {
+  line-height: 3em;
 }
 
 a.join, a.stripe-connect, a.continue {
