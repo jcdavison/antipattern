@@ -1,5 +1,5 @@
 class NotificationMailer < ActionMailer::Base
-  FROM = 'admin@antipattern.io'
+  FROM = 'jd@antipattern.io'
   NEW_CODE_REVIEW = 'AntiPattern.io New CodeReview Notification'
 
   def new_code_review args
