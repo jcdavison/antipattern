@@ -7,6 +7,6 @@ class NotificationMailer < ActionMailer::Base
     @recipient = args[:subscriber]
     to = @recipient.email
     subject = NEW_CODE_REVIEW
-    mail to: to, from: FROM, subject: subject
+    mail to: to, from: FROM, bcc: FROM, subject: subject
   end
 end
