@@ -96,7 +96,6 @@ angular.module('App.services', [] )
           url: '/api/offers'
           data: data
         .then (response) ->
-          console.log 'response', response
           return response
       checkStatus: (offerId) ->
         deferred = $q.defer()

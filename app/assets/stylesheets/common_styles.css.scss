@@ -13,6 +13,7 @@ $light_red: rgba(207, 78, 66, .5);
 $link_color: $green;
 $gold: #FEFE00;
 $grey: gray;
+$pic_height: 2.8em;
 
 // GLOBAL BOOTSTRAP OVERRIDES
 
@@ -228,10 +229,6 @@ textarea.error, input.error {
 .code-review, .offer {
   padding: .2em 0 .2em .2em;
   margin: 5px 0;
-  div {
-    margin: .2em 0;
-    padding: .2em 0;
-  }
 }
 
 .border-bottom {
@@ -285,9 +282,10 @@ section.offer {
 }
 
 .profile {
-  height: 2.6em;
+  height: $pic_height;
   border-radius: 5px;
-  border: 1px solid $grey;
+  border: 1px solid $light_grey;
+  margin: .3em;
 } 
 
 .product-display {
@@ -328,8 +326,24 @@ a.venmo {
 
 // LAYOUT
 
+.inline {
+  display: inline;
+}
+
+.left-bump {
+  margin-left: 1em;
+}
+
 .footer-row {
   margin-bottom: 2em;
+}
+
+.fixed-line-36 {
+  line-height: $pic_height;
+}
+
+.gen-margin {
+  margin: .2em;
 }
 
 // SLIDER 

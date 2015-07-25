@@ -5,11 +5,11 @@ gem 'rails', '4.1.8'
 gem 'spring',        group: :development
 gem 'quiet_assets', '~> 1.0.3'
 gem 'pg', '~> 0.17.1'
-gem 'pry'
 gem 'aasm', '~> 4.0.8'
 gem 'jbuilder', '~> 2.2.6'
 gem 'rack-ssl-enforcer'
 gem 'octokit', '~> 3.0'
+gem 'acts-as-taggable-on', '~> 3.4'
 
 #user auth
 gem 'devise', '~> 3.4.1'
@@ -17,6 +17,7 @@ gem 'devise-async'
 gem 'omniauth'
 gem 'omniauth-github', '~> 1.1.2'
 gem 'omniauth-stripe-connect'
+gem 'react-rails', '~> 1.0'
 
 #pmts
 gem 'stripe'
@@ -27,6 +28,7 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'spring-commands-rspec'
   gem 'guard-rspec'
+  gem 'byebug'
 end
 
 # assets

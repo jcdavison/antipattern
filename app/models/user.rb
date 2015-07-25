@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
+  include JsonHelper
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
-
   devise :database_authenticatable, :registerable, 
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
   validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
@@ -53,5 +53,9 @@ class User < ActiveRecord::Base
 
   def subscribe_new_code_reviews
     NotificationChannel.subscribe name: 'new_code_review', subscriber: self
+  end
+
+  def display_attributes
+    %w(name profile_pic github_profile)
   end
 end

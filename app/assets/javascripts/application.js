@@ -1,3 +1,4 @@
+//= require react_helpers
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui/slider
@@ -7,6 +8,9 @@
 //= require angular-route
 //= require angular-sanitize
 //= require angular-ui-bootstrap-tpls
+//= require react
+//= require react_ujs
+//= require components
 //= require marked
 //= require select
 //= require slider

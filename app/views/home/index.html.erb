@@ -3,12 +3,12 @@
     <div class='col-sm-10 col-sm-offset-2'>
       <div class='row'>
         <div class='col-sm-10 border-bottom no-left-padding'>
-          <h3>Open Code Reviews</h3>
+          <h3 class='light-grey'>Open Code Reviews</h3>
         </div>
       </div>
       <div class='row'>
-        <div class='col-sm-10 text-left no-left-padding no-right-padding'>
-          <%= render partial: 'shared/ng_code_reviews_index' %>
+        <div class='col-sm-10 no-left-padding'>
+          <%= react_component 'codeReviewIndex', { data: { codeReviews: @code_reviews } } %>
         </div>
       </div>
     </div>
