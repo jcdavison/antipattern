@@ -164,17 +164,17 @@ controllers.controller('createCodeReviewModal', ($scope, $rootScope, $modalInsta
 
 controllers.controller('createCodeReview', ($scope, $rootScope, $modal, User) ->
   $scope.requestCodeReview = () ->
-    if $rootScope.authorizedUser == true
-      modalInstance = $modal.open(
-        templateUrl: 'requestCodeReview.html'
-        controller: 'createCodeReviewModal'
-        size: 'lg'
-      )
-    else
-      modalInstance = $modal.open(
-        templateUrl: 'pleaseLogin.html'
-        controller: 'genericModalCtrl'
-      )
+    # if $rootScope.authorizedUser == true
+    #   modalInstance = $modal.open(
+    #     templateUrl: 'requestCodeReview.html'
+    #     controller: 'createCodeReviewModal'
+    #     size: 'lg'
+    #   )
+    # else
+    #   modalInstance = $modal.open(
+    #     templateUrl: 'pleaseLogin.html'
+    #     controller: 'genericModalCtrl'
+    #   )
 )
 
 

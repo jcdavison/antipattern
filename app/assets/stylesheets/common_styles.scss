@@ -1,98 +1,4 @@
-// VARIABLES
-
-$white: white;
-$red: #CF4E42;
-$mauve: rgb(151, 120, 120);
-$blue: hsl(210, 68%, 42%);
-$green: rgb(120, 151, 120);
-$light_green: rgba(120, 151, 120, 0.2);
-$light_grey: rgba(121, 121, 151, .5);
-$light_blue: hsla(210, 68%, 42%, .5);
-$very_light_grey: rgba(121, 121, 151, .3);
-$light_red: rgba(207, 78, 66, .5);
-$link_color: $green;
-$gold: #FEFE00;
-$grey: gray;
-$pic_height: 2.8em;
-
-// GLOBAL BOOTSTRAP OVERRIDES
-
-$brand-primary: $blue;
-$text-color: $grey;
-$link-hover-color: $grey;
-$font-size-small: 20px;
-
-button.btn-default.accept, {
-  border-color: $green;
-  background-color: $white;
-  color: $green;
-  &:hover {
-    border-color: $green;
-    background-color: $green;
-    color: $white;
-  }
-}
-
-button.btn-default.disabled {
-  border: 1px solid $grey;
-  color: $grey;
-  background-color: $white;
-  &:hover {
-    border: 1px solid $grey;
-    color: $grey;
-    background-color: $white;
-  }
-}
-
-button.btn-default.summary {
-  border-color: $blue;
-  background-color: $white;
-  color: $blue;
-  &:hover {
-    border-color: $green;
-    background-color: $white;
-    color: $green;
-  }
-}
-button.btn-default.cancel {
-  border-color: $red;
-  background-color: $white;
-  color: $red;
-  &:hover {
-    border-color: $red;
-    background-color: $red;
-    color: $white
-  }
-}
-
-button.btn-default.delete {
-  border-color: $light_red;
-  background-color: $white;
-  color: $light_red;
-  &:hover {
-    border-color: $light_red;
-    background-color: $light_red;
-    color: $white
-  }
-}
-
-button.btn-default {
-  color: $grey;
-  background-color: $white;
-  border-color: $grey;
-  padding: 5px;
-  margin: .5em;
-  font-size: 1.2em;
-}
-
-$font-family-base: "TitilliumWeb-Regular";
-
-.pointer {
-  cursor: pointer !important;
-}
-
 // FONT
-// @import url(http://fonts.googleapis.com/css?family=Oxygen:400,700);
 
 .text-left {
   text-align: left;
@@ -325,6 +231,25 @@ a.venmo {
 }
 
 // LAYOUT
+.fixed-line-45 {
+  line-height: 45px;
+}
+
+.small-right-bump {
+  margin-right: .5em;
+}
+
+.full-bleed {
+  width: 100%;
+}
+
+.no-float {
+  float: none !important;
+}
+
+.borders {
+  border: 1px solid grey;
+}
 
 .inline {
   display: inline;
@@ -357,4 +282,14 @@ a.venmo {
 .slider-summary {
   line-height: 3.1em;
   color: $green;
+}
+
+// REQUEST CODE REVIEW
+
+.modal.request-code-review {
+  .form-steps {
+    .row > div {
+      @include no-horizontal-padding;
+    }
+  }
 }

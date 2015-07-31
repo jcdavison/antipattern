@@ -1,7 +1,6 @@
 //= require react_helpers
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui/slider
 //= require bootstrap-sprockets
 //= require angular
 //= require angular-mocks
@@ -12,6 +11,5 @@
 //= require react_ujs
 //= require components
 //= require marked
-//= require select
-//= require slider
+//= require select2.min.js
 //= require_tree .
