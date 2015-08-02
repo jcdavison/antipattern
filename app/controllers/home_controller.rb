@@ -4,7 +4,6 @@ class HomeController < ApplicationController
 
   def index
     @code_reviews = all_active_code_reviews
-    @tags = CodeReview.avail_tags
   end
 
   private

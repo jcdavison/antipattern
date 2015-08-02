@@ -80,7 +80,7 @@ controllers.controller('showCodeReview', ($routeParams, $scope, $rootScope, $mod
   $scope.shouldHideOwnerTools = true
 
   renderHtml = () ->
-    $scope.codeReviewHtml = marked($scope.codeReview.detail)
+    $scope.codeReviewHtml = marked($scope.codeReview.context)
 
   $scope.$on 'render-html-from-detail', () ->
     renderHtml()

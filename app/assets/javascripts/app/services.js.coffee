@@ -52,17 +52,6 @@ angular.module('App.services', [] )
         .error (response) =>
           deferred.reject(response)
         return deferred.promise
-      create: (codeReview) ->
-        data =
-          code_review: codeReview
-        $http
-          method: 'post' 
-          url: '/api/reviews.json'
-          data: data
-        .then (response) =>
-          if response.status == 200
-            @allCodeReviews.unshift response.data.code_review
-          return response
       update: (codeReview, indexOfCodeReview) ->
         codeReview.value = (codeReview.value * 100)
         $http

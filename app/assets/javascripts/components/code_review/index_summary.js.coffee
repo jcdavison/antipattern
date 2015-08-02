@@ -17,7 +17,7 @@
               className: 'medium'
               React.DOM.a
                 href: "/code-reviews/#{@props.data.codeReview.id}"
-                @props.data.codeReview.title
+                @props.data.codeReview.url
         React.DOM.div
           className: 'row'
           React.DOM.div

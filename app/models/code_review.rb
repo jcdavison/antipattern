@@ -1,7 +1,7 @@
 class CodeReview < ActiveRecord::Base
   include JsonHelper
   belongs_to :user
-  validates_presence_of :detail, :user_id, :title
+  validates_presence_of :context, :user_id, :url
   has_many :offers
 
   acts_as_taggable
@@ -17,7 +17,7 @@ class CodeReview < ActiveRecord::Base
     NotificationChannel.send! name: 'new_code_review', code_review: self, skip_user: user
   end
 
-  def self.avail_tags
+  def self.avail_topics
     %w(javascript java c# php android jquery python html c++ ios mysql css sql asp.net objective-c .net swift ruby-on-rails c ruby angular.js react.js ember.js backbone.js r security devops node.js html5 performance algorithms git)
   end
 

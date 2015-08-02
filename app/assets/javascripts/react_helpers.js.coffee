@@ -21,3 +21,9 @@ window.ReactHelpers =
   displayDate: (timeStamp) ->
     date = new Date(timeStamp)
     "#{date.getFullYear()}/#{date.getMonth()}/#{date.getDay()}"
+
+  hide: (selector) ->
+    $(selector).addClass('hide')
+
+  show: (selector) ->
+    $(selector).removeClass('hide')

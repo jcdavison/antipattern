@@ -107,6 +107,10 @@ textarea.error, input.error {
   border: 1px solid $red;
 }
 
+.standard-form {
+  @include standard-form;
+}
+
 .home-hero {
   position: relative;
   overflow: hidden;
@@ -271,6 +275,16 @@ a.venmo {
   margin: .2em;
 }
 
+// FORMS
+
+.ui-state-error {
+  border: 1px solid $red !important;
+}
+
+.ui-state-valid {
+  border: 1px solid $green !important;
+}
+
 // SLIDER 
 
 .slider {
@@ -284,12 +298,7 @@ a.venmo {
   color: $green;
 }
 
-// REQUEST CODE REVIEW
-
-.modal.request-code-review {
-  .form-steps {
-    .row > div {
-      @include no-horizontal-padding;
-    }
-  }
+// SELECT
+.select2-selection.select2-selection--multiple {
+  @include standard-form;
 }

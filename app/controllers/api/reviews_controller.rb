@@ -14,8 +14,10 @@ class Api::ReviewsController < ApplicationController
 
   def create
     @code_review = CodeReview.new(code_review_params.merge(user_id: current_user.id))
+    topic_list = tagize_topics params[:code_review][:topics]
+    @code_review.topic_list = topic_list
     if @code_review.save
-      @members_notified = @code_review.notify_subscribers
+      # @members_notified = @code_review.notify_subscribers
       render 'api/reviews/create'
     else
       head :forbidden
@@ -50,6 +52,10 @@ class Api::ReviewsController < ApplicationController
   private
 
     def code_review_params
-      params.require(:code_review).compact.permit(:id, :title, :detail)
+      params.require(:code_review).compact.permit(:url, :context)
+    end
+
+    def tagize_topics enum_data
+      enum_data.join(', ')
     end
 end

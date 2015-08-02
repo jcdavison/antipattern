@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get '/profile', to: 'users#profile', as: 'profile'
 
   namespace :api do
+    get 'topics', to: 'topics#index'
     post 'offers', to: 'offers#create'
     get 'reviews', to: 'reviews#index'
     get 'review', to: 'reviews#show'
