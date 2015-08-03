@@ -14,7 +14,7 @@
           React.DOM.div
             className: 'col-sm-12'
             React.DOM.span
-              className: 'medium'
+              className: 'medium-small'
               React.DOM.a
                 href: "/code-reviews/#{@props.data.codeReview.id}"
                 @props.data.codeReview.url
