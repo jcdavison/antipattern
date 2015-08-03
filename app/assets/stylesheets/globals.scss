@@ -58,6 +58,14 @@ $pic_height: 2.8em;
   padding-right: .5em;
 }
 
+@mixin overflow {
+  overflow: auto;
+}
+
+.overflow {
+  @include overflow;
+}
+
 // GLOBAL BOOTSTRAP OVERRIDES
 
 $brand-primary: $blue;

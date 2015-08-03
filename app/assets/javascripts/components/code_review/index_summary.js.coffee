@@ -12,7 +12,7 @@
         React.DOM.div
           className: 'row'
           React.DOM.div
-            className: 'col-sm-12'
+            className: 'col-sm-12 overflow'
             React.DOM.span
               className: 'medium-small'
               React.DOM.a
