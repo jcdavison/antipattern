@@ -1,5 +1,5 @@
 class NotificationChannel < ActiveRecord::Base
-  has_and_belongs_to_many :subscribers, class_name: 'User'
+  has_and_belongs_to_many :subscribers, class_name: 'User', uniq: true
 
   def self.send! args = nil
     self.find_by_name(args[:name]).execute(args)
