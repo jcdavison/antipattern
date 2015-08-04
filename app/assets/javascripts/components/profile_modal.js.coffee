@@ -103,6 +103,12 @@
           React.DOM.div
             className: 'modal-header blue medium'
             "Confirm Thy Self"
+            React.DOM.button
+              className: 'close'
+              'data-dismiss': 'modal'
+              React.DOM.span
+                'aria-hidden': true
+                'X'
           @userProfileForm()
           React.DOM.div
             className: 'modal-footer request-code-review-form'
