@@ -15,6 +15,7 @@
     if $("##{@state.formId}").h5Validate('allValid')
       data = 
         codeReview: 
+          title: $("#code-review-title").val()
           url: $("#code-review-url").val()
           context: $("#code-review-context").val()
           topics: $("#topics-select").val()
@@ -60,6 +61,31 @@
                         className: 'col-sm-3'
                         React.DOM.span
                           className: 'medium'
+                          'Title:' 
+                      React.DOM.div
+                        className: 'col-sm-9'
+                        React.DOM.input
+                          type: 'text'
+                          id: 'code-review-title'
+                          required: 'required'
+                          maxLength: 75 
+                          className: 'fixed-line-45 full-bleed standard-form'
+                          placeholder: 'give this code review a happy name (maxLength 75 chars)'
+                React.DOM.div
+                  className: 'row top-margined'
+                  React.DOM.div
+                    className: 'col-md-1'
+                    React.DOM.div
+                      className: 'medium blue centered'
+                      '2.'
+                  React.DOM.div
+                    className: 'col-md-11'
+                    React.DOM.div
+                      className: 'row no-horizontal-margin'
+                      React.DOM.div
+                        className: 'col-sm-3'
+                        React.DOM.span
+                          className: 'medium'
                           'Url:' 
                       React.DOM.div
                         className: 'col-sm-9'
@@ -75,7 +101,7 @@
                     className: 'col-md-1'
                     React.DOM.div
                       className: 'medium blue centered'
-                      '2.'
+                      '3.'
                   React.DOM.div
                     className: 'col-md-11'
                     React.DOM.div
@@ -100,7 +126,7 @@
                     className: 'col-md-1'
                     React.DOM.div
                       className: 'medium blue centered'
-                      '3.'
+                      '4.'
                   React.DOM.div
                     className: 'col-md-11'
                     React.DOM.div

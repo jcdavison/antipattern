@@ -29,7 +29,7 @@
                   className: 'medium-small'
                   React.DOM.a
                     href: "/code-reviews/#{@props.data.codeReview.id}"
-                    @props.data.codeReview.url
+                    @props.data.codeReview.title
                 React.DOM.div
                   className: null
                   React.DOM.span

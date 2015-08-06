@@ -52,7 +52,7 @@ class Api::ReviewsController < ApplicationController
   private
 
     def code_review_params
-      params.require(:code_review).compact.permit(:url, :context)
+      params.require(:code_review).compact.permit(:url, :context, :title)
     end
 
     def tagize_topics enum_data
