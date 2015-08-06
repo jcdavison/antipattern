@@ -147,3 +147,8 @@ $font-family-base: "TitilliumWeb-Regular";
   border: 1px solid $grey;
   border-radius: 3px;
 }
+
+
+:active:focus, :focus , :visited {
+  outline: none !important;
+}
