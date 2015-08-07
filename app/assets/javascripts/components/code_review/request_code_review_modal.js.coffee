@@ -70,7 +70,7 @@
                           required: 'required'
                           maxLength: 55 
                           className: 'fixed-line-45 full-bleed standard-form'
-                          placeholder: 'give this code review a happy name (maxLength 75 chars)'
+                          placeholder: 'give this code review a happy name (maxLength 55 chars)'
                 React.DOM.div
                   className: 'row top-margined'
                   React.DOM.div
