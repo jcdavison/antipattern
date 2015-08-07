@@ -12,7 +12,7 @@
         React.DOM.div
           className: 'row'
           React.DOM.div
-            className: 'col-sm-12'
+            className: 'col-sm-11'
             React.DOM.div
               className: 'row'
               React.DOM.div
