@@ -24,20 +24,27 @@
                     src: @props.data.codeReview.user.profilePic
                     className: 'profile'
               React.DOM.div
-                className: 'col-sm-10'
-                React.DOM.span
-                  className: 'medium-small'
-                  React.DOM.a
-                    href: "/code-reviews/#{@props.data.codeReview.id}"
-                    @props.data.codeReview.title
+                className: 'col-sm-9'
                 React.DOM.div
-                  className: null
                   React.DOM.span
+                    className: 'medium-small'
+                    React.DOM.a
+                      href: "/code-reviews/#{@props.data.codeReview.id}"
+                      @props.data.codeReview.title
+                  React.DOM.div
                     className: null
-                    "topics: " 
-                  React.DOM.span
-                    className: 'blue'
-                    @props.data.codeReview.topics
+                    React.DOM.span
+                      className: null
+                      "topics: " 
+                    React.DOM.span
+                      className: 'blue'
+                      @props.data.codeReview.topics
+              React.DOM.div
+                className: 'col-sm-2'
+                React.DOM.a
+                  className: 'btn btn-default review inline small-top-margined' 
+                  href: '#'
+                  'Review This Code!'
         React.DOM.div
           className: 'row'
           React.DOM.div
