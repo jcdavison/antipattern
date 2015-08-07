@@ -68,7 +68,7 @@
                           type: 'text'
                           id: 'code-review-title'
                           required: 'required'
-                          maxLength: 75 
+                          maxLength: 55 
                           className: 'fixed-line-45 full-bleed standard-form'
                           placeholder: 'give this code review a happy name (maxLength 75 chars)'
                 React.DOM.div
