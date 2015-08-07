@@ -18,7 +18,7 @@ class CodeReview < ActiveRecord::Base
   end
 
   def self.avail_topics
-    %w(http javascript java c# php android jquery python html c++ ios mysql css sql asp.net objective-c .net swift ruby-on-rails c ruby angular.js react.js ember.js backbone.js r security devops node.js html5 performance algorithms git wordpress rails)
+    %w(http javascript java c# php android jquery python html c++ ios mysql css sql asp.net objective-c .net swift ruby-on-rails c ruby angular.js react.js ember.js backbone.js r security devops node.js html5 performance algorithms git wordpress rails chef)
   end
 
   def package_with_associations
