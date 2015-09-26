@@ -10,6 +10,7 @@ gem 'jbuilder', '~> 2.2.6'
 gem 'rack-ssl-enforcer'
 gem 'octokit', '~> 3.0'
 gem 'acts-as-taggable-on', '~> 3.4'
+gem 'web-console', '~> 2.0'
 
 #user auth
 gem 'devise', '~> 3.4.1'
@@ -28,7 +29,7 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'spring-commands-rspec'
   gem 'guard-rspec'
-  gem 'byebug'
+  gem 'pry'
 end
 
 # assets

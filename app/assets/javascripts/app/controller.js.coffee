@@ -20,12 +20,12 @@ controllers.controller('appController', ($scope, $rootScope, $modal, User, CodeR
 )
 
 controllers.controller('codeReviewsCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, CodeReview, $sanitize) ->
-  marked.setOptions(gfm: true)
+  # marked.setOptions(gfm: true, tables: true)
   $scope.showDetail = false
   $scope.shouldHideOwnerTools = true
 
-  renderHtml = () ->
-    $scope.codeReviewHtml = marked($scope.review.detail)
+  # renderHtml = () ->
+  #   $scope.codeReviewHtml = marked($scope.review.detail)
   renderHtml()
 
   $scope.$on 'render-html-from-detail', () ->
@@ -75,12 +75,12 @@ controllers.controller('showCodeReview', ($routeParams, $scope, $rootScope, $mod
   CodeReview.get($attrs.codeReviewId).then (response) ->
     $scope.codeReview = response.data.codeReview
     renderHtml()
-  marked.setOptions(gfm: true)
+  # marked.setOptions(gfm: true)
   $scope.showDetail = false
   $scope.shouldHideOwnerTools = true
 
-  renderHtml = () ->
-    $scope.codeReviewHtml = marked($scope.codeReview.context)
+  # renderHtml = () ->
+    # $scope.codeReviewHtml = marked($scope.codeReview.context)
 
   $scope.$on 'render-html-from-detail', () ->
     renderHtml()

@@ -310,3 +310,22 @@ a.venmo {
 .select2-selection.select2-selection--multiple {
   @include standard-form;
 }
+
+// PATCH
+
+table.patch-display {
+  width: 100%;
+  
+  td {
+    // padding: 2px;
+    white-space: pre;
+  }
+}
+
+.red-row {
+  background-color: $light_red;
+}
+
+.green-row {
+  background-color: $light_green;
+}

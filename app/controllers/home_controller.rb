@@ -1,5 +1,5 @@
+include QueryHelper
 class HomeController < ApplicationController
-  include QueryHelper
   layout :set_layout
 
   def index

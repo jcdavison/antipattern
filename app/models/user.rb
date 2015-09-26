@@ -1,5 +1,6 @@
+include WaffleHelper
+
 class User < ActiveRecord::Base
-  include JsonHelper
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
   devise :database_authenticatable, :registerable, 
@@ -57,5 +58,9 @@ class User < ActiveRecord::Base
 
   def display_attributes
     %w(name profile_pic github_profile)
+  end
+
+  def github_username
+    github_profile.split("/").last
   end
 end

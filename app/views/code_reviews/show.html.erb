@@ -1,10 +1,6 @@
 <div class='container'>
   <div class='row'>
-    <div class='col-sm-10 col-sm-offset-2'>
-      <div class='row'>
-        <div class='col-sm-10 no-left-padding no-right-padding'>
-          <%= render partial: 'shared/code_review', locals: {review: @code_review} %>
-        </div>
-      </div>
+    <div class='col-sm-12'>
+      <%= react_component 'commitDisplay', { data: { commit: @commit_blob} } %>
     </div>
 </div>

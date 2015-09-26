@@ -1,5 +1,6 @@
 class CodeReview < ActiveRecord::Base
-  include JsonHelper
+  include WaffleHelper
+
   belongs_to :user
   validates_presence_of :context, :user_id, :url
   has_many :offers
@@ -22,9 +23,9 @@ class CodeReview < ActiveRecord::Base
   end
 
   def package_with_associations
-    self.to_builder.attributes!
+    self.to_waffle.attributes!
       .merge(topics: self.topic_list.join(', '))
-      .merge(user: self.user.to_builder.attributes!)
+      .merge(user: self.user.to_waffle.attributes!)
   end
 
   def display_attributes

@@ -43,7 +43,7 @@
                 className: 'col-sm-2'
                 React.DOM.a
                   className: 'btn btn-default review inline small-top-margined' 
-                  href: @props.data.codeReview.url
+                  href: "/code-reviews/#{@props.data.codeReview.id}"
                   target: 'new'
                   'Review This Code!'
         React.DOM.div
