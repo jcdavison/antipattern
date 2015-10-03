@@ -26,7 +26,6 @@
         success: (data) =>
           @props.helpers.hide('.request-code-review-form')
           @props.helpers.show('.request-code-review-success')
-          console.log data.codeReview
           @setState codeReviewUrl: data.codeReview.antipatternUrl
       ) 
     else

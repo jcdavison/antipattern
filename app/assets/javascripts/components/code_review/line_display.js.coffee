@@ -1,10 +1,12 @@
-@patchLineDisplay = React.createClass
+@lineDisplay = React.createClass
 
   getInitialState: () ->
-    line: @props.data.line
+    lineType: @props.data.line.lineType
+    deleteIndex: @props.data.line.deleteIndex
+    addIndex: @props.data.line.addIndex
+    content: @props.data.line.content
 
   componentDidMount: () ->
-    # console.log @state.line
 
   displayLineIndeces: () ->
 
@@ -15,7 +17,7 @@
       return 'red-row'
 
   render: () ->
-    if @state.line.lineType == 'patchInfo' 
+    if @state.lineType == 'patchInfo' 
       React.DOM.thead
         className: null
         React.DOM.tr
@@ -23,23 +25,23 @@
           React.DOM.th
             className: null
             colSpan: '3'
-            @state.line.content
+            @state.content
     else
       React.DOM.tbody
         className: null
-        if @state.line.lineType == 'deletion'
+        if @state.lineType == 'deletion'
           React.DOM.tr
             className: @setRowColor()
             React.DOM.td
               className: 'delete-line-num'
-              @state.line.deletionIndex
+              @state.deleteIndex
             React.DOM.td
               className: 'addition-line-num'
               ''
             React.DOM.td
               className: 'code line'
-              @state.line.content
-        if @state.line.lineType == 'addition'
+              @state.content
+        if @state.lineType == 'addition'
           React.DOM.tr
             className: @setRowColor()
             React.DOM.td
@@ -47,19 +49,19 @@
               ''
             React.DOM.td
               className: 'addition-line-num'
-              @state.line.additionIndex
+              @state.addIndex
             React.DOM.td
               className: 'code line'
-              @state.line.content
-        if @state.line.lineType == 'display'
+              @state.content
+        if @state.lineType == 'display'
           React.DOM.tr
             className: @setRowColor()
             React.DOM.td
               className: 'display-deletion-line-num'
-              @state.line.deletionIndex
+              @state.deleteIndex
             React.DOM.td
               className: 'display-addition-line-num'
-              @state.line.additionIndex
+              @state.addIndex
             React.DOM.td
               className: 'code line'
-              @state.line.content
+              @state.content

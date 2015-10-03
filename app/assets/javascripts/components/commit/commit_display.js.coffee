@@ -19,4 +19,4 @@
           className: 'col-sm-9'
           'commit message ' + "'#{@state.info.message}'"
       for file, index in @state.includedFiles
-        React.createElement patchedFileDisplay, key: "patch-#{index}", data: file: file, index: index
+        React.createElement fileDisplay, key: "patch-#{index}", data: file: file

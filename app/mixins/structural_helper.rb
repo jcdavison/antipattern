@@ -9,7 +9,7 @@ module StructuralHelper
   
   def structurize_nodes waffle
     waffle.each_pair do |attr, value|
-      if value.class == Hash || value.class == Parse::Object
+      if value.class == Hash
         waffle[attr] = structurize_waffle value
         structurize_nodes waffle[attr]
       end
