@@ -1,11 +1,11 @@
 include CommitHelper
 include StructuralHelper
 class CodeReviewsController < ApplicationController
+  PATCH_INFO_REGEXP = /@@.+@@/
 
   def show
     @code_review = CodeReview.find params[:id]
     commit_blob = build_commit_blob(OCTOCLIENT.get(commit_url(@code_review))) 
-    # binding.pry
     @comments = grab_comments(@code_review).map {|e| e.to_attrs }
     @commit_blob = inject_comments_into @comments, commit_blob
     # binding.pry
@@ -39,7 +39,15 @@ class CodeReviewsController < ApplicationController
     def modify_line_break! things
       things.each do |thing|
         # thing[:patch] = thing[:patch].gsub('\n','\\n')
-        thing[:patch] = thing[:patch].lines
+        thing[:patches] = thing[:patch].lines
+        thing[:patches] = thing[:patches].inject([]) do |patch, line|
+          if line.match PATCH_INFO_REGEXP
+            patch.push [line]
+          else
+            patch.last.push line
+          end
+          patch
+        end
       end
     end
 end

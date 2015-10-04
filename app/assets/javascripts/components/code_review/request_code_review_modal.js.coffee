@@ -29,7 +29,7 @@
           @setState codeReviewUrl: data.codeReview.antipatternUrl
       ) 
     else
-      console.log 'invalid'
+      'invalid'
 
   codeReviewRequestForm: () ->
     React.DOM.div

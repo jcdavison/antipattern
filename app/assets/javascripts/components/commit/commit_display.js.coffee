@@ -1,11 +1,13 @@
 @commitDisplay = React.createClass
 
   getInitialState: () ->
-    includedFiles: @props.data.commit.files
+    files: @props.data.commit.files
     info: @props.data.commit.info
 
   getDefaultProps: () ->
     helpers: window.ReactHelpers
+
+  componentDidMount: () ->
 
   render: () ->
     React.DOM.div
@@ -18,5 +20,14 @@
         React.DOM.div
           className: 'col-sm-9'
           'commit message ' + "'#{@state.info.message}'"
-      for file, index in @state.includedFiles
+      React.DOM.div
+        className: 'row'
+        React.DOM.div
+          className: 'col-sm-12 blue'
+          React.DOM.a
+            href: @state.info.tree.url
+            className: 'blue'
+            target: "_blank"
+            @state.info.tree.sha
+      for file, index in @state.files
         React.createElement fileDisplay, key: "patch-#{index}", data: file: file

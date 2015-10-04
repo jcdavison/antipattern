@@ -5,10 +5,9 @@
     deleteIndex: @props.data.line.deleteIndex
     addIndex: @props.data.line.addIndex
     content: @props.data.line.content
+    comments: @props.data.line.comments
 
   componentDidMount: () ->
-
-  displayLineIndeces: () ->
 
   setRowColor: () ->
     if @props.data.line.lineType == 'addition'
@@ -16,20 +15,14 @@
     if @props.data.line.lineType == 'deletion' 
       return 'red-row'
 
-  render: () ->
-    if @state.lineType == 'patchInfo' 
-      React.DOM.thead
-        className: null
-        React.DOM.tr
+  renderComments: () ->
+    for comment, index in @state.comments
+      React.createElement commentDisplay, key: "comment-#{index}", data: comment: comment
+
+  renderFoo: () ->
+      if @state.lineType == 'deletion'
+        return React.DOM.tbody
           className: null
-          React.DOM.th
-            className: null
-            colSpan: '3'
-            @state.content
-    else
-      React.DOM.tbody
-        className: null
-        if @state.lineType == 'deletion'
           React.DOM.tr
             className: @setRowColor()
             React.DOM.td
@@ -41,7 +34,11 @@
             React.DOM.td
               className: 'code line'
               @state.content
-        if @state.lineType == 'addition'
+          for comment, commentIndex in @state.comments
+            React.createElement commentDisplay, key: "comment-#{commentIndex}", data: comment: comment
+      if @state.lineType == 'addition'
+        return React.DOM.tbody
+          className: null
           React.DOM.tr
             className: @setRowColor()
             React.DOM.td
@@ -53,7 +50,11 @@
             React.DOM.td
               className: 'code line'
               @state.content
-        if @state.lineType == 'display'
+          for comment, commentIndex in @state.comments
+            React.createElement commentDisplay, key: "comment-#{commentIndex}", data: comment: comment
+      if @state.lineType == 'display'
+        return React.DOM.tbody
+          className: null
           React.DOM.tr
             className: @setRowColor()
             React.DOM.td
@@ -65,3 +66,16 @@
             React.DOM.td
               className: 'code line'
               @state.content
+            for comment, commentIndex in @state.comments
+              React.createElement commentDisplay, key: "comment-#{commentIndex}", data: comment: comment
+
+  render: () ->
+    if @state.lineType == 'patchInfo' 
+      React.DOM.tr
+        className: null
+        React.DOM.th
+          className: null
+          colSpan: '3'
+          @state.content
+    else
+      @renderFoo()
