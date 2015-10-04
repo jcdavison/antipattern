@@ -70,7 +70,7 @@
     return 'display'
 
   render: () ->
-    React.DOM.div
-      className: null
+    React.DOM.table
+      className: 'patch-display borders'
       for line, index in @state.lines
         React.createElement lineDisplay, key: "line-#{index}", data: line: line

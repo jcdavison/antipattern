@@ -28,8 +28,5 @@
           React.DOM.h4
             className: 'blue'
             @state.fileName
-          React.DOM.table
-            className: 'patch-display borders'
-            @state.fileName
-            for patch, index in @state.patches
-              React.createElement patchDisplay, key: "patch-#{index}", data: patch: patch, comments: @state.comments
+          for patch, index in @state.patches
+            React.createElement patchDisplay, key: "patch-#{index}", data: patch: patch, comments: @state.comments

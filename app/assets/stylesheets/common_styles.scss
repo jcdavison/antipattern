@@ -319,17 +319,17 @@ a.venmo {
 
 table.patch-display {
   width: 100%;
-  
-  td {
-    // padding: 2px;
-    white-space: pre;
+  tbody {
+    tr {
+      white-space: pre-wrap;
+    }
   }
 }
 
 .red-row {
-  background-color: $light_red;
+  background-color: $code_deletion;
 }
 
 .green-row {
-  background-color: $light_green;
+  background-color: $code_addition;
 }
