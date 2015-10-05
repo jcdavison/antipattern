@@ -16,6 +16,9 @@ $link_color: $green;
 $gold: #FEFE00;
 $grey: gray;
 $pic_height: 3.8em;
+// $font-family-base: "TitilliumWeb-Regular";
+$font-family-base: "Cousine-Regular";
+
 
 @mixin no-right-padding {
   padding-right: 0 !important;
@@ -151,7 +154,6 @@ button.btn-default {
   font-size: 1.2em;
 }
 
-$font-family-base: "TitilliumWeb-Regular";
 
 .pointer {
   cursor: pointer !important;

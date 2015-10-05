@@ -60,6 +60,20 @@ a.join, a.stripe-connect, a.continue {
   font-style: normal;
 }
 
+@font-face{
+  font-family: "CutiveMono-Regular";
+  src: url('CutiveMono-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face{
+  font-family: "Cousine-Regular";
+  src: url('Cousine-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .blue {
   color: $blue;
 }
