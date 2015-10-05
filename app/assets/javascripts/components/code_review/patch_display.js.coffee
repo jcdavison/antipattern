@@ -47,7 +47,7 @@
     comments = []
     if @state.comments[position]
       comments = @state.comments[position]
-    {comments: comments}
+    {comments: comments, position: position}
 
   calculateLineIndeces: (line, lineType, lineIndex, linesWithIndeces) ->
     if lineType == 'patchInfo'
@@ -73,4 +73,4 @@
     React.DOM.table
       className: 'patch-display borders'
       for line, index in @state.lines
-        React.createElement lineDisplay, key: "line-#{index}", data: line: line
+        React.createElement lineDisplay, key: "line-#{index}", data: line: line, commitInfo: @props.data.commitInfo

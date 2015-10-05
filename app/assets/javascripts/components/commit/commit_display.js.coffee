@@ -30,4 +30,4 @@
             target: "_blank"
             @state.info.tree.sha
       for file, index in @state.files
-        React.createElement fileDisplay, key: "patch-#{index}", data: file: file
+        React.createElement fileDisplay, key: "patch-#{index}", data: file: file, info: @state.info

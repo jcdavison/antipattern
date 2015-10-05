@@ -8,7 +8,7 @@ class CodeReviewsController < ApplicationController
     commit_blob = build_commit_blob(OCTOCLIENT.get(commit_url(@code_review))) 
     @comments = grab_comments(@code_review).map {|e| e.to_attrs }
     @commit_blob = inject_comments_into @comments, commit_blob
-    # binding.pry
+    @commit_blob[:info].merge!({repo: @code_review.repo, commitSha: @code_review.commit_sha})
     # rescue 
     #   redirect_to authenticated_root_path
   end

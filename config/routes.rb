@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     post 'tokens', to: 'tokens#create'
     post 'offers/payments', to: 'offers#payments'
     post 'offers', to: 'offers#create'
+    post 'comments', to: 'comments#create'
     put 'offers', to: 'offers#update'
     put 'reviews', to: 'reviews#update'
     delete 'reviews/:id', to: 'reviews#destroy'

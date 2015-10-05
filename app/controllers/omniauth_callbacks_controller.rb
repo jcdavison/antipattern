@@ -29,7 +29,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def stripe_connect
     wallet = current_user.wallet
-    binding.pry
     if wallet
       wallet.update_attributes wallet_params
     else

@@ -323,6 +323,22 @@ table.patch-display {
     tr {
       white-space: pre-wrap;
     }
+
+    tr.patch-line {
+      i.add-comment {
+        visibility: hidden;
+      }
+    }
+
+    tr.patch-line:hover {
+      i.add-comment {
+        visibility: visible;
+      }
+      i.add-comment:hover {
+        visibility: visible;
+        font-size: 22px;
+      }
+    }
   }
 }
 

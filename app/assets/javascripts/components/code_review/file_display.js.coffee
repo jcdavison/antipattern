@@ -7,8 +7,11 @@
     patches: @calculateStartingPosition(@props.data.file.patches)
     comments: @props.data.file.comments
     fileName: @props.data.file.filename
+    commitSha: @props.data.info.commitSha
+    repo: @props.data.info.repo
 
-  componentDidMount: () ->
+  commitInfo: () ->
+    { commitSha: @state.commitSha, fileName: @state.fileName, repo: @state.repo }
 
   calculateStartingPosition: (patches) ->
     for patch, index in patches
@@ -29,4 +32,4 @@
             className: 'blue'
             @state.fileName
           for patch, index in @state.patches
-            React.createElement patchDisplay, key: "patch-#{index}", data: patch: patch, comments: @state.comments
+            React.createElement patchDisplay, key: "patch-#{index}", data: patch: patch, comments: @state.comments, commitInfo: @commitInfo()
