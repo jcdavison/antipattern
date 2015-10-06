@@ -4,7 +4,8 @@ class CodeReviewsController < ApplicationController
   PATCH_INFO_REGEXP = /@@.+@@/
 
   def show
-    @code_review = CodeReview.find params[:id]
+    @code_review = CodeReview.preload(:user).find params[:id]
+    @code_review_owner = @code_review.user.to_waffle.attributes!
     commit_blob = build_commit_blob(OCTOCLIENT.get(commit_url(@code_review))) 
     @comments = grab_comments(@code_review).map {|e| e.to_attrs }
     @commit_blob = inject_comments_into @comments, commit_blob

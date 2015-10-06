@@ -25,11 +25,11 @@
     React.DOM.div
       className: null
       React.DOM.div
-        className: 'row top-margined'
+        className: 'row top-margined no-horizontal-margin'
         React.DOM.div
-          className: 'col-sm-10 center-block no-float'
-          React.DOM.h4
-            className: 'blue'
+          className: 'col-sm-12 patch-file-container no-horizontal-padding top-margined'
+          React.DOM.div
+            className: 'black top-radius light_grey_background top-left-pad'
             @state.fileName
           for patch, index in @state.patches
             React.createElement patchDisplay, key: "patch-#{index}", data: patch: patch, comments: @state.comments, commitInfo: @commitInfo()

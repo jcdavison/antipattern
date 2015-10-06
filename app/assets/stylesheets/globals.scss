@@ -8,9 +8,13 @@ $green: rgb(120, 151, 120);
 $light_green: rgba(120, 151, 120, 0.2);
 $light_grey: rgba(121, 121, 151, .5);
 $light_blue: hsla(210, 68%, 42%, .5);
+$pale_blue: hsl(199, 47%, 93%);
+$ultra_light_blue: hsl(214, 47%, 97%);
 $very_light_grey: rgba(121, 121, 151, .3);
+$ultra_light_grey: rgba(121, 121, 151, .05);
 $code_addition: hsl(120, 100%, 96%);
 $code_deletion: hsl(0, 100%, 96%);
+$light_display_grey: hsl(0, 0%, 97%);
 $light_red: rgba(207, 78, 66, .5);
 $link_color: $green;
 $gold: #FEFE00;
@@ -18,7 +22,15 @@ $grey: gray;
 $pic_height: 3.8em;
 // $font-family-base: "TitilliumWeb-Regular";
 $font-family-base: "Cousine-Regular";
+$rounding: 5px;
 
+@mixin pale_blue {
+  color: $pale_blue;
+}
+
+.ultra-light-blue-background {
+  background-color: $ultra_light_blue;
+}
 
 @mixin no-right-padding {
   padding-right: 0 !important;

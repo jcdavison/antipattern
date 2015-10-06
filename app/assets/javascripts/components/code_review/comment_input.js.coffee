@@ -41,22 +41,27 @@
     React.DOM.tr
       className: 'comment-input'
       React.DOM.td
-        colSpan: 3
+        className: 'no-right-borders'
+      React.DOM.td
+        className: 'no-right-borders'
+      React.DOM.td
         className: null
         React.DOM.div
           className: 'row'
           React.DOM.div
-            className: 'col-sm-10 center-block no-float'
+            className: 'col-sm-10'
             React.DOM.form
-              className: 'create-comment'
-              React.DOM.input
-                className: 'comment-anti-pattern'
-                type: 'text'
-                placeholder: 'comment here'
-                value: @state.comment
-                onChange: @updateComment
+              className: 'create-comment form-inline pull-right'
+              React.DOM.div
+                className: 'form-group'
+                React.DOM.input
+                  className: 'comment-anti-pattern form-control'
+                  type: 'text'
+                  placeholder: 'comment here'
+                  value: @state.comment
+                  onChange: @updateComment
               React.DOM.button
                 type: 'submit'
-                className: 'btn btn-continue'
+                className: 'btn btn-default accept form-control'
                 onClick: @clickSubmit
                 'comment'

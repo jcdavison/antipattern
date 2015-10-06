@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
   end
 
   def display_attributes
-    %w(name profile_pic github_profile)
+    %w(name profile_pic github_profile github_username)
   end
 
   def github_username

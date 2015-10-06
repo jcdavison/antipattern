@@ -1,5 +1,8 @@
 @lineDisplay = React.createClass
 
+  getDefaultProps: () ->
+    helpers: window.ReactHelpers
+
   getInitialState: () ->
     lineType: @props.data.line.lineType
     deleteIndex: @props.data.line.deleteIndex
@@ -27,84 +30,57 @@
   commentInputKey: () ->
     "comment-input-#{@props.data.commitInfo.commitSha}-#{@position}"
 
-  renderFoo: () ->
-      if @state.lineType == 'deletion'
-        return React.DOM.tbody
-          className: null
-          React.DOM.tr
-            className: "patch-line #{@lineColor()}"
-            React.DOM.td
-              className: 'delete-line-num'
-              @state.deleteIndex
-            React.DOM.td
-              className: 'addition-line-num'
-              ''
-            React.DOM.td
-              className: 'code line'
-              React.DOM.span
-                className: null
-                React.DOM.i
-                  className: 'fa fa-plus-square blue add-comment'
-                  onClick: @renderCommentInput
-              @state.content
-          for comment, commentIndex in @state.comments
-            React.createElement commentDisplay, key: "comment-#{commentIndex}", data: comment: comment
-          if @state.showCommentInput
-            React.createElement commentInput, key: "#{@commentInputKey()}", data: position: @state.position, commitSha: @props.data.commitInfo.commitSha, fileName: @props.data.commitInfo.fileName, repo: @props.data.commitInfo.repo
-      if @state.lineType == 'addition'
-        return React.DOM.tbody
-          className: null
-          React.DOM.tr
-            className: "patch-line #{@lineColor()}"
-            React.DOM.td
-              className: 'delete-line-num'
-              ''
-            React.DOM.td
-              className: 'addition-line-num'
-              @state.addIndex
-            React.DOM.td
-              className: 'code line'
-              React.DOM.span
-                className: null
-                React.DOM.i
-                  className: 'fa fa-plus-square blue add-comment'
-                  onClick: @renderCommentInput
-              @state.content
-          for comment, commentIndex in @state.comments
-            React.createElement commentDisplay, key: "comment-#{commentIndex}", data: comment: comment
-          if @state.showCommentInput
-            React.createElement commentInput, key: "#{@commentInputKey()}", data: position: @state.position, commitSha: @props.data.commitInfo.commitSha, fileName: @props.data.commitInfo.fileName, repo: @props.data.commitInfo.repo
-      if @state.lineType == 'display'
-        return React.DOM.tbody
-          className: null
-          React.DOM.tr
-            className: "patch-line #{@lineColor()}"
-            React.DOM.td
-              className: 'display-deletion-line-num'
-              @state.deleteIndex
-            React.DOM.td
-              className: 'display-addition-line-num'
-              @state.addIndex
-            React.DOM.td
-              className: 'code line'
-              React.DOM.span
-                className: null
-                React.DOM.i
-                  className: 'fa fa-plus-square blue add-comment'
-                  onClick: @renderCommentInput
-              @state.content
-          for comment, commentIndex in @state.comments
-            React.createElement commentDisplay, key: "comment-#{commentIndex}", data: comment: comment
-          if @state.showCommentInput
-            React.createElement commentInput, key: "#{@commentInputKey()}", data: position: @state.position, commitSha: @props.data.commitInfo.commitSha, fileName: @props.data.commitInfo.fileName, repo: @props.data.commitInfo.repo
+  renderIndex: (displayRow) ->
+    if @state.lineType == 'deletion'
+      if displayRow == 'delete'
+        return @state.deleteIndex
+      if displayRow == 'addition'
+        return ''
+    if @state.lineType == 'addition'
+      if displayRow == 'delete'
+        return ''
+      if displayRow == 'addition'
+        return @state.addIndex
+    if @state.lineType == 'display'
+      if displayRow == 'delete'
+        return @state.deleteIndex
+      if displayRow == 'addition'
+        return @state.addIndex
+
+  renderLine: () ->
+    return React.DOM.tbody
+      className: null
+      React.DOM.tr
+        className: "patch-line #{@lineColor()}"
+        React.DOM.td
+          className: 'line-index'
+          @renderIndex('delete')
+        React.DOM.td
+          className: 'line-index'
+          @renderIndex('addition')
+        React.DOM.td
+          className: 'code line'
+          React.DOM.span
+            className: null
+            React.DOM.i
+              className: 'fa fa-plus-square blue add-comment'
+              onClick: @renderCommentInput
+          @state.content
+      for comment, commentIndex in @state.comments
+        React.createElement commentDisplay, key: "comment-#{commentIndex}", data: comment: comment
+      if @state.showCommentInput
+        React.createElement commentInput, key: "#{@commentInputKey()}", data: position: @state.position, commitSha: @props.data.commitInfo.commitSha, fileName: @props.data.commitInfo.fileName, repo: @props.data.commitInfo.repo
 
   render: () ->
     if @state.lineType == 'patchInfo' 
       React.DOM.tr
         className: null
         React.DOM.th
-          className: null
-          colSpan: '3'
+          className: 'ultra-light-blue-background'
+        React.DOM.th
+          className: 'ultra-light-blue-background'
+        React.DOM.th
+          className: 'ultra-light-blue-background left-padd'
           @state.content
     else
-      @renderFoo()
+      @renderLine()

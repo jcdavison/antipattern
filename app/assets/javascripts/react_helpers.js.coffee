@@ -28,14 +28,11 @@ window.ReactHelpers =
   show: (selector) ->
     $(selector).removeClass('hide')
 
-  # marked: () ->
-  #   marked.setOptions(
-  #     renderer: new marked.Renderer(),
-  #     gfm: true,
-  #     tables: true,
-  #     breaks: false,
-  #     pedantic: false,
-  #     sanitize: true,
-  #     smartLists: true,
-  #     smartypants: false
-  #   )
+  commitUrl: (opts) ->
+    "https://github.com/#{opts.username}/#{opts.repo}/commit/#{opts.commitSha}"
+
+  date: (timeStamp) ->
+    moment(timeStamp).format("MMM D")
+
+  highlightCode: (str) ->
+    marked("`#{str}`")

@@ -1,5 +1,17 @@
 // FONT
 
+.black {
+  color: black;
+}
+
+.bottom {
+  vertical-align: text-top;
+}
+
+i.fa.medium {
+  font-size: 2.2em;
+}
+
 .double-wide {
   transform: scale(2)
 }
@@ -121,10 +133,6 @@ html, body {
   margin: .4em;
 }
 
-.brd {
-  border: 1px black solid;
-}
-
 textarea.error, input.error {
   border: 1px solid $red;
 }
@@ -179,9 +187,18 @@ textarea.error, input.error {
   padding-left: 0 !important;
 }
 
+.left-padd {
+  padding-left: 1em;
+}
+
 .no-horizontal-padding {
   padding-left: 0 !important;
   padding-right: 0 !important;
+}
+
+.sanitize {
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .summary {
@@ -227,7 +244,26 @@ section.offer {
   margin-top: 2em;
 }
 
-// Create Review
+// CODE REVIEW
+
+.commit-container {
+  border: 1px solid $light_grey;
+  border-radius: $rounding;
+}
+
+.patch-file-container {
+  border: 1px solid $light_grey;
+  border-radius: $rounding;
+}
+
+
+.pale_blue_background {
+  background-color: $pale_blue;
+}
+
+.light_grey_background {
+  background-color: $light_display_grey;
+}
 
 #code-review {
   .review-title {
@@ -250,6 +286,17 @@ a.venmo {
   margin: 2em 0;
 }
 
+// COMMENT
+
+.comment-element {
+  padding: 1em;
+}
+
+.comment-container {
+  margin-left: 1em;
+  border: 1px solid $light_grey;
+}
+
 // ANGULAR
 
 [ng\:cloak], [ng-cloak], .ng-cloak {
@@ -257,12 +304,35 @@ a.venmo {
 }
 
 // LAYOUT
+
+.no-right-borders {
+  border-right: 0 !important;
+}
+
+.rounded {
+  border-radius: $rounding;
+}
+
+.bottom-radius {
+  border-bottom-left-radius: $rounding;
+  border-bottom-right-radius: $rounding;
+}
+
+.top-radius {
+  border-top-left-radius: $rounding;
+  border-top-right-radius: $rounding;
+}
+
 .fixed-line-45 {
   line-height: 45px;
 }
 
 .fixed-line-14 {
   line-height: 14px;
+}
+
+.fixed-line-10 {
+  line-height: 10px;
 }
 
 .small-right-bump {
@@ -301,6 +371,10 @@ a.venmo {
   margin: .2em;
 }
 
+.top-left-pad {
+  padding: .7em 1em;
+}
+
 // FORMS
 
 .ui-state-error {
@@ -334,6 +408,18 @@ a.venmo {
 table.patch-display {
   width: 100%;
   tbody {
+    td {
+      padding: 1px 0;
+      border-right: 1px solid $ultra_light_grey;
+      border-bottom: 1px solid $ultra_light_grey;
+    }
+
+    td.line-index {
+      width: 50px;
+      text-align: right;
+      padding-right: 4px;
+    }
+
     tr {
       white-space: pre-wrap;
     }
@@ -341,6 +427,8 @@ table.patch-display {
     tr.patch-line {
       i.add-comment {
         visibility: hidden;
+        font-size: 16px;
+        padding: 0 3px;
       }
     }
 
@@ -350,7 +438,8 @@ table.patch-display {
       }
       i.add-comment:hover {
         visibility: visible;
-        font-size: 22px;
+        cursor: pointer;
+        color: $green;
       }
     }
   }

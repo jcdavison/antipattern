@@ -11,6 +11,7 @@ gem 'rack-ssl-enforcer'
 gem 'octokit', '~> 3.0'
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'web-console', '~> 2.0'
+gem 'momentjs-rails'
 
 #user auth
 gem 'devise', '~> 3.4.1'
