@@ -13,8 +13,6 @@ class User < ActiveRecord::Base
   has_one :wallet, dependent: :destroy
   has_and_belongs_to_many :notification_channels, dependent: :destroy
 
-  after_create :subscribe_new_code_reviews
-
   def self.find_for_oauth(auth, signed_in_resource = nil)
     identity = Identity.find_for_oauth(auth)
     user = signed_in_resource ? signed_in_resource : identity.user
