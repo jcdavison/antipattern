@@ -8,6 +8,9 @@
 
   componentDidMount: () ->
 
+  componentWillReceiveProps: (newProps) ->
+    @setState comment: newProps.data.comment
+
   render: () ->
     React.DOM.tr
       className: null

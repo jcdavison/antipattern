@@ -10,6 +10,11 @@
     commitSha: @props.data.info.commitSha
     repo: @props.data.info.repo
 
+  componentWillReceiveProps: (newProps) ->
+    newPatches = newProps.data.file.patches
+    @setState patches: @calculateStartingPosition(newPatches)
+    @setState comments: newProps.data.file.comments
+
   commitInfo: () ->
     { commitSha: @state.commitSha, fileName: @state.fileName, repo: @state.repo }
 

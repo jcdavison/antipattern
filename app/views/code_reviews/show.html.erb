@@ -1,6 +1,6 @@
 <div class='container'>
   <div class='row'>
     <div class='col-sm-11 center-block no-float'>
-      <%= react_component 'commitDisplay', { data: { commit: @commit_blob, codeReviewOwner: @code_review_owner } } %>
+      <%= react_component 'commitDisplay', { data: { commit: @commit_blob, codeReviewOwner: @code_review_owner, codeReviewId: @code_review.id } } %>
     </div>
 </div>

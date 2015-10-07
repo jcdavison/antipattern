@@ -4,13 +4,23 @@
     files: @props.data.commit.files
     info: @props.data.commit.info
     owner: @props.data.codeReviewOwner
+    id: @props.data.codeReviewId
 
   getDefaultProps: () ->
     helpers: window.ReactHelpers
 
   componentDidMount: () ->
-    # console.log @state.info.committer
-    # console.log @state.info.committer.date
+    PubSub.subscribe 'updateCommit', @updateCommit
+
+  updateCommit: () ->
+    $.get(
+      '/api/review', 
+      id: @state.id
+    )
+    .success( 
+      (response) =>
+        @setState files: response.commit.files
+    )
 
   render: () ->
     React.DOM.div
@@ -48,4 +58,3 @@
               "authored on #{@props.helpers.date(@state.info.committer.date)}, sha: #{@state.info.commitSha}"
       for file, index in @state.files
         React.createElement fileDisplay, key: "patch-#{index}", data: file: file, info: @state.info
-      # React.createElement fileDisplay, key: "patch-#{1}", data: file: @state.files[0], info: @state.info

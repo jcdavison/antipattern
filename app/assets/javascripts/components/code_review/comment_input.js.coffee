@@ -8,6 +8,7 @@
     repo: @props.data.repo
 
   componentDidMount: () ->
+    PubSub.subscribe 'enableCommentButton', @toggleButton
 
   updateComment: (e) ->
     @setState comment: e.target.value
@@ -20,22 +21,29 @@
       position: @state.position
       repo: @state.repo
 
-  postComment: () ->
+  toggleButton: () ->
+    currentState = $('button.comment-input').prop('disabled')
+    $('button.comment-input').prop('disabled', ! currentState)
+
+  postComment: (e) ->
     $.post(
       '/api/comments', 
       @postableComment()
-    ).success( 
-      (obj) =>
-        @setState comment: ''
-    ).error(
-      (response) ->
+    )
+    .success( (obj) =>
+      PubSub.publish 'updateCommit'
+      @setState comment: ''
+    )
+    .error( (response) =>
+      @toggleButton()
     )
 
   renderComment: (comment) ->
 
   clickSubmit: (e) ->
     e.preventDefault()
-    @postComment()
+    @toggleButton()
+    @postComment(e)
 
   render: () ->
     React.DOM.tr
@@ -62,6 +70,6 @@
                   onChange: @updateComment
               React.DOM.button
                 type: 'submit'
-                className: 'btn btn-default accept form-control'
+                className: 'btn btn-default accept form-control comment-input'
                 onClick: @clickSubmit
                 'comment'

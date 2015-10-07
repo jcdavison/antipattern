@@ -9,8 +9,13 @@
     comments: @extractComments(@props.data.comments)
     lines: []
 
+  componentWillReceiveProps: (newProps) ->
+    @setState patch: newProps.data.patch
+    @setState baseLineIndeces: @extractBaseIndeces(newProps.data.patch)
+    @setState lines: @evaluateLines(newProps.data.patch, @extractComments(newProps.data.comments))
+
   componentDidMount: () ->
-    @setState lines: @evaluateLines(@props.data.patch)
+    @setState lines: @evaluateLines(@props.data.patch, @state.comments)
 
   extractBaseIndeces: (patch) ->
     patchInfo = patch[0].split("@@")[1].split(' ')
@@ -32,21 +37,21 @@
         positions["#{comment.position}"] = [comment]
     positions
 
-  evaluateLines: (patch) ->
+  evaluateLines: (patch, commentsCollection) ->
     lines = []
     for line, lineIndex in patch
       lineType = @setLineType(line)
       lineIndeces = @calculateLineIndeces(line, lineType, lineIndex, lines)
-      comments = @grabComments(lineIndex)
+      comments = @grabComments(lineIndex, commentsCollection)
       lineObj = $.extend { content: line, lineType: lineType }, lineIndeces, comments
       lines.push lineObj
     lines
 
-  grabComments: (lineIndex) ->
+  grabComments: (lineIndex, commentCollection)->
     position = lineIndex + @state.patch.initialPosition
     comments = []
-    if @state.comments[position]
-      comments = @state.comments[position]
+    if commentCollection[position]
+      comments = commentCollection[position]
     {comments: comments, position: position}
 
   calculateLineIndeces: (line, lineType, lineIndex, linesWithIndeces) ->
