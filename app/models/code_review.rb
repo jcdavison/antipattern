@@ -2,7 +2,7 @@ class CodeReview < ActiveRecord::Base
   include WaffleHelper
 
   belongs_to :user
-  validates_presence_of :context, :user_id, :url
+  validates_presence_of :user_id
   has_many :offers
 
   acts_as_taggable

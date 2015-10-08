@@ -141,41 +141,41 @@ controllers.controller('deleteCodeReviewModal', ($scope, $rootScope, $modalInsta
       window.location.pathname = "/"
 )
 
-controllers.controller('createCodeReviewModal', ($scope, $rootScope, $modalInstance, $modal, CodeReview, User) ->
-  $scope.codeReview = {}
-  $scope.codeReview.value = $scope.values[0]
-  $scope.communityMembers = User.communityMembers
-  $scope.display = 'code-review-submit'
-  $scope.submitted = false
+# controllers.controller('createCodeReviewModal', ($scope, $rootScope, $modalInstance, $modal, CodeReview, User) ->
+#   $scope.codeReview = {}
+#   $scope.codeReview.value = $scope.values[0]
+#   $scope.communityMembers = User.communityMembers
+#   $scope.display = 'code-review-submit'
+#   $scope.submitted = false
 
-  $scope.createCodeReview = () ->
-    $scope.submitted = true
-    CodeReview.create($scope.codeReview).then (response) ->
-      if response.status == 200 
-        $scope.summary = response.data.code_review.summary
-        $rootScope.$broadcast 'render-html-from-detail'
-        $scope.display = 'code-review-success'
-      else
-        $scope.display = 'code-review-error'
+#   $scope.createCodeReview = () ->
+#     $scope.submitted = true
+#     CodeReview.create($scope.codeReview).then (response) ->
+#       if response.status == 200 
+#         $scope.summary = response.data.code_review.summary
+#         $rootScope.$broadcast 'render-html-from-detail'
+#         $scope.display = 'code-review-success'
+#       else
+#         $scope.display = 'code-review-error'
 
-  $scope.cancel = () ->
-    $modalInstance.dismiss('cancel');
-)
+#   $scope.cancel = () ->
+#     $modalInstance.dismiss('cancel');
+# )
 
-controllers.controller('createCodeReview', ($scope, $rootScope, $modal, User) ->
-  $scope.requestCodeReview = () ->
-    # if $rootScope.authorizedUser == true
-    #   modalInstance = $modal.open(
-    #     templateUrl: 'requestCodeReview.html'
-    #     controller: 'createCodeReviewModal'
-    #     size: 'lg'
-    #   )
-    # else
-    #   modalInstance = $modal.open(
-    #     templateUrl: 'pleaseLogin.html'
-    #     controller: 'genericModalCtrl'
-    #   )
-)
+# controllers.controller('createCodeReview', ($scope, $rootScope, $modal, User) ->
+#   $scope.requestCodeReview = () ->
+#     # if $rootScope.authorizedUser == true
+#     #   modalInstance = $modal.open(
+#     #     templateUrl: 'requestCodeReview.html'
+#     #     controller: 'createCodeReviewModal'
+#     #     size: 'lg'
+#     #   )
+#     # else
+#     #   modalInstance = $modal.open(
+#     #     templateUrl: 'pleaseLogin.html'
+#     #     controller: 'genericModalCtrl'
+#     #   )
+# )
 
 
 controllers.controller('editCodeReviewModal', ($scope, $rootScope, $modalInstance, User, codeReview, CodeReview) -> 

@@ -36,3 +36,10 @@ window.ReactHelpers =
 
   highlightCode: (str) ->
     marked("`#{str}`")
+
+  validateForm: (selector) ->
+    $("#{selector}").h5Validate()
+
+  isValidForm: (selector) ->
+    $("#{selector}").h5Validate('allValid')
+

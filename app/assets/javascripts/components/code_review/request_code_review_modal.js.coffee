@@ -3,21 +3,84 @@
   getInitialState: () ->
     formId: 'request-code-review'
     codeReviewUrl: ''
+    reposSelectId: 'code-review-repo'
+    branchSelectId: 'code-review-branch'
+    commitSelectId: 'code-review-commit'
+    repos: []
 
   getDefaultProps: () ->
     products: []
     helpers: window.ReactHelpers
 
   componentDidMount: () ->
-    $("##{@state.formId}").h5Validate()
+    @initEmptySelect()
+    @props.helpers.validateForm("##{@state.formId}")
+    @initSelectListeners()
+    @populateRepos()
+
+  initEmptySelect: () ->
+    $('.init-empty').each( (i,e,c) ->
+      $(e).select2( placeholder: '...')
+    )
+
+  initSelectListeners: () ->
+    $("##{@state.reposSelectId}").on 'select2:select', (e) =>
+      @populateBranches(e)
+    $("##{@state.branchSelectId}").on 'select2:select', (e) =>
+      @populateCommits(e)
+
+  enableSelect2: (element, data) ->
+    $(element).select2(data: data)
+
+  populateRepos: () ->
+    $.get '/api/repositories', {} 
+    .success( (response) =>
+      @enableSelect2("##{@state.reposSelectId}", response.repos)
+      $("#select2-code-review-repo-container").text('select a repo')
+    )
+    .error( (response) =>
+      console.log 'error', response
+    )
+
+  populateBranches: (e) ->
+    $.get '/api/branches', {repo: @selectedRepo()} 
+    .success( (response) =>
+      @enableSelect2("##{@state.branchSelectId}", response.branches)
+      $("#select2-code-review-branch-container").text('select a branch')
+    )
+    .error( (response) =>
+      console.log 'error', response
+    )
+
+  populateCommits: (e) ->
+    $.get '/api/commits', {repo: @selectedRepo(), branch: @selectedBranch()} 
+    .success( (response) =>
+      @enableSelect2("##{@state.commitSelectId}", response.commits)
+    )
+    .error( (response) =>
+      console.log 'error', response
+    )
+
+  selectedRepo: () ->
+    $("##{@state.reposSelectId}").val()
+
+  selectedBranch: () ->
+    $("##{@state.branchSelectId}").val()
+
+  selectedCommit: () ->
+    $("##{@state.commitSelectId}").val()
+
+  selectedTitle: () ->
+    $("option[value='#{@selectedCommit()}']").text()
+
 
   submitCodeReview: () ->
-    if $("##{@state.formId}").h5Validate('allValid')
+    if @props.helpers.isValidForm("##{@state.formId}")
       data = 
         codeReview: 
-          title: $("#code-review-title").val()
-          url: $("#code-review-url").val()
-          context: $("#code-review-context").val()
+          repo: @selectedRepo() 
+          commit_sha: @selectedCommit()
+          title: @selectedTitle()
           topics: $("#topics-select").val()
       $.ajax(
         type: 'POST'
@@ -40,7 +103,6 @@
           className: 'col-md-12'
           React.DOM.form
             id: @state.formId 
-          # begin component row
             React.DOM.div
               className: 'row'
               React.DOM.div
@@ -48,99 +110,66 @@
                 React.DOM.div
                   className: 'row top-margined'
                   React.DOM.div
-                    className: 'col-md-1'
-                    React.DOM.div
-                      className: 'medium blue centered'
-                      '1.'
+                    className: 'col-md-1 col-md-offset-1 medium-small'
+                    '1.'
                   React.DOM.div
-                    className: 'col-md-11'
-                    React.DOM.div
-                      className: 'row no-horizontal-margin'
-                      React.DOM.div
-                        className: 'col-sm-3'
-                        React.DOM.span
-                          className: 'medium'
-                          'Title:' 
-                      React.DOM.div
-                        className: 'col-sm-9'
-                        React.DOM.input
-                          type: 'text'
-                          id: 'code-review-title'
-                          required: 'required'
-                          maxLength: 55 
-                          className: 'fixed-line-45 full-bleed standard-form'
-                          placeholder: 'give this code review a happy name (maxLength 55 chars)'
+                    className: 'col-md-8 medium-small'
+                    'Repository Name'
                 React.DOM.div
                   className: 'row top-margined'
                   React.DOM.div
-                    className: 'col-md-1'
-                    React.DOM.div
-                      className: 'medium blue centered'
-                      '2.'
-                  React.DOM.div
-                    className: 'col-md-11'
-                    React.DOM.div
-                      className: 'row no-horizontal-margin'
-                      React.DOM.div
-                        className: 'col-sm-3'
-                        React.DOM.span
-                          className: 'medium'
-                          'Url:' 
-                      React.DOM.div
-                        className: 'col-sm-9'
-                        React.DOM.input
-                          type: 'text'
-                          id: 'code-review-url'
-                          required: 'required'
-                          className: 'fixed-line-45 full-bleed standard-form h5-url'
-                          placeholder: 'gist (ok), pull request (better), commit (best)'
+                    className: 'col-md-10 col-md-offset-1 medium-small'
+                    React.DOM.select
+                      id: @state.reposSelectId
+                      required: 'required'
+                      className: 'full-bleed' 
                 React.DOM.div
                   className: 'row top-margined'
                   React.DOM.div
-                    className: 'col-md-1'
-                    React.DOM.div
-                      className: 'medium blue centered'
-                      '3.'
+                    className: 'col-md-1 col-md-offset-1 medium-small'
+                    '2.'
                   React.DOM.div
-                    className: 'col-md-11'
-                    React.DOM.div
-                      className: 'row no-horizontal-margin'
-                      React.DOM.div
-                        className: 'col-sm-3'
-                        React.DOM.span
-                          className: 'medium'
-                          'Context:' 
-                      React.DOM.div
-                        className: 'col-sm-9'
-                        React.DOM.textarea
-                          rows: '8'
-                          cols: '56'
-                          required: 'required'
-                          className: 'standard-form'
-                          id: 'code-review-context'
-                          placeholder: 'Tell the community what you are looking for in your code review. (markdown friendly)'
+                    className: 'col-md-8 medium-small'
+                    'Branch Name'
                 React.DOM.div
                   className: 'row top-margined'
                   React.DOM.div
-                    className: 'col-md-1'
-                    React.DOM.div
-                      className: 'medium blue centered'
-                      '4.'
+                    className: 'col-md-10 col-md-offset-1 medium-small'
+                    React.DOM.select
+                      id: @state.branchSelectId
+                      required: 'required'
+                      className: 'full-bleed init-empty' 
+                React.DOM.div
+                  className: 'row top-margined'
                   React.DOM.div
-                    className: 'col-md-11'
+                    className: 'col-md-1 col-md-offset-1 medium-small'
+                    '3.'
+                  React.DOM.div
+                    className: 'col-md-8 medium-small'
+                    'Commit Name'
+                React.DOM.div
+                  className: 'row top-margined'
+                  React.DOM.div
+                    className: 'col-md-10 col-md-offset-1 medium-small'
+                    React.DOM.select
+                      id: @state.commitSelectId
+                      required: 'required'
+                      className: 'full-bleed init-empty' 
+                React.DOM.div
+                  className: 'row top-margined'
+                  React.DOM.div
+                    className: 'col-md-1 col-md-offset-1 medium-small'
+                    '4.'
+                  React.DOM.div
+                    className: 'col-md-8 medium-small'
+                    'Commit Topic(s)'
+                React.DOM.div
+                  className: 'row top-margined'
+                  React.DOM.div
+                    className: 'col-md-10 col-md-offset-1 medium-small'
                     React.DOM.div
-                      className: 'row no-horizontal-margin'
-                      React.DOM.div
-                        className: 'col-sm-3'
-                        React.DOM.span
-                          className: 'medium'
-                          'Topics:' 
-                      React.DOM.div
-                        className: 'col-sm-9'
-                        React.DOM.div
-                          className: 'topic-select'
-                          React.createElement topicSelect
-
+                      className: 'topic-select'
+                      React.createElement topicSelect
   render: () ->
     React.DOM.div
       className: 'modal fade request-code-review'
@@ -151,7 +180,7 @@
           className: 'modal-content no-corners'
           React.DOM.div
             className: 'modal-header blue medium'
-            'Post a link to your code.'
+            "Please Choose a Commit."
             React.DOM.button
               className: 'close'
               'data-dismiss': 'modal'
@@ -172,9 +201,16 @@
             className: 'modal-footer request-code-review-success hide'
             React.DOM.div
               className: 'centered medium blue'
-              'Congrats!!!! It is a Code Review'
+              'Congrats!'
             React.DOM.div
               className: 'centered medium blue'
+              React.DOM.span
+                className: null
+                "It's a Code Review! "
+              React.DOM.i
+                className: 'fa fa-retweet'
+            React.DOM.div
+              className: 'centered medium-small blue'
               React.DOM.a
                 href: @state.codeReviewUrl
                 @state.codeReviewUrl

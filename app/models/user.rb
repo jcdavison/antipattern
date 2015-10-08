@@ -39,6 +39,11 @@ class User < ActiveRecord::Base
       user.save
     end
 
+    if identity.token.nil?
+      identity.token = auth["credentials"]["token"]
+      identity.save!
+    end
+
     if identity.user != user
       identity.user = user
       identity.save!
