@@ -24,7 +24,7 @@ class CodeReviewsController < ApplicationController
     end
 
     def grab_comments code_review
-      OCTOCLIENT.get "/repos/jcdavison/#{code_review.repo}/commits/#{code_review.commit_sha}/comments"
+      OCTOCLIENT.get "/repos/#{code_review.user.github_username}/#{code_review.repo}/commits/#{code_review.commit_sha}/comments"
     end
 
     def inject_comments_into comments, commit_blob
