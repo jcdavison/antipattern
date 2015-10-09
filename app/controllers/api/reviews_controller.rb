@@ -77,7 +77,10 @@ class Api::ReviewsController < ApplicationController
     end
 
     def grab_comments code_review
-      OCTOCLIENT.get "/repos/jcdavison/#{code_review.repo}/commits/#{code_review.commit_sha}/comments"
+      user = code_review.user.github_username
+      repo = code_review.repo
+      sha = code_review.commit_sha
+      OCTOCLIENT.get "/repos/#{user}/#{repo}/commits/#{sha}/comments"
     end
 
     def inject_comments_into comments, commit_blob

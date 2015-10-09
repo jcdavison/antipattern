@@ -39,10 +39,8 @@ class User < ActiveRecord::Base
       user.save
     end
 
-    if identity.token.nil?
-      identity.token = auth["credentials"]["token"]
-      identity.save!
-    end
+    identity.token = auth["credentials"]["token"]
+    identity.save!
 
     if identity.user != user
       identity.user = user
@@ -65,5 +63,9 @@ class User < ActiveRecord::Base
 
   def github_username
     github_profile.split("/").last
+  end
+
+  def auth_token
+    identities.first.token
   end
 end

@@ -1,7 +1,7 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
-  config.omniauth :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET']
+  config.omniauth :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET'], scope: 'public_repo, user:email'
   config.omniauth :stripe_connect, ENV['STRIPE_CLIENT_ID'], ENV['STRIPE_SECRET'], scope: 'read_write', always_prompt: true
   #
   # The secret key used by Devise. Devise uses this key to generate

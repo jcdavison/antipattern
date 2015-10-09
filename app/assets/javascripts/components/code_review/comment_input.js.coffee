@@ -6,6 +6,7 @@
     fileName: @props.data.fileName
     position: @props.data.position
     repo: @props.data.repo
+    owner: @props.data.owner
 
   componentDidMount: () ->
     PubSub.subscribe 'enableCommentButton', @toggleButton
@@ -20,6 +21,7 @@
       path: @state.fileName
       position: @state.position
       repo: @state.repo
+      commitOwner: @state.owner.githubUsername
 
   toggleButton: () ->
     currentState = $('button.comment-input').prop('disabled')
