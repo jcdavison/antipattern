@@ -7,6 +7,7 @@
     position: @props.data.position
     repo: @props.data.repo
     owner: @props.data.owner
+    currentUser: @props.data.currentUser
 
   componentDidMount: () ->
     PubSub.subscribe 'enableCommentButton', @toggleButton
@@ -47,6 +48,23 @@
     @toggleButton()
     @postComment(e)
 
+  renderRelevantButton: () ->
+    if @props.data.currentUser
+      React.DOM.div
+        className: 'text-right' 
+        React.DOM.button
+          type: 'submit'
+          className: 'btn btn-default accept form-control comment-input'
+          onClick: @clickSubmit
+          dangerouslySetInnerHTML: {__html: "comment as #{@state.currentUser.githubUsername} <i class='fa fa-github'></i>"}
+    else
+      React.DOM.div
+        className: 'text-right top-margined' 
+        React.DOM.a
+          className: 'btn btn-default accept comment-input'
+          href: '/users/auth/github'
+          dangerouslySetInnerHTML: {__html: "<i class='fa fa-github-alt'></i> authenticate to comment"}
+
   render: () ->
     React.DOM.tr
       className: 'comment-input'
@@ -63,15 +81,12 @@
             React.DOM.form
               className: 'create-comment form-inline pull-right'
               React.DOM.div
-                className: 'form-group'
-                React.DOM.input
+                className: null 
+                React.DOM.textarea
                   className: 'comment-anti-pattern form-control'
-                  type: 'text'
-                  placeholder: 'comment here'
+                  cols: '90'
+                  rows: '5'
+                  placeholder: 'Enter some valuable feedback here.'
                   value: @state.comment
                   onChange: @updateComment
-              React.DOM.button
-                type: 'submit'
-                className: 'btn btn-default accept form-control comment-input'
-                onClick: @clickSubmit
-                'comment'
+              @renderRelevantButton()

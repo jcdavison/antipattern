@@ -37,4 +37,4 @@
             className: 'black top-radius light_grey_background top-left-pad'
             @state.fileName
           for patch, index in @state.patches
-            React.createElement patchDisplay, key: "patch-#{index}", data: patch: patch, comments: @state.comments, commitInfo: @commitInfo(), owner: @props.data.owner
+            React.createElement patchDisplay, key: "patch-#{index}", data: patch: patch, comments: @state.comments, commitInfo: @commitInfo(), owner: @props.data.owner, currentUser: @props.data.currentUser

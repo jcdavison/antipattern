@@ -27,40 +27,23 @@
   </div>
 </div>
 
-<div class="container">
-  <div class="row">
-    <div class='col-sm-12 centered top-margined'>
-      <%= link_to 'VIEW CODE REVIEWS', code_reviews_path, class: 'medium join' %>
-    </div>
-  </div>
-  <div class="row">
-    <div class='col-sm-12 centered top-margined'>
-      <%= link_to 'JOIN', user_omniauth_authorize_path(:github), class: 'medium join' %>
-    </div>
-  </div>
-</div>
 
 <div class="container">
   <div class="row">
     <div class='col-sm-12'>
-      <div class="centered splash">
-        <span class='medium grey'>
-          How it works...
-        </span>
-      </div>
 
       <div class="centered splash">
         <span class='medium grey'>
-          1. Request feedback on your code.
+          1. Request feedback on a specific commit.
         </span>
         <%= image_tag 'request_code_review.png', class: 'centered product-display' %>
       </div>
 
       <div class="centered splash">
         <span class='medium grey'>
-          2. Let the community give you a code review.
+          2. Let the community give you code feedback.
         </span>
-        <%= image_tag 'instructions.png', class: 'centered product-display' %>
+        <%= image_tag 'review_me.png', class: 'centered product-display' %>
       </div>
 
       <div class="centered splash">
@@ -82,32 +65,7 @@
   </div>
   <div class="row">
     <div class='col-sm-12 centered top-margined'>
-      <%= link_to 'JOIN', user_omniauth_authorize_path(:github), class: 'medium join' %>
-    </div>
-  </div>
-</div>
-
-<div class="container">
-  <div class="row">
-    <div class='col-sm-12'>
-      <div class="centered splash">
-        <span class='medium grey'>
-          Supporting Information
-        </span>
-      </div>
-
-      <div class="centered medium">
-        <a href="http://blog.antipattern.io/articles/terms-rules-conditions/" target="new">Community Standards and Guidelines</a>
-      </div>
-
-      <div class="centered medium">
-        <a href="http://blog.antipattern.io/articles/genesis-of-antipattern/" target="new">The Genesis of AntiPattern.io</a>
-      </div>
-
-      <div class="centered medium footer-row">
-        <a href="http://blog.antipattern.io/articles/Antipatternio-Open-Source-Startup/" target="new">AntiPattern.io has open source code.</a>
-      </div>
-
+      <%= link_to "GITHUB AUTH #{fa_icon 'github-alt'}".html_safe, user_omniauth_authorize_path(:github), class: 'medium join' %>
     </div>
   </div>
 </div>

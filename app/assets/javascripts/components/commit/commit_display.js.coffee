@@ -57,4 +57,4 @@
               className: null
               "authored on #{@props.helpers.date(@state.info.committer.date)}, sha: #{@state.info.commitSha}"
       for file, index in @state.files
-        React.createElement fileDisplay, key: "patch-#{index}", data: file: file, info: @state.info, owner: @state.owner
+        React.createElement fileDisplay, key: "patch-#{index}", data: file: file, info: @state.info, owner: @state.owner, currentUser: @props.data.currentUser

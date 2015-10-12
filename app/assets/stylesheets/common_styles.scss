@@ -32,12 +32,11 @@ i.jumbo {
   line-height: 3em;
 }
 
-a.join, a.stripe-connect, a.continue {
+a.join, a.continue {
   border: 1px solid $green;
-  border-radius: 1px;
+  border-radius: $rounding;
   color: $green;
-  padding: 4px 16px;
-  line-height: 1.8em;
+  padding: 10px 16px;
   &:hover {
     text-decoration: none;
     color: $white;
@@ -290,6 +289,7 @@ a.venmo {
 
 .comment-element {
   padding: 1em;
+  line-height: 16px;
 }
 
 .comment-container {

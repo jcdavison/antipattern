@@ -12,7 +12,7 @@
         React.DOM.div
           className: 'row'
           React.DOM.div
-            className: 'col-sm-11'
+            className: 'col-sm-12'
             React.DOM.div
               className: 'row'
               React.DOM.div
@@ -24,7 +24,7 @@
                     src: @props.data.codeReview.user.profilePic
                     className: 'profile'
               React.DOM.div
-                className: 'col-sm-9'
+                className: 'col-sm-7'
                 React.DOM.div
                   React.DOM.span
                     className: 'medium-small'
@@ -40,9 +40,9 @@
                       className: 'blue'
                       @props.data.codeReview.topics
               React.DOM.div
-                className: 'col-sm-2'
+                className: 'col-sm-4 fixed-line-45 text-right'
                 React.DOM.a
-                  className: 'btn btn-default review inline small-top-margined' 
+                  className: 'continue review inline small-top-margined' 
                   href: "/code-reviews/#{@props.data.codeReview.id}"
                   target: 'new'
                   'Review This Code!'
