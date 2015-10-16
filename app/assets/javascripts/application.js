@@ -1,4 +1,5 @@
 //= require react_helpers
+//= require underscore
 //= require moment
 //= require jquery
 //= require jquery_ujs

@@ -19,7 +19,8 @@ Rails.application.routes.draw do
     get 'decision_registered', to: 'offers#decision_registered'
     get 'tokens', to: 'tokens#show'
     get 'community_members', to: 'users#index'
-    get 'subscriptions', to: 'users#subscriptions'
+    get 'channels', to: 'notifications#index'
+    get 'subscriptions', to: 'subscriptions#index'
     post 'update_profile', to: 'users#update'
     post 'offers/deliver', to: 'offers#deliver'
     post 'reviews', to: 'reviews#create'
@@ -29,6 +30,7 @@ Rails.application.routes.draw do
     post 'comments', to: 'comments#create'
     put 'offers', to: 'offers#update'
     put 'reviews', to: 'reviews#update'
+    patch 'subscriptions', to: 'subscriptions#update'
     delete 'reviews/:id', to: 'reviews#destroy'
   end
 

@@ -1,7 +1,7 @@
 <% if current_user %>
   <ul class="nav navbar-nav navbar-left">
     <li><%= link_to "signed in as: #{github_username(current_user)}", current_user.github_profile, target: 'new' %></li>
-    <li><a href="#" class="hover-blue show-user-profile-modal" >PROFILE & NOTIFICATIONS</a></li>
+    <li><a href="#" class="hover-blue show-user-profile-modal" >NOTIFICATIONS</a></li>
     <li><a href="#" class="hover-blue" ng-click="showFaq()">FAQ</a></li>
     <li><%= link_to 'SIGN OUT', destroy_user_session_path, method: :delete, class: 'hover-blue' %></li>
   </ul>

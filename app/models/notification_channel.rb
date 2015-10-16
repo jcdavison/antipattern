@@ -1,4 +1,5 @@
 class NotificationChannel < ActiveRecord::Base
+  include WaffleHelper
   has_and_belongs_to_many :subscribers, class_name: 'User', uniq: true
 
   def self.send! args = nil
@@ -20,5 +21,9 @@ class NotificationChannel < ActiveRecord::Base
 
   def self.subscribe args
     NotificationChannel.find_by(name: args[:name]).subscribers << args[:subscriber]
+  end
+
+  def display_attributes
+    %w(name id)
   end
 end

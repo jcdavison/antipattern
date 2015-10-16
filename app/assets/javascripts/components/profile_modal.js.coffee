@@ -4,15 +4,35 @@
     formId: 'user-profile'
     subscribeTo: true
     email: @props.data.currentUser.email
+    notificationsSelectId: 'user-notifications-select'
+    channels: []
 
   getDefaultProps: () ->
     helpers: window.ReactHelpers
 
   componentDidMount: () ->
+    $("##{@state.notificationsSelectId}").select2()
+    @getUserSubscriptions()
+    # @initChannelSelect()
     $("##{@state.formId}").h5Validate()
     @showIfQueryParam()
     @getUserSubscription()
     @handleShowClick()
+
+  getUserSubscriptions: () ->
+    $.get '/api/subscriptions', {}
+      .success( (response) => 
+        subscriptionValues = _.map(response.subscriptions, (obj) -> "#{obj.id}")
+        @initChannelSelect(subscriptionValues)
+      )
+
+
+  initChannelSelect: (currentUserSubscriptions) ->
+    $.get '/api/channels', {}
+      .success( (response) => 
+        $("##{@state.notificationsSelectId}").select2(data: response.channels)
+        $("##{@state.notificationsSelectId}").val(currentUserSubscriptions).trigger('change')
+      )
 
   showIfQueryParam: () ->
     if window.location.search.match(/show_profile=true/)
@@ -21,24 +41,20 @@
       )
 
   getUserSubscription: () ->
-    $.get '/api/subscriptions.json', {} , (data) =>
-      @setState subscribeTo: data.subscribedTo
+    # $.get '/api/subscriptions.json', {} , (data) =>
+    #   @setState subscribeTo: data.subscribedTo
 
   handleShowClick: () ->
     $(".show-user-profile-modal").click () ->
-      $('.user-profile-modal').modal(
-        backdrop: 'static'
-      )
+      $('.user-profile-modal').modal()
 
-  updateProfile: () ->
+  updateNotifications: () ->
     if $("##{@state.formId}").h5Validate('allvalid')
       data = 
-        user: 
-          email: @state.email
-          subscribeTo: @state.subscribeTo
+        channelIds: $("##{@state.notificationsSelectId}").val()
       $.ajax(
-        type: 'POST'
-        url: '/api/update_profile.json'
+        type: 'PATCH'
+        url: '/api/subscriptions'
         data: data 
         success: (data) =>
           $('.user-profile-modal').modal('hide')
@@ -63,35 +79,36 @@
             React.DOM.div
               className: 'row top-margined'
               React.DOM.div
-                className: 'col-sm-9 fixed-line-45'
+                className: 'col-sm-10'
                 React.DOM.span
                   className: 'medium-small'
-                  'Get Notified About New Code Reviews:' 
-              React.DOM.div
-                className: 'col-sm-3 fixed-line-45'
-                React.DOM.input
-                  type: 'checkbox'
-                  className: 'double-wide'
-                  id: 'user-profile-notifications'
-                  checked: @state.subscribeTo 
-                  onChange: @updateSubscribeTo
-
+                  'Select Channels' 
             React.DOM.div
               className: 'row top-margined'
               React.DOM.div
-                className: 'col-sm-2 fixed-line-45'
-                React.DOM.span
-                  className: 'medium-small'
-                  'Email:' 
-              React.DOM.div
-                className: 'col-sm-10 fixed-line-45'
-                React.DOM.input
-                  type: 'text'
-                  id: 'user-profile-email'
+                className: 'col-md-12 medium-small'
+                React.DOM.select
+                  id: @state.notificationsSelectId
+                  multiple: 'true'
                   required: 'required'
-                  className: ' full-bleed standard-form h5-email'
-                  onChange: @updateEmail
-                  value: @state.email
+                  className: 'full-bleed'
+
+            # React.DOM.div
+            #   className: 'row top-margined'
+            #   React.DOM.div
+            #     className: 'col-sm-2 fixed-line-45'
+            #     React.DOM.span
+            #       className: 'medium-small'
+            #       'Email:' 
+            #   React.DOM.div
+            #     className: 'col-sm-10 fixed-line-45'
+            #     React.DOM.input
+            #       type: 'text'
+            #       id: 'user-profile-email'
+            #       required: 'required'
+            #       className: ' full-bleed standard-form h5-email'
+            #       onChange: @updateEmail
+            #       value: @state.email
   render: () ->
     React.DOM.div
       className: 'modal fade user-profile-modal'
@@ -101,8 +118,8 @@
         React.DOM.div
           className: 'modal-content no-corners'
           React.DOM.div
-            className: 'modal-header blue medium'
-            "Confirm Thy Self"
+            className: 'modal-header blue medium-small'
+            "New Code Review Email Notifications"
             React.DOM.button
               className: 'close'
               'data-dismiss': 'modal'
@@ -111,20 +128,10 @@
                 'X'
           @userProfileForm()
           React.DOM.div
-            className: 'modal-footer request-code-review-form'
+            className: 'modal-footer'
             React.DOM.div
               className: 'centered'
               React.DOM.button
                 className: 'btn btn-default summary' 
-                onClick: @updateProfile
-                'CONFIRM & UPDATE'
-          React.DOM.div
-            className: 'modal-footer request-code-review-success hide'
-            React.DOM.div
-              className: 'centered medium blue'
-              'Congrats!!!! It is a Code Review'
-            React.DOM.div
-              className: 'centered medium blue'
-              React.DOM.a
-                href: @state.codeReviewUrl
-                @state.codeReviewUrl
+                onClick: @updateNotifications
+                'SAVE PREFERENCES'
