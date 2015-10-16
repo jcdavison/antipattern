@@ -2,6 +2,7 @@
 
   getInitialState: () ->
     comment: '' 
+    antipattern: null
     commitSha: @props.data.commitSha
     fileName: @props.data.fileName
     position: @props.data.position
@@ -15,18 +16,30 @@
   updateComment: (e) ->
     @setState comment: e.target.value
 
+  updateAntipattern: (e) ->
+    @setState antipattern: e.target.value
+
   postableComment: () ->
     comment: 
-      body: @state.comment
+      body: @buildCommentBody()
       sha: @state.commitSha
       path: @state.fileName
       position: @state.position
       repo: @state.repo
       commitOwner: @state.owner.githubUsername
 
+  buildCommentBody: () ->
+    if @state.antipattern
+      "antipattern: <br/>#{@state.antipattern}<br/><br/>feedback: <br/>#{@state.comment}#{@includeAttribution()}"
+    else
+      "#{@state.comment}#{@includeAttribution()}"
+
   toggleButton: () ->
     currentState = $('button.comment-input').prop('disabled')
     $('button.comment-input').prop('disabled', ! currentState)
+
+  includeAttribution: () ->
+    "<br/><br/><a href='#{window.location.href}' target='_blank'>created on antipattern.io</a>"
 
   postComment: (e) ->
     $.post(
@@ -36,6 +49,7 @@
     .success( (obj) =>
       PubSub.publish 'updateCommit'
       @setState comment: ''
+      @setState antipattern: null
     )
     .error( (response) =>
       @toggleButton()
@@ -81,12 +95,23 @@
             React.DOM.form
               className: 'create-comment form-inline pull-right'
               React.DOM.div
-                className: null 
+                className: 'top-margined' 
+                'identify potential antipattern'
+                React.DOM.div
+                  className: null
+                  React.DOM.input
+                    className: 'form-control full-bleed anti-pattern-identification'
+                    placeholder: "like 'unclear variable names' or 'improper use of a constant'"
+                    value: @state.antipattern
+                    onChange: @updateAntipattern
+              React.DOM.div
+                className: 'top-margined' 
+                'general feedback'
                 React.DOM.textarea
                   className: 'comment-anti-pattern form-control'
-                  cols: '90'
-                  rows: '5'
-                  placeholder: 'Enter some valuable feedback here.'
+                  cols: '92'
+                  rows: '3'
+                  placeholder: "like 'try using a ruby Proc' or 'JS has tricky behavior irt truthy variables, try logging the value of the variable to know what it is'"
                   value: @state.comment
                   onChange: @updateComment
               @renderRelevantButton()

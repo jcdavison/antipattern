@@ -31,4 +31,5 @@
                 "#{@state.comment.user.login} commented on #{@props.helpers.date(@state.comment.created_at)}"
               React.DOM.div
                 className: 'bottom-radius comment-element'
-                @state.comment.body
+                dangerouslySetInnerHTML: {__html: marked(@state.comment.body)}
+                
