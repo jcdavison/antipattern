@@ -1,5 +1,6 @@
 include CommitHelper
 include StructuralHelper
+include QueryHelper
 
 class Api::ReviewsController < ApplicationController
 
@@ -8,8 +9,8 @@ class Api::ReviewsController < ApplicationController
   respond_to :json
 
   def index
-    @code_reviews = CodeReview.all_active.order(created_at: :desc)
-    render 'api/reviews/index'
+    @code_reviews = all_active_code_reviews
+    render json: {codeReviews: @code_reviews}
   end
 
   def show

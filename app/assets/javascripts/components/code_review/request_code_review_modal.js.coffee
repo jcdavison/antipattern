@@ -91,6 +91,7 @@
           @props.helpers.hide('.request-code-review-form')
           @props.helpers.show('.request-code-review-success')
           @setState codeReviewUrl: data.codeReview.antipatternUrl
+          PubSub.publish 'refresh-code-review-index'
       ) 
     else
       'invalid'
