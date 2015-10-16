@@ -82,6 +82,7 @@
           commit_sha: @selectedCommit()
           title: @selectedTitle()
           topics: $("#topics-select").val()
+          context: $("#context").val() 
       $.ajax(
         type: 'POST'
         url: '/api/reviews.json'
@@ -170,6 +171,24 @@
                     React.DOM.div
                       className: 'topic-select'
                       React.createElement topicSelect
+                React.DOM.div
+                  className: 'row top-margined'
+                  React.DOM.div
+                    className: 'col-md-1 col-md-offset-1 medium-small'
+                    '5.'
+                  React.DOM.div
+                    className: 'col-md-8 medium-small'
+                    'Context'
+                React.DOM.div
+                  className: 'row top-margined'
+                  React.DOM.div
+                    className: 'col-md-10 col-md-offset-1 medium-small'
+                    React.DOM.div
+                      className: 'topic-select'
+                      React.DOM.textarea
+                        id: 'context'
+                        cols: 34
+                        rows: 3
   render: () ->
     React.DOM.div
       className: 'modal fade request-code-review'
