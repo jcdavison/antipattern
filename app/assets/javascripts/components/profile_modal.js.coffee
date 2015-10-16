@@ -119,7 +119,7 @@
           className: 'modal-content no-corners'
           React.DOM.div
             className: 'modal-header blue medium-small'
-            "New Code Review Email Notifications"
+            "Get Emailed About New Code Reviews"
             React.DOM.button
               className: 'close'
               'data-dismiss': 'modal'
