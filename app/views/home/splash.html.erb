@@ -43,6 +43,11 @@
         <span class='medium grey'>
           2. Let the community give you code feedback.
         </span>
+        <div class='community-grid'>
+          <% @users.each do |user| %>
+            <div class='community-member'><%= image_tag user['profilePic'] %></div>
+          <% end %>
+        </div>
         <%= image_tag 'review_me.png', class: 'centered product-display' %>
       </div>
 
@@ -69,3 +74,10 @@
     </div>
   </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(e){
+  console.log("foo")
+  $('.community-grid').masonry({columnWidth: 40, itemSelector: '.community-member'})
+});
+</script>

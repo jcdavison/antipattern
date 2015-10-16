@@ -44,6 +44,7 @@ gem 'ngmin-rails', '~> 0.4.0'
 gem 'redcarpet'
 gem 'marked-rails'
 gem 'underscore-rails'
+gem 'masonry-rails'
 
 # js
 gem 'coffee-rails', '~> 4.0.0'

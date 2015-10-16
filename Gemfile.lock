@@ -118,6 +118,8 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     marked-rails (0.3.2.0)
+    masonry-rails (0.2.4)
+      railties
     method_source (0.8.2)
     mime-types (2.4.3)
     minitest (5.5.0)
@@ -287,6 +289,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   marked-rails
+  masonry-rails
   momentjs-rails
   ngmin-rails (~> 0.4.0)
   octokit (~> 3.0)
