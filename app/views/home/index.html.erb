@@ -5,7 +5,9 @@
         <div class='col-sm-10 border-bottom no-left-padding center-block no-float'>
           <div class='row'>
             <div class='col-sm-12 no-right-padding text-right'>
-              <button class='accept medium-small btn btn-default show-user-profile-modal'>Get Notified of New Code Reviews</button>
+              <% if current_user %>
+                <button class='accept medium-small btn btn-default show-user-profile-modal'>Get Notified of New Code Reviews</button>
+              <% end %>
 
             </div>
           </div>
