@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151007210828) do
+ActiveRecord::Schema.define(version: 20151105183507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,22 @@ ActiveRecord::Schema.define(version: 20151007210828) do
     t.string   "repo"
   end
 
+  create_table "delayed_jobs", force: true do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
   create_table "identities", force: true do |t|
     t.integer  "user_id"
     t.string   "provider"
@@ -39,6 +55,20 @@ ActiveRecord::Schema.define(version: 20151007210828) do
   end
 
   add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
+
+  create_table "leads", force: true do |t|
+    t.string   "email"
+    t.string   "username"
+    t.string   "source"
+    t.hstore   "original_blob"
+    t.boolean  "registered",    default: false
+    t.boolean  "opt_out",       default: false
+    t.integer  "uid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.hstore   "user_blob"
+    t.hstore   "repo_blob"
+  end
 
   create_table "notification_channels", force: true do |t|
     t.string   "name"
