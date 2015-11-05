@@ -43,4 +43,3 @@ var PubSub = {};
         return false;
     };
 }(PubSub));
-

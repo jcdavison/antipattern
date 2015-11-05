@@ -35,7 +35,7 @@
       )
 
   showIfQueryParam: () ->
-    if window.location.search.match(/show_profile=true/)
+    if window.location.search.match(/show_notification_settings=true/)
       $('.user-profile-modal').modal(
         backdrop: 'static'
       )

@@ -28,7 +28,7 @@ class Api::ReviewsController < ApplicationController
     topic_list = tagize_topics params[:code_review][:topics]
     @code_review.topic_list = topic_list
     if @code_review.save
-      # @members_notified = @code_review.notify_subscribers
+      Notifier.new code_review: @code_review
       render 'api/reviews/create'
     else
       head :forbidden

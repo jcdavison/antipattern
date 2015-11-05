@@ -31,4 +31,8 @@ class CodeReview < ActiveRecord::Base
   def display_attributes
     self.attributes.keys
   end
+
+  def notification_channels
+    topics.map {|topic| NotificationChannel.find_by_name(topic.name) }
+  end
 end
