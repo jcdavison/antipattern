@@ -31,6 +31,7 @@
 
   enableSelect2: (element, data) ->
     $(element).select2(data: data)
+    $(element).val(null)
 
   populateRepos: () ->
     $.get '/api/repositories', {} 
