@@ -33,6 +33,6 @@ class CodeReview < ActiveRecord::Base
   end
 
   def notification_channels
-    topics.map {|topic| NotificationChannel.find_by_name(topic.name) }
+    NotificationChannel.where name: topics.map(&:name)
   end
 end

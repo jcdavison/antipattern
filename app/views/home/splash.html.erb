@@ -70,14 +70,13 @@
   </div>
   <div class="row">
     <div class='col-sm-12 centered top-margined'>
-      <%= link_to "GITHUB AUTH #{fa_icon 'github-alt'}".html_safe, user_omniauth_authorize_path(:github), class: 'medium join' %>
+      <%= link_to "LOGIN #{fa_icon 'github-alt'}".html_safe, user_omniauth_authorize_path(:github), class: 'medium join' %>
     </div>
   </div>
 </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function(e){
-  console.log("foo")
   $('.community-grid').masonry({columnWidth: 40, itemSelector: '.community-member'})
 });
 </script>
