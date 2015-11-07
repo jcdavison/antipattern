@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     get 'topics', to: 'topics#index'
+    get 'entities', to: 'entities#index'
     get 'repositories', to: 'repositories#index'
     get 'branches', to: 'branches#index'
     get 'commits', to: 'commits#index'

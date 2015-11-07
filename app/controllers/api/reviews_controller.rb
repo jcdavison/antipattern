@@ -37,8 +37,8 @@ class Api::ReviewsController < ApplicationController
 
   def owned_by
     code_review = CodeReview.find_by(user_id: current_user.id, id: params[:id])
-    owned_by = !code_review.nil?
-    render json: { owned_by: owned_by}
+    owned_by = ! code_review.nil?
+    render json: { owned_by: owned_by }
   end
 
   def update

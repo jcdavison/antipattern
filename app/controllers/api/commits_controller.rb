@@ -1,6 +1,6 @@
 class Api::CommitsController < ApplicationController
   def index
-    owner = current_user.github_username
+    owner = params[:entity][:value]
     repo = params[:repo]
     branch = params[:branch]
     commits = OCTOCLIENT.get("/repos/#{owner}/#{repo}/commits?sha=#{branch}")

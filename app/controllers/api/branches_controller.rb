@@ -1,6 +1,6 @@
 class Api::BranchesController < ApplicationController
   def index
-    owner = current_user.github_username
+    owner = params[:entity][:value]
     repo = params[:repo]
     branches = OCTOCLIENT.get("/repos/#{owner}/#{repo}/branches")
     branch_names = branches.map {|branch| {text: branch[:name], id: branch[:name]} } 

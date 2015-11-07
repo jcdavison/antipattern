@@ -6,7 +6,10 @@
     reposSelectId: 'code-review-repo'
     branchSelectId: 'code-review-branch'
     commitSelectId: 'code-review-commit'
+    entitySelectId: 'code-review-entity'
+    entities: []
     repos: []
+    entity: null
 
   getDefaultProps: () ->
     products: []
@@ -16,7 +19,7 @@
     @initEmptySelect()
     @props.helpers.validateForm("##{@state.formId}")
     @initSelectListeners()
-    @populateRepos()
+    @populateEntities()
 
   initEmptySelect: () ->
     $('.init-empty').each( (i,e,c) ->
@@ -24,6 +27,8 @@
     )
 
   initSelectListeners: () ->
+    $("##{@state.entitySelectId}").on 'select2:select', (e) =>
+      @populateRepos(e)
     $("##{@state.reposSelectId}").on 'select2:select', (e) =>
       @populateBranches(e)
     $("##{@state.branchSelectId}").on 'select2:select', (e) =>
@@ -33,8 +38,23 @@
     $(element).select2(data: data)
     $(element).val(null)
 
+  populateEntities: () ->
+    $.get '/api/entities', {} 
+    .success( (response) =>
+      @setState entities: response.entities
+      @enableSelect2("##{@state.entitySelectId}", response.entities)
+      $("#select2-code-review-entity-container").text('select self or org')
+    )
+    .error( (response) =>
+      console.log 'error', response
+    )
+
   populateRepos: () ->
-    $.get '/api/repositories', {} 
+    entity = _.select(@state.entities, (entity) =>
+      @selectedEntity() == entity.text
+    )[0]
+    @setState entity: entity
+    $.get '/api/repositories', {entityType: entity.entityType, value: entity.text} 
     .success( (response) =>
       @enableSelect2("##{@state.reposSelectId}", response.repos)
       $("#select2-code-review-repo-container").text('select a repo')
@@ -44,7 +64,10 @@
     )
 
   populateBranches: (e) ->
-    $.get '/api/branches', {repo: @selectedRepo()} 
+    $.get '/api/branches', {
+        repo: @selectedRepo(), 
+        entity: {value: @state.entity.text} 
+      } 
     .success( (response) =>
       @enableSelect2("##{@state.branchSelectId}", response.branches)
       $("#select2-code-review-branch-container").text('select a branch')
@@ -54,13 +77,20 @@
     )
 
   populateCommits: (e) ->
-    $.get '/api/commits', {repo: @selectedRepo(), branch: @selectedBranch()} 
+    $.get '/api/commits', {
+        repo: @selectedRepo(), 
+        branch: @selectedBranch(), 
+        entity: {value: @state.entity.text}
+      } 
     .success( (response) =>
       @enableSelect2("##{@state.commitSelectId}", response.commits)
     )
     .error( (response) =>
       console.log 'error', response
     )
+
+  selectedEntity: () ->
+    $("##{@state.entitySelectId}").val()
 
   selectedRepo: () ->
     $("##{@state.reposSelectId}").val()
@@ -117,6 +147,22 @@
                     '1.'
                   React.DOM.div
                     className: 'col-md-8 medium-small'
+                    'User or Organization'
+                React.DOM.div
+                  className: 'row top-margined'
+                  React.DOM.div
+                    className: 'col-md-10 col-md-offset-1 medium-small'
+                    React.DOM.select
+                      id: @state.entitySelectId
+                      required: 'required'
+                      className: 'full-bleed' 
+                React.DOM.div
+                  className: 'row top-margined'
+                  React.DOM.div
+                    className: 'col-md-1 col-md-offset-1 medium-small'
+                    '2.'
+                  React.DOM.div
+                    className: 'col-md-8 medium-small'
                     'Repository Name'
                 React.DOM.div
                   className: 'row top-margined'
@@ -125,12 +171,12 @@
                     React.DOM.select
                       id: @state.reposSelectId
                       required: 'required'
-                      className: 'full-bleed' 
+                      className: 'full-bleed init-empty' 
                 React.DOM.div
                   className: 'row top-margined'
                   React.DOM.div
                     className: 'col-md-1 col-md-offset-1 medium-small'
-                    '2.'
+                    '3.'
                   React.DOM.div
                     className: 'col-md-8 medium-small'
                     'Branch Name'
@@ -146,7 +192,7 @@
                   className: 'row top-margined'
                   React.DOM.div
                     className: 'col-md-1 col-md-offset-1 medium-small'
-                    '3.'
+                    '4.'
                   React.DOM.div
                     className: 'col-md-8 medium-small'
                     'Commit Name'
@@ -162,7 +208,7 @@
                   className: 'row top-margined'
                   React.DOM.div
                     className: 'col-md-1 col-md-offset-1 medium-small'
-                    '4.'
+                    '5.'
                   React.DOM.div
                     className: 'col-md-8 medium-small'
                     'Commit Topic(s)'
@@ -177,7 +223,7 @@
                   className: 'row top-margined'
                   React.DOM.div
                     className: 'col-md-1 col-md-offset-1 medium-small'
-                    '5.'
+                    '6.'
                   React.DOM.div
                     className: 'col-md-8 medium-small'
                     'Context'
