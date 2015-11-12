@@ -1,8 +1,9 @@
 @commentInput = React.createClass
 
   getInitialState: () ->
-    justification: '' 
-    references: ''
+    formId: 'antipatternInput'
+    justification: null 
+    references: null
     antipattern: null
     commitSha: @props.data.commitSha
     fileName: @props.data.fileName
@@ -17,6 +18,7 @@
 
   componentDidMount: () ->
     PubSub.subscribe 'enableCommentButton', @toggleButton
+    $("##{@state.formId}").h5Validate()
 
   postableComment: () ->
     comment: 
@@ -39,7 +41,10 @@
     $('button.comment-input').prop('disabled', ! currentState)
 
   buildFragment: (stateName) ->
-    "#{stateName}: <br/>#{@state[stateName]}<br/><br/>"
+    if @state[stateName]
+      "#{stateName}: <br/>#{@state[stateName]}<br/><br/>"
+    else
+      ""
 
   includeAttribution: () ->
     "<a href='#{window.location.href}' target='_blank'>created on antipattern.io</a>"
@@ -62,8 +67,9 @@
 
   clickSubmit: (e) ->
     e.preventDefault()
-    @toggleButton()
-    @postComment(e)
+    if $("##{@state.formId}").h5Validate('allValid')
+      @toggleButton()
+      @postComment(e)
 
   renderRelevantButton: () ->
     if @props.data.currentUser
@@ -91,7 +97,7 @@
           className: null
           React.DOM.form
             className: 'create-comment form-inline'
-            id: 'antipatternInput'
+            id: @state.formId
             React.DOM.div
               className: 'top-margined' 
               React.DOM.div
@@ -106,6 +112,7 @@
                   className: 'form-control full-bleed anti-pattern-identification'
                   value: @state.antipattern
                   'data-state-attribute': 'antipattern'
+                  required: true
                   onChange: @props.helpers.updateSelf.bind(@)
             React.DOM.div
               className: 'top-margined' 
@@ -120,6 +127,7 @@
                 cols: '75'
                 rows: '3'
                 value: @state.justification
+                required: true
                 'data-state-attribute': 'justification'
                 onChange: @props.helpers.updateSelf.bind(@)
             React.DOM.div
