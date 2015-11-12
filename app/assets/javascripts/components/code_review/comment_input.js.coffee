@@ -47,7 +47,7 @@
       ""
 
   includeAttribution: () ->
-    "<a href='#{window.location.href}' target='_blank'>created on antipattern.io</a>"
+    "<a href='#{window.location.href}' class='antipattern-inline-hide' target='_blank'>created on antipattern.io</a>"
 
   postComment: (e) ->
     $.post(

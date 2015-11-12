@@ -7,9 +7,14 @@
     comment: @props.data.comment
 
   componentDidMount: () ->
+    @hideAllInline()
 
   componentWillReceiveProps: (newProps) ->
     @setState comment: newProps.data.comment
+
+  hideAllInline: () ->
+    $(".antipattern-inline-hide").each (index, obj) ->
+      $(obj).addClass('hide')
 
   render: () ->
     React.DOM.tr
@@ -32,4 +37,3 @@
               React.DOM.div
                 className: 'bottom-radius comment-element'
                 dangerouslySetInnerHTML: {__html: marked(@state.comment.body)}
-                
