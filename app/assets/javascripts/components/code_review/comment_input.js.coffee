@@ -1,7 +1,8 @@
 @commentInput = React.createClass
 
   getInitialState: () ->
-    comment: '' 
+    justification: '' 
+    references: ''
     antipattern: null
     commitSha: @props.data.commitSha
     fileName: @props.data.fileName
@@ -10,14 +11,12 @@
     owner: @props.data.owner
     currentUser: @props.data.currentUser
 
+
+  getDefaultProps: () ->
+    helpers: window.ReactHelpers
+
   componentDidMount: () ->
     PubSub.subscribe 'enableCommentButton', @toggleButton
-
-  updateComment: (e) ->
-    @setState comment: e.target.value
-
-  updateAntipattern: (e) ->
-    @setState antipattern: e.target.value
 
   postableComment: () ->
     comment: 
@@ -30,16 +29,20 @@
 
   buildCommentBody: () ->
     if @state.antipattern
-      "antipattern: <br/>#{@state.antipattern}<br/><br/>feedback: <br/>#{@state.comment}#{@includeAttribution()}"
+      "#{@buildFragment('antipattern')}#{@buildFragment('justification')}#{@buildFragment('references')}#{@includeAttribution()}"
     else
-      "#{@state.comment}#{@includeAttribution()}"
+      "#{@state.justification}#{@includeAttribution()}"
+
 
   toggleButton: () ->
     currentState = $('button.comment-input').prop('disabled')
     $('button.comment-input').prop('disabled', ! currentState)
 
+  buildFragment: (stateName) ->
+    "#{stateName}: <br/>#{@state[stateName]}<br/><br/>"
+
   includeAttribution: () ->
-    "<br/><br/><a href='#{window.location.href}' target='_blank'>created on antipattern.io</a>"
+    "<a href='#{window.location.href}' target='_blank'>created on antipattern.io</a>"
 
   postComment: (e) ->
     $.post(
@@ -48,7 +51,7 @@
     )
     .success( (obj) =>
       PubSub.publish 'updateCommit'
-      @setState comment: ''
+      @setState justification: ''
       @setState antipattern: null
     )
     .error( (response) =>
@@ -79,6 +82,102 @@
           href: '/users/auth/github'
           dangerouslySetInnerHTML: {__html: "<i class='fa fa-github-alt'></i> authenticate to comment"}
 
+  renderIdentifyAntipattern: () ->
+    React.DOM.div
+      className: 'row'
+      React.DOM.div
+        className: 'col-sm-10'
+        React.DOM.div
+          className: null
+          React.DOM.form
+            className: 'create-comment form-inline'
+            id: 'antipatternInput'
+            React.DOM.div
+              className: 'top-margined' 
+              React.DOM.div
+                className: 'blue'
+                "Identify the Antipattern"
+              React.DOM.div
+                className: null
+                "i.e., 'unclear variable names' or 'n+1 query'"
+              React.DOM.div
+                className: null
+                React.DOM.input
+                  className: 'form-control full-bleed anti-pattern-identification'
+                  value: @state.antipattern
+                  'data-state-attribute': 'antipattern'
+                  onChange: @props.helpers.updateSelf.bind(@)
+            React.DOM.div
+              className: 'top-margined' 
+              React.DOM.div
+                className: 'blue'
+                "Justify the relevance of the Antipattern"
+              React.DOM.div
+                className: null
+                "i.e., 'n+1 queries can cause a possibly infinite number of db calls'"
+              React.DOM.textarea
+                className: 'comment-anti-pattern form-control'
+                cols: '75'
+                rows: '3'
+                value: @state.justification
+                'data-state-attribute': 'justification'
+                onChange: @props.helpers.updateSelf.bind(@)
+            React.DOM.div
+              className: 'top-margined' 
+              React.DOM.div
+                className: 'blue'
+                "Provide supporting links and references, if necessary."
+              React.DOM.div
+                className: null
+                "i.e., http://stackoverflow.com/foo or http://someawesomblog.com/great_post"
+              React.DOM.textarea
+                className: 'references-anti-pattern form-control'
+                cols: '75'
+                rows: '3'
+                value: @state.references
+                'data-state-attribute': 'references'
+                onChange: @props.helpers.updateSelf.bind(@)
+            @renderRelevantButton()
+
+  setIntention: (e) ->
+     intention = e.currentTarget.dataset.intention
+     @props.helpers.hide('#intentionSelect')
+     @props.helpers.show("##{intention}Input")
+
+  renderFeedbackIntentionChoices: () ->
+    React.DOM.div
+      className: 'row'
+      React.DOM.div
+        className: 'col-sm-10'
+        @renderIdentifyAntipattern() 
+        React.DOM.div
+          className: null
+          id: 'intentionSelect'
+          'Please Choose Your Feedback Intention:'
+          React.DOM.div
+            className: 'top-margined'
+            React.DOM.div
+              className: 'blue pointer'
+              onClick: @setIntention
+              'data-intention': 'antipattern'
+              "Identify a coding antipattern "
+              React.DOM.i
+                className: 'fa fa-space-shuttle hover-toggle'
+            React.DOM.div
+              className: 'blue pointer'
+              onClick: @setIntention
+              'data-intention': 'affirmation'
+              "Give 'props' and point out something awesome "
+              React.DOM.i
+                className: 'fa fa-fighter-jet hover-toggle'
+            React.DOM.div
+              className: 'blue pointer'
+              onClick: @setIntention
+              'data-intention': 'unstructured'
+              "Give general unstructured feedback "
+              React.DOM.i
+                className: 'fa fa-plane hover-toggle'
+
   render: () ->
     React.DOM.tr
       className: 'comment-input'
@@ -92,26 +191,4 @@
           className: 'row'
           React.DOM.div
             className: 'col-sm-10'
-            React.DOM.form
-              className: 'create-comment form-inline pull-right'
-              React.DOM.div
-                className: 'top-margined' 
-                'identify potential antipattern'
-                React.DOM.div
-                  className: null
-                  React.DOM.input
-                    className: 'form-control full-bleed anti-pattern-identification'
-                    placeholder: "like 'unclear variable names' or 'improper use of a constant'"
-                    value: @state.antipattern
-                    onChange: @updateAntipattern
-              React.DOM.div
-                className: 'top-margined' 
-                'general feedback'
-                React.DOM.textarea
-                  className: 'comment-anti-pattern form-control'
-                  cols: '92'
-                  rows: '3'
-                  placeholder: "like 'try using a ruby Proc' or 'JS has tricky behavior irt truthy variables, try logging the value of the variable to know what it is'"
-                  value: @state.comment
-                  onChange: @updateComment
-              @renderRelevantButton()
+            @renderIdentifyAntipattern()

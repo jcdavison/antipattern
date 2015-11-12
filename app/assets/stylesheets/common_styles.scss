@@ -1,5 +1,17 @@
 // FONT
 
+div.pointer {
+  i.hover-toggle {
+    visibility: hidden;
+  }
+}
+
+div.pointer:hover {
+  i.hover-toggle {
+    visibility: visible;
+  }
+}
+
 .black {
   color: black;
 }

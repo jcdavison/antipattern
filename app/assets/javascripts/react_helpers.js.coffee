@@ -43,3 +43,9 @@ window.ReactHelpers =
   isValidForm: (selector) ->
     $("#{selector}").h5Validate('allValid')
 
+  updateSelf: (e) ->
+    updateObj = {}
+    newValue = $(e.currentTarget).val()
+    attribute = e.currentTarget.dataset.stateAttribute
+    updateObj[attribute] = newValue
+    @setState updateObj
