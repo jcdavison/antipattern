@@ -13,6 +13,8 @@
     showCommentInput: false
 
   componentDidMount: () ->
+    if @state.comments.length >= 1
+      console.log 'line display comment', @state.comments
 
   componentWillReceiveProps: (newProps) ->
     @setState lineType: newProps.data.line.lineType

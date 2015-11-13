@@ -8,6 +8,11 @@ class CodeReviewsController < ApplicationController
     @code_review_owner = @code_review.user.to_waffle.attributes!
     commit_blob = build_commit_blob(OCTOCLIENT.get(commit_url(@code_review))) 
     @comments = grab_comments(@code_review).map {|e| e.to_attrs }
+    p '@comments'
+    p @comments.class
+    p @comments.length
+    p @comments
+    save_and_associate({find_key: :github_id, objects: @comments, attributes: [:body, {github_id: :id}], class: 'Comment', parent: @code_review})
     @commit_blob = inject_comments_into @comments, commit_blob
     @commit_blob[:info].merge!({repo: @code_review.repo, commitSha: @code_review.commit_sha})
     # rescue 
@@ -15,6 +20,22 @@ class CodeReviewsController < ApplicationController
   end
 
   private
+
+    def save_and_associate opts
+      opts[:objects].each do |obj|
+        obj_attributes = opts[:attributes].inject({}) do |attr_map, attribute|
+          look_up_key = attribute.is_a?(Hash) ? attribute.values.first : attribute
+          local_modal_key = attribute.is_a?(Hash) ? attribute.keys.first : attribute
+          attr_map[local_modal_key] = eval("obj[:#{look_up_key}]")
+          attr_map
+        end
+        new_obj = eval("#{opts[:class]}.find_or_create_by(opts[:find_key] => #{obj_attributes[opts[:find_key]]})")
+        new_obj.update_attributes obj_attributes
+        parent = opts[:parent]
+        association = opts[:class].downcase.pluralize
+        eval("parent.send(association) << new_obj")
+      end
+    end
 
     def build_commit_blob octo_blob
       files = octo_blob.files.map {|f| camelize_thing(f.to_attrs) }

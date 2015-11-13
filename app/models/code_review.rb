@@ -4,6 +4,8 @@ class CodeReview < ActiveRecord::Base
   belongs_to :user
   validates_presence_of :user_id
   has_many :offers
+  has_many :comments
+  has_many :votes, as: :voteable
 
   acts_as_taggable
   acts_as_taggable_on :topics
