@@ -10,6 +10,8 @@
     commitSha: @props.data.info.commitSha
     repo: @props.data.info.repo
 
+  componentDidMount: () ->
+
   componentWillReceiveProps: (newProps) ->
     newPatches = newProps.data.file.patches
     @setState patches: @calculateStartingPosition(newPatches)

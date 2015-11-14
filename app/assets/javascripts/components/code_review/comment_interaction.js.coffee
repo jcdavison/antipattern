@@ -13,10 +13,8 @@
     )
     .success( 
       (response) =>
-        console.log response.comment
         @setState upVotes: response.comment.voteCount.upVotes
         @setState downVotes: response.comment.voteCount.downVotes
-
     )
 
   getInitialState: () ->
