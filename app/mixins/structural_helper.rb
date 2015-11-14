@@ -44,4 +44,13 @@ module StructuralHelper
     end
     keyed_thing
   end
+
+  def change_key collection, original_key, new_key
+    collection.map do |obj|
+      obj_value = obj[original_key]
+      obj.delete original_key
+      obj[new_key] = obj_value
+      obj
+    end
+  end
 end

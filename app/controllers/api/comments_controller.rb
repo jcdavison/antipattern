@@ -1,4 +1,11 @@
 class Api::CommentsController < ApplicationController
+  def show
+    comment = Comment.find_by github_id: params[:github_id]
+    render json: { comment: comment.to_waffle.attributes!}, status: 200
+    rescue 
+      render json: { content: 'not ok'}, status: 401
+  end
+
   def create
     comment = params[:comment]
     post_comment current_user, comment

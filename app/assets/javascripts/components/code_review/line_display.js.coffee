@@ -13,8 +13,6 @@
     showCommentInput: false
 
   componentDidMount: () ->
-    if @state.comments.length >= 1
-      console.log 'line display comment', @state.comments
 
   componentWillReceiveProps: (newProps) ->
     @setState lineType: newProps.data.line.lineType
@@ -90,6 +88,6 @@
                 onClick: @renderCommentInput
             @state.content
         for comment, commentIndex in @state.comments
-          React.createElement commentDisplay, key: "comment-#{commentIndex}", data: comment: comment
+          React.createElement commentDisplay, key: "comment-#{commentIndex}", data: comment: comment, currentUser: @props.data.currentUser
         if @state.showCommentInput
           React.createElement commentInput, key: "#{@commentInputKey()}", toggleCommentInput: @toggleCommentInput, data: position: @state.position, commitSha: @props.data.commitInfo.commitSha, fileName: @props.data.commitInfo.fileName, repo: @props.data.commitInfo.repo, owner: @props.data.owner, currentUser: @props.data.currentUser

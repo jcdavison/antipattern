@@ -186,6 +186,12 @@ textarea.error, input.error {
   border-bottom: 1px solid $light_grey;
 }
 
+.green-bottom-border {
+  border-bottom: 1px solid $green;
+  // border-radius: $rounding; 
+  // padding: 5px;
+}
+
 .text-right {
   text-align: right;
 }
@@ -205,6 +211,11 @@ textarea.error, input.error {
 .no-horizontal-padding {
   padding-left: 0 !important;
   padding-right: 0 !important;
+}
+
+.no-vertical-padding {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .sanitize {
