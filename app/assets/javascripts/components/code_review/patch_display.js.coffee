@@ -69,7 +69,6 @@
         return { addIndex: precedingAddIndex  + 1, deleteIndex: precedingDeleteIndex + 1 }
 
   setLineType: (line) ->
-    # return 'patchInfo' if line.match(/@@.+@@/) 
     return 'patchInfo' if line.match(/@@.{3,}@@/) 
     return 'addition' if line[0] == '+'
     return 'deletion' if line[0] == '-'
