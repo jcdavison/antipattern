@@ -8,9 +8,15 @@
     deleteIndex: @props.data.line.deleteIndex
     addIndex: @props.data.line.addIndex
     content: @props.data.line.content
-    comments: @props.data.line.comments
+    comments: @rankComments @props.data.line.comments
     position: @props.data.line.position
     showCommentInput: false
+
+  rankComments: (comments) ->
+    sorted_comments = _.sortBy(comments, (comment) ->
+      comment.votes.upVotes
+    )
+    sorted_comments.reverse()
 
   componentDidMount: () ->
 

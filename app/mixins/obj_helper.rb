@@ -11,6 +11,7 @@ module ObjHelper
       association = opts[:class].downcase.pluralize
       eval("parent.send(association) << new_obj")
       obj[:id] = new_obj.id
+      obj[:votes] = new_obj.vote_count
       collection.push new_obj
     end
     { created_objs: created_objs, input_objs: opts[:objects] }
