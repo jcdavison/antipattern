@@ -12,7 +12,6 @@
     owner: @props.data.owner
     currentUser: @props.data.currentUser
 
-
   getDefaultProps: () ->
     helpers: window.ReactHelpers
 
@@ -34,7 +33,6 @@
       "#{@buildFragment('antipattern')}#{@buildFragment('justification')}#{@buildFragment('references')}#{@includeAttribution()}"
     else
       "#{@state.justification}#{@includeAttribution()}"
-
 
   toggleButton: () ->
     currentState = $('button.comment-input').prop('disabled')

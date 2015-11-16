@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151112233341) do
+ActiveRecord::Schema.define(version: 20151116164436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20151112233341) do
     t.string   "url"
     t.string   "commit_sha"
     t.string   "repo"
+    t.string   "author"
+    t.string   "branch"
   end
 
   create_table "comments", force: true do |t|

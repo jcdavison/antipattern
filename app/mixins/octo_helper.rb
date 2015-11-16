@@ -2,7 +2,7 @@ module OctoHelper
   PATCH_INFO_REGEXP = /@@.{3,}@@/
 
   def commit_url code_review
-    "/repos/#{code_review.user.github_username}/#{code_review.repo}/commits/#{code_review.commit_sha}"
+    "/repos/#{code_review.author}/#{code_review.repo}/commits/#{code_review.commit_sha}"
   end
 
   def build_commit_blob octo_blob
@@ -13,10 +13,10 @@ module OctoHelper
   end
 
   def grab_comments code_review, client = nil
-    user = code_review.user.github_username
+    author = code_review.author
     repo = code_review.repo
     sha = code_review.commit_sha
-    client.send 'get', "/repos/#{user}/#{repo}/commits/#{sha}/comments"
+    client.send 'get', "/repos/#{author}/#{repo}/commits/#{sha}/comments"
   end
 
   def inject_comments_into comments, commit_blob

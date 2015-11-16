@@ -104,12 +104,16 @@
   selectedTitle: () ->
     $("option[value='#{@selectedCommit()}']").text()
 
+  elementVal: (selector) ->
+    $(selector).val()
 
   submitCodeReview: () ->
     if @props.helpers.isValidForm("##{@state.formId}")
       data = 
         codeReview: 
           repo: @selectedRepo() 
+          author: @elementVal("##{@state.entitySelectId}")
+          branch: @elementVal("##{@state.branchSelectId}")
           commit_sha: @selectedCommit()
           title: @selectedTitle()
           topics: $("#topics-select").val()
