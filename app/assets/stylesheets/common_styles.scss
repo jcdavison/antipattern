@@ -495,12 +495,13 @@ table.patch-display {
 // VOTE
 
 .vote-interface {
-  div.upvote, div.downvote {
+  div.voteable {
+    cursor: pointer;
     border-radius: $rounding;
     padding: 5px;
   }
 
-  div.upvote:hover {
+  div.upvoteable:hover, div.upvoted {
     background-color: $very_light_blue;
     i.upvote {
       color: $blue;
@@ -508,7 +509,7 @@ table.patch-display {
 
   }
 
-  div.downvote:hover {
+  div.downvoteable:hover, div.downvoted {
     background-color: $very_light_red;
     i.downvote {
       color: $red;

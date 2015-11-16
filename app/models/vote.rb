@@ -14,4 +14,8 @@ class Vote < ActiveRecord::Base
   def display_attributes
     self.attributes.keys
   end
+
+  def self.vote_of_record_for opts
+    where(opts).first
+  end
 end

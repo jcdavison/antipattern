@@ -13,17 +13,33 @@
     )
     .success( 
       (response) =>
-        @setState upVotes: response.comment.voteCount.upVotes
-        @setState downVotes: response.comment.voteCount.downVotes
+        @setVoteableCss(response.currentUserVote)
+        @setState upVoteCount: response.comment.voteCount.upVotes
+        @setState downVoteCount: response.comment.voteCount.downVotes
     )
+
+  setVoteableCss: (currentUserVote) ->
+    if currentUserVote == null
+      @setState upVoteableCss: 'upvoteable'
+      @setState downVoteableCss: 'downvoteable'
+      return
+    if currentUserVote.value == 1
+      @setState upVoteableCss: 'upvoted'
+      @setState downVoteableCss: 'downvoteable'
+    if currentUserVote.value == -1
+      @setState upVoteableCss: 'upvoteable'
+      @setState downVoteableCss: 'downvoted'
+
+  refreshSelf: (voteData) ->
+    @getCommentStats()
 
   getInitialState: () ->
     comment: @props.data.comment
     currentUser: @props.data.currentUser || {}
-    upVotes: ''
-    upVoteStatus: ''
-    downVotes: ''
-    downVoteStatus: ''
+    upVoteableCss: ''
+    downVoteableCss: ''
+    upVoteCount: 0
+    downVoteCount: 0
     voteableType: 'Comment'
     voteableId: @props.data.comment.id
 
@@ -44,7 +60,7 @@
     )
     .success( 
       (response) =>
-        console.log response
+        @refreshSelf(response)
     )
 
 
@@ -55,27 +71,27 @@
         className: null 
         "{ "
         React.DOM.div
-          className: "#{@insertIfCan('upvote pointer')} inline"
+          className: "#{@state.upVoteableCss} inline voteable"
           onClick: @vote
           'data-vote-value': 1
           React.DOM.i
             className: "fa fa-thumbs-up light-blue inline upvote"
           React.DOM.span
-            className: @state.upVoteStatus
-            ": #{@state.upVotes}"
+            className: null
+            ": #{@state.upVoteCount}"
       React.DOM.span
         className: null 
         " , "
       React.DOM.div
-        className: "#{@insertIfCan('downvote pointer')} inline"
+        className: "#{@state.downVoteableCss} inline voteable"
+        'data-vote-value': -1
+        onClick: @vote
         React.DOM.span
           React.DOM.i
             className: "fa fa-thumbs-down light-red downvote"
-            'data-vote-value': -1
-            onClick: @vote
         React.DOM.span
-          className: @state.downVoteStatus
-          ": #{@state.downVotes}"
+            className: null
+          ": #{@state.downVoteCount}"
       React.DOM.span
         className: null 
         " }"

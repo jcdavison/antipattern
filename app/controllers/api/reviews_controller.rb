@@ -20,7 +20,6 @@ class Api::ReviewsController < ApplicationController
     github_comment_colletion = grab_comments(@code_review, OCTOCLIENT).map {|e| e.to_attrs }
     comments_by_github_id = change_key(github_comment_colletion, :id, :github_id)
     comments = save_and_associate({find_key: :github_id, objects: comments_by_github_id, attributes: [:body, :github_id], class: 'Comment', parent: @code_review})
-    binding.pry
     @commit_blob = inject_comments_into comments_by_github_id, commit_blob
     @commit_blob[:info].merge!({repo: @code_review.repo, commitSha: @code_review.commit_sha})
     render json: {commit: @commit_blob, codeReviewOwner: @code_review_owner, codeReviewId: @code_review.id}

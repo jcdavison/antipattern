@@ -3,7 +3,8 @@ class Api::CommentsController < ApplicationController
 
   def show
     comment = Comment.find_by github_id: params[:github_id]
-    render json: { comment: comment.to_waffle.attributes!}, status: 200
+    current_user_vote = current_user ? comment.votes.select {|c| c.user_id == current_user.id }.first : nil
+    render json: { comment: comment.to_waffle.attributes!, currentUserVote: current_user_vote}, status: 200
     rescue 
       render json: { content: 'not ok'}, status: 401
   end
