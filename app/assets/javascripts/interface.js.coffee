@@ -1,6 +1,7 @@
 class Interface
   constructor: () ->
     @configValidation()
+    @showFaq()
 
   configValidation: () ->
     $.h5Validate.addPatterns({
@@ -10,5 +11,10 @@ class Interface
       userpassword: /[a-zA-Z0-9]{1,}.+/
       url: /http\:\/\/.+/
     });
+
+  showFaq: () ->
+    $("#show-faq").click( () ->
+      $("#faq-modal").modal()
+    )
 
 new Interface

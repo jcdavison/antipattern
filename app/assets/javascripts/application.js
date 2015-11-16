@@ -6,11 +6,6 @@
 //= require masonry/jquery.masonry
 //= require bootstrap-sprockets
 //= require jquery.h5validate.min
-//= require angular
-//= require angular-mocks
-//= require angular-route
-//= require angular-sanitize
-//= require angular-ui-bootstrap-tpls
 //= require react
 //= require react_ujs
 //= require components

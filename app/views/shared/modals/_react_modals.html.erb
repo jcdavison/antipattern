@@ -1,5 +1,5 @@
 <%= react_component 'requestCodeReviewModal', { data: { codeReviews: @code_reviews } } %>
-
+<%= render 'shared/modals/faq' %>
 
 <% if current_user %>
   <%= react_component 'profileModal', { data: { currentUser: current_user } } %>
