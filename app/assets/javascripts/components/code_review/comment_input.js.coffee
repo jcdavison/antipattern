@@ -40,7 +40,7 @@
 
   buildFragment: (stateName) ->
     if @state[stateName]
-      "#{stateName}: <br/>#{@state[stateName]}<br/><br/>"
+      "<span class='structured-feedback-element'>#{stateName}:</span> <br/>#{@state[stateName]}<br/><br/>"
     else
       ""
 
