@@ -43,6 +43,9 @@ window.ReactHelpers =
   isValidForm: (selector) ->
     $("#{selector}").h5Validate('allValid')
 
+  pleaseLogin: () ->
+    $("#please-login").modal()
+
   updateSelf: (e) ->
     updateObj = {}
     newValue = $(e.currentTarget).val()

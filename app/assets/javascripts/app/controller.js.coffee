@@ -1,22 +1,6 @@
 controllers = angular.module('App.controllers', [])
 
 controllers.controller('appController', ($scope, $rootScope, $modal, User, CodeReview, Offer, $attrs) ->
-  User.isAuthorized().then (response) ->
-    if response.status == 200
-      User.getCommunityMembers()
-      $rootScope.$broadcast 'authorized-user'
-
-  CodeReview.getAll().then () ->
-    $scope.allCodeReviews = CodeReview.allCodeReviews
-
-  $rootScope.values = [ {title: 'Good Karma', value: 0} ]
-
-  $scope.showFaq = () ->
-    modalInstance = $modal.open(
-      templateUrl: 'faq.html'
-      controller: 'genericModalCtrl'
-      size: 'md'
-    )
 )
 
 controllers.controller('codeReviewsCtrl', ($scope, $rootScope, $modal, $location, User, $attrs, CodeReview, $sanitize) ->

@@ -35,7 +35,7 @@
 
   getInitialState: () ->
     comment: @props.data.comment
-    currentUser: @props.data.currentUser || {}
+    currentUser: @props.data.currentUser
     upVoteableCss: ''
     downVoteableCss: ''
     upVoteCount: 0
@@ -43,25 +43,22 @@
     voteableType: 'Comment'
     voteableId: @props.data.comment.id
 
-  insertIfCan: (str) ->
-    if @state.comment.user.login == @state.currentUser.githubUsername
-      return ''
-    else
-      return str
-
   vote: (e) ->
-    value = e.currentTarget.dataset.voteValue
-    $.post(
-      '/api/votes', 
-      vote: 
-        value: value
-        voteableType: @state.voteableType
-        voteableId: @state.voteableId
-    )
-    .success( 
-      (response) =>
-        @refreshSelf(response)
-    )
+    if @state.currentUser == null
+      @props.helpers.pleaseLogin()
+    else
+      value = e.currentTarget.dataset.voteValue
+      $.post(
+        '/api/votes', 
+        vote: 
+          value: value
+          voteableType: @state.voteableType
+          voteableId: @state.voteableId
+      )
+      .success( 
+        (response) =>
+          @refreshSelf(response)
+      )
 
 
   render: () ->

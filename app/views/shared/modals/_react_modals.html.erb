@@ -1,5 +1,10 @@
 <%= react_component 'requestCodeReviewModal', { data: { codeReviews: @code_reviews } } %>
 
+
 <% if current_user %>
   <%= react_component 'profileModal', { data: { currentUser: current_user } } %>
+<% end %>
+
+<% if current_user.nil? %>
+  <%= render 'shared/modals/please_login' %>
 <% end %>
