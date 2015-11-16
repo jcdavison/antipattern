@@ -124,6 +124,11 @@ a.join, a.continue {
 .medium-small {
   font-size: 1.6em;
 }
+
+.foo-small {
+  font-size: 1.2em;
+}
+
 .navbar-default .navbar-nav > li > a.hover-blue {
   &:hover {
     color: $blue;
@@ -184,12 +189,6 @@ textarea.error, input.error {
 
 .border-bottom {
   border-bottom: 1px solid $light_grey;
-}
-
-.green-bottom-border {
-  border-bottom: 1px solid $green;
-  // border-radius: $rounding; 
-  // padding: 5px;
 }
 
 .text-right {
@@ -328,6 +327,10 @@ a.venmo {
 
 // LAYOUT
 
+.inline {
+  display: inline;
+}
+
 .no-right-borders {
   border-right: 0 !important;
 }
@@ -348,6 +351,10 @@ a.venmo {
 
 .fixed-line-45 {
   line-height: 45px;
+}
+
+.fixed-line-18 {
+  line-height: 18px;
 }
 
 .fixed-line-14 {
@@ -483,4 +490,29 @@ table.patch-display {
     height: 35px;
     width: 35px;
   }
+}
+
+// VOTE
+
+.vote-interface {
+  div.upvote, div.downvote {
+    border-radius: $rounding;
+    padding: 5px;
+  }
+
+  div.upvote:hover {
+    background-color: $very_light_blue;
+    i.upvote {
+      color: $blue;
+    }
+
+  }
+
+  div.downvote:hover {
+    background-color: $very_light_red;
+    i.downvote {
+      color: $red;
+    }
+  }
+
 }

@@ -1,4 +1,6 @@
 class Api::CommentsController < ApplicationController
+  before_filter :authenticate_user!, only: [:create]
+
   def show
     comment = Comment.find_by github_id: params[:github_id]
     render json: { comment: comment.to_waffle.attributes!}, status: 200

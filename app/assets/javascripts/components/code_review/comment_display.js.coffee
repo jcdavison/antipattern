@@ -14,7 +14,7 @@
 
   hideAllInline: () ->
     $(".antipattern-inline-hide").each (index, obj) ->
-      $(obj).addClass('hide')
+      $(obj).remove()
 
   render: () ->
     React.DOM.tr
@@ -36,7 +36,7 @@
                 React.DOM.div
                   className: 'row'
                   React.DOM.div
-                    className: 'col-sm-6'
+                    className: 'col-sm-6 fixed-line-18'
                     "#{@state.comment.user.login} commented on #{@props.helpers.date(@state.comment.created_at)}"
                   React.DOM.div
                     className: 'col-sm-6'

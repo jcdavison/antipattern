@@ -19,17 +19,63 @@
 
   getInitialState: () ->
     comment: @props.data.comment
+    currentUser: @props.data.currentUser || {}
     upVotes: ''
-    upVoteStatus: 'green'
+    upVoteStatus: ''
     downVotes: ''
-    downVoteStatus: 'green'
+    downVoteStatus: ''
+    voteableType: 'Comment'
+    voteableId: @props.data.comment.id
+
+  insertIfCan: (str) ->
+    if @state.comment.user.login == @state.currentUser.githubUsername
+      return ''
+    else
+      return str
+
+  vote: (e) ->
+    value = e.currentTarget.dataset.voteValue
+    $.post(
+      '/api/votes', 
+      vote: 
+        value: value
+        voteableType: @state.voteableType
+        voteableId: @state.voteableId
+    )
+    .success( 
+      (response) =>
+        console.log response
+    )
+
 
   render: () ->
     React.DOM.div
-      className: 'pull-right green-bottom-border'
+      className: 'pull-right vote-interface foo-small'
       React.DOM.span
-        className: @state.upVoteStatus
-        "upVotes: #{@state.upVotes}"
+        className: null 
+        "{ "
+        React.DOM.div
+          className: "#{@insertIfCan('upvote pointer')} inline"
+          onClick: @vote
+          'data-vote-value': 1
+          React.DOM.i
+            className: "fa fa-thumbs-up light-blue inline upvote"
+          React.DOM.span
+            className: @state.upVoteStatus
+            ": #{@state.upVotes}"
       React.DOM.span
-        className: @state.downVoteStatus
-        " downVotes: #{@state.downVotes}"
+        className: null 
+        " , "
+      React.DOM.div
+        className: "#{@insertIfCan('downvote pointer')} inline"
+        React.DOM.span
+          React.DOM.i
+            className: "fa fa-thumbs-down light-red downvote"
+            'data-vote-value': -1
+            onClick: @vote
+        React.DOM.span
+          className: @state.downVoteStatus
+          ": #{@state.downVotes}"
+      React.DOM.span
+        className: null 
+        " }"
