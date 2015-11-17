@@ -5,6 +5,7 @@
     info: @props.data.commit.info
     owner: @props.data.codeReviewOwner
     id: @props.data.codeReviewId
+    context: @props.data.commit.info.context
 
   getDefaultProps: () ->
     helpers: window.ReactHelpers
@@ -53,6 +54,14 @@
             React.DOM.div
               className: 'black medium-small '
               @state.info.message
+            React.DOM.div
+              className: null
+              React.DOM.span
+                className: 'black'
+                "context: "
+              React.DOM.span
+                className: null
+                @state.context
             React.DOM.div
               className: null
               "authored on #{@props.helpers.date(@state.info.committer.date)}, sha: #{@state.info.commitSha}"

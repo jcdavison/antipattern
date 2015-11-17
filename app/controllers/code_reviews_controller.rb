@@ -12,7 +12,7 @@ class CodeReviewsController < ApplicationController
     comments_by_github_id = change_key(github_comment_colletion, :id, :github_id)
     comments = save_and_associate({find_key: :github_id, objects: comments_by_github_id, attributes: [:body, :github_id], class: 'Comment', parent: @code_review})
     @commit_blob = inject_comments_into comments[:input_objs], commit_blob
-    @commit_blob[:info].merge!({repo: @code_review.repo, commitSha: @code_review.commit_sha})
+    @commit_blob[:info].merge!({repo: @code_review.repo, commitSha: @code_review.commit_sha, context: @code_review.context})
     rescue 
       redirect_to authenticated_root_path
   end

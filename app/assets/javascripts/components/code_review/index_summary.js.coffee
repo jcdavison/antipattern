@@ -4,6 +4,10 @@
     products: []
     helpers: window.ReactHelpers
 
+  trimContext: (str) ->
+    if str
+      return str.slice(0,45) + "..."
+
   render: () ->
     React.DOM.div
       className: 'code-review'
@@ -31,13 +35,22 @@
                     React.DOM.a
                       href: "/code-reviews/#{@props.data.codeReview.id}"
                       @props.data.codeReview.title
+                  if @props.data.codeReview.context
+                    React.DOM.div
+                      className: null
+                      React.DOM.span
+                        className: 'blue'
+                        "context: " 
+                      React.DOM.span
+                        className: 'grey'
+                        @trimContext @props.data.codeReview.context
                   React.DOM.div
                     className: null
                     React.DOM.span
-                      className: null
+                      className: 'blue'
                       "topics: " 
                     React.DOM.span
-                      className: 'blue'
+                      className: 'grey'
                       @props.data.codeReview.topics
               React.DOM.div
                 className: 'col-sm-4 fixed-line-45 text-right'
