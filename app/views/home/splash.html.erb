@@ -2,8 +2,8 @@
   <div class="row">
     <div class='col-sm-12'>
       <div class="centered splash">
-        <span class='medium light-grey'>
-          Every Code Review is an opportunity to Learn and Teach.
+        <span class='medium-med light-grey'>
+          Code Reviews can have a profound impact on code quality.
         </span>
       </div>
     </div>
@@ -19,45 +19,43 @@
   <div class="row">
     <div class='col-sm-12'>
       <div class="centered splash">
-        <span class='medium light-grey'>
-          We are a community committed to Code Reviews.
+        <span class='medium-med light-grey'>
+          Giving actionable, relevant Code Reviews can be a tricky business.
         </span>
       </div>
     </div>
   </div>
 </div>
 
+<div class="container">
+  <div class="row">
+    <div class='col-sm-12'>
+      <div class="centered splash">
+        <span class='medium blue'>AntiPattern.io provides developers with...</span>
+        <div class='medium-small '>Tools to improve the process of giving and receiving code feedback.</div>
+        <div><%= image_tag 'tools_1.png', class: 'centered product-display' %></div>
+        <div><%= image_tag 'tools_2.png', class: 'centered product-display' %></div>
+        <%# <div class='medium-small '>A marketplace to exchange time spent code reviewing for financial currency ($, btc, etc)(coming soon).</div> %>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="container">
   <div class="row">
     <div class='col-sm-12'>
-
       <div class="centered splash">
-        <span class='medium grey'>
-          1. Request feedback on a specific commit.
-        </span>
-        <%= image_tag 'request_code_review.png', class: 'centered product-display' %>
-      </div>
-
-      <div class="centered splash">
-        <span class='medium grey'>
-          2. Let the community give you code feedback.
-        </span>
-        <div class='community-grid'>
-          <% @users.each do |user| %>
-            <div class='community-member'><%= image_tag user['profilePic'] %></div>
-          <% end %>
+        <div class='top-margined'>
+          <span class='medium blue'>AntiPattern.io also provides developers with...</span>
+          <div class='medium-small'>A community to surface and promote the world's best Code Reviewers.</div>
+          <div class='community-grid top-margined'>
+            <% @users.each do |user| %>
+              <div class='community-member'><%= image_tag user['profilePic'] %></div>
+            <% end %>
+          </div>
         </div>
-        <%= image_tag 'review_me.png', class: 'centered product-display' %>
+        <%# <div class='medium-small '>A marketplace to exchange time spent code reviewing for financial currency ($, btc, etc)(coming soon).</div> %>
       </div>
-
-      <div class="centered splash">
-        <span class='medium grey'>
-          3. Integrate feedback into your code.
-        </span>
-        <%= image_tag 'integrate_feedback.png', class: 'centered product-display' %>
-      </div>
-
     </div>
   </div>
 </div>
