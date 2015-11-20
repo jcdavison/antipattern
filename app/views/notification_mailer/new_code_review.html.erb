@@ -1,9 +1,9 @@
 <html>
   <body>
     <h3>Greetings <%= @recipient.name %>,</h3>
-    <p><%= @code_review.user.name %> has posted a new Code Review.</p>
-    <p>You can see the details of this Code Review at <%= link_to code_review_url(@code_review), code_review_url(@code_review) %>.</p>
-    <p>You have been notified of this code review because the code review has been tagged with the topic(s) '<%= @topics %>' of which you have previously subscribed.</p>
+    <p>A new code review has been posted.</p>
+    <p>You can see the details at <%= link_to code_review_url(@code_review), code_review_url(@code_review) %>.</p>
+    <p>You have been notified because the code review has been tagged with the topic(s) '<%= @topics %>' of which you have previously subscribed.</p>
     <p>Thanks,</p>
     John Davison
     <br>
