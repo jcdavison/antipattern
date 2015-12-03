@@ -21,7 +21,7 @@ class CodeReview < ActiveRecord::Base
   end
 
   def self.avail_topics
-    %w(http javascript java c# php android jquery python html c++ ios mysql css sql asp.net objective-c .net swift ruby-on-rails c ruby angular.js react.js ember.js backbone.js r security devops node.js html5 performance algorithms git wordpress rails chef react-native crypto-currency bitcoin laravel clojure clojurescript plsql).sort
+    %w(http javascript java c# php android jquery python html c++ ios mysql css sql asp.net objective-c .net swift ruby-on-rails c ruby angular.js react.js ember.js backbone.js r security devops node.js html5 performance algorithms git wordpress rails chef react-native crypto-currency bitcoin laravel clojure clojurescript plsql haskell).sort
   end
 
   def package_with_associations
