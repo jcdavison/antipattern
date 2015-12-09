@@ -18,8 +18,12 @@
   componentDidMount: () ->
     @initEmptySelect()
     @props.helpers.validateForm("##{@state.formId}")
-    @initSelectListeners()
-    @populateEntities()
+    if @props.data.currentUser
+      @populateEntities()
+      @initSelectListeners()
+    else
+      @enableSelect2("##{@state.entitySelectId}", [])
+      $("#select2-code-review-entity-container").text('please login to continue')
 
   initEmptySelect: () ->
     $('.init-empty').each( (i,e,c) ->
