@@ -23,7 +23,7 @@
       @initSelectListeners()
     else
       @enableSelect2("##{@state.entitySelectId}", [])
-      $("#select2-code-review-entity-container").text('please login to continue')
+      $("#select2-code-review-entity-container").text('please sign in to continue')
 
   initEmptySelect: () ->
     $('.init-empty').each( (i,e,c) ->
