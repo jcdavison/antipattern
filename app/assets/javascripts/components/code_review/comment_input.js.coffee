@@ -1,7 +1,7 @@
 @commentInput = React.createClass
 
   getInitialState: () ->
-    formId: 'antipatternInput'
+    formId: @props.data.formId
     justification: null 
     references: null
     antipattern: null

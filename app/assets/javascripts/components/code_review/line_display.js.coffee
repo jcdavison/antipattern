@@ -36,7 +36,7 @@
     @setState showCommentInput: ! @state.showCommentInput
 
   commentInputKey: () ->
-    "comment-input-#{@props.data.commitInfo.commitSha}-#{@position}"
+    "comment-input-#{@props.data.commitInfo.commitSha}-#{@state.position}"
 
   renderIndex: (displayRow) ->
     if @state.lineType == 'deletion'
@@ -90,4 +90,4 @@
         for comment, commentIndex in @state.comments
           React.createElement commentDisplay, key: "comment-#{commentIndex}", data: comment: comment, currentUser: @props.data.currentUser
         if @state.showCommentInput
-          React.createElement commentInput, key: "#{@commentInputKey()}", toggleCommentInput: @toggleCommentInput, data: position: @state.position, commitSha: @props.data.commitInfo.commitSha, fileName: @props.data.commitInfo.fileName, repo: @props.data.commitInfo.repo, owner: @props.data.owner, currentUser: @props.data.currentUser
+          React.createElement commentInput, key: "#{@commentInputKey()}", toggleCommentInput: @toggleCommentInput, data: position: @state.position, commitSha: @props.data.commitInfo.commitSha, fileName: @props.data.commitInfo.fileName, repo: @props.data.commitInfo.repo, owner: @props.data.owner, currentUser: @props.data.currentUser, formId: "#{@commentInputKey()}"
