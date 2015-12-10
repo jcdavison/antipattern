@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   after_filter  :set_csrf_cookie_for_ng
 
   def after_sign_in_path_for(resource)
-    authenticated_root_path
+    code_reviews_path
   end
 
   private

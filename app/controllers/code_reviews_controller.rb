@@ -14,6 +14,6 @@ class CodeReviewsController < ApplicationController
     @commit_blob = inject_comments_into comments[:input_objs], commit_blob
     @commit_blob[:info].merge!({repo: @code_review.repo, commitSha: @code_review.commit_sha, context: @code_review.context})
     rescue 
-      redirect_to authenticated_root_path
+      redirect_to code_reviews_path
   end
 end

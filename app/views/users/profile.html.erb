@@ -5,7 +5,7 @@
       <div ng-show="stripeConnected" class="medium-small padded top-margined">
         <span ng-show="validCreditCard">
           <div class="blue padded top-margined">
-            Your Profile is Complete.  Please visit the <%= link_to "feed and give a code review.", authenticated_root_path %> 
+            Your Profile is Complete.  Please visit the <%= link_to "feed and give a code review.", code_reviews_path %> 
           </div>
           You have a valid credit card connected <a href="#" ng-click="showCreditCardForm()" class="stripe-connect">RE-ENTER CREDIT CARD INFO</a>
         </span>

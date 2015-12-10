@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     if request.patch? && params[:user] #&& params[:user][:email]
       if @user.update(user_params)
         sign_in(@user, :bypass => true)
-        redirect_to authenticated_root_path, notice: 'Your profile was successfully updated.'
+        redirect_to code_reviews_path, notice: 'Your profile was successfully updated.'
       else
         @show_errors = true
       end
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
   private
     def set_user
       @user = current_user
-      redirect_to authenticated_root_path unless @user
+      redirect_to code_reviews_path unless @user
     end
 
     def user_params
