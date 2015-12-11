@@ -15,7 +15,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     }
   end
 
-  [:github, :stripe_connect].each do |provider|
+  [:stripe_connect, :github_private_scope].each do |provider|
     provides_callback_for provider
   end
 

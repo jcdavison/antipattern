@@ -2,6 +2,7 @@ class Interface
   constructor: () ->
     @configValidation()
     @showFaq()
+    @togglePanel()
 
   configValidation: () ->
     $.h5Validate.addPatterns({
@@ -15,6 +16,12 @@ class Interface
   showFaq: () ->
     $("#show-faq").click( () ->
       $("#faq-modal").modal()
+    )
+
+  togglePanel: () ->
+    $('.toggle-panel').click(
+      (e) ->
+        $($(e.target).data('toggle-target')).toggleClass('hidden')
     )
 
 new Interface

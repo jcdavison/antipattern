@@ -54,12 +54,11 @@
     )
 
   populateRepos: () ->
-    entity = _.select(@state.entities, (entity) =>
-      @selectedEntity() == entity.text
-    )[0]
+    entity = @props.helpers.selectFrom(@state.entities, @selectedEntity())
     @setState entity: entity
-    $.get '/api/repositories', {entityType: entity.entityType, value: entity.text} 
+    $.get '/api/repositories', {entityType: entity.entityType, entityValue: entity.text} 
     .success( (response) =>
+      @setState repos: response.repos
       @enableSelect2("##{@state.reposSelectId}", response.repos)
       $("#select2-code-review-repo-container").text('select a repo')
     )
@@ -68,11 +67,15 @@
     )
 
   populateBranches: (e) ->
+    repo = @props.helpers.selectFrom(@state.repos, @selectedRepo())
+    @setState repo: repo
     $.get '/api/branches', {
         repo: @selectedRepo(), 
+        private: repo.private
         entity: {value: @state.entity.text} 
       } 
     .success( (response) =>
+      console.log 'branchs', response
       @enableSelect2("##{@state.branchSelectId}", response.branches)
       $("#select2-code-review-branch-container").text('select a branch')
     )
@@ -112,6 +115,7 @@
     $(selector).val()
 
   submitCodeReview: () ->
+    console.log @state.repo
     if @props.helpers.isValidForm("##{@state.formId}")
       data = 
         codeReview: 
@@ -122,6 +126,7 @@
           title: @selectedTitle()
           topics: $("#topics-select").val()
           context: $("#context").val() 
+          is_private: @state.repo.private
       $.ajax(
         type: 'POST'
         url: '/api/reviews.json'

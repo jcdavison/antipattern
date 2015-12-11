@@ -1,23 +1,19 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :finish_signup]
-
-  def profile
-  end
+  before_action :set_user, only: [:settings, :show, :edit, :update, :destroy, :finish_signup]
 
   def edit
   end
 
+  def settings
+  end
+
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        sign_in(@user == current_user ? @user : current_user, :bypass => true)
-        format.html { redirect_to @user, notice: 'Your profile was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if params[:disable_private_repos]
+      current_user.disable_private_repos!
+      redirect_to settings_path
     end
+    rescue 
+      redirect_to root_path
   end
 
   def finish_signup

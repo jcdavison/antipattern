@@ -10,4 +10,8 @@ module GeneralHelper
       nil
     end
   end
+
+  def as_common_date date_obj
+    date_obj.strftime('%B %-d, %Y')
+  end
 end

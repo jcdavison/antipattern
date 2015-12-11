@@ -52,3 +52,8 @@ window.ReactHelpers =
     attribute = e.currentTarget.dataset.stateAttribute
     updateObj[attribute] = newValue
     @setState updateObj
+
+  selectFrom: (collection, attribute) ->
+    _.select(collection, (element) =>
+      attribute == element.text
+    )[0]

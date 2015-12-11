@@ -1,0 +1,69 @@
+<div class='container' ng-controller="userController">
+  <div class='row'>
+    <div class='col-md-10 center-block no-float'>
+
+      <div class='row'>
+        <div class='col-md-6 center-block no-float centered'>
+            <%= image_tag current_user.profile_pic , class: 'medium-format' %>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-6 center-block no-float'>
+          <div class='centered'>
+            member since: <%= as_common_date current_user.created_at %>
+          </div>
+        </div>
+      </div>
+      <% if current_user.private_repos? %>
+        <div class='row'>
+          <div class='col-md-9 center-block no-float top-margined'>
+            <div class='grey medium small centered pointer hover-blue toggle-panel' data-toggle-target='#disablePrivateCodeReview'>
+              DISABLE PRIVATE REPOSITORY CODE REVIEWS
+            </div>
+          </div>
+        </div>
+        <div class='row hidden' id='disablePrivateCodeReview'>
+          <div class='col-md-10 center-block no-float'>
+            <div class='centered top-margined'>
+              <%= link_to "DISABLE PRIVATE REPOS", users_path(disable_private_repos: true), method: :patch, class: 'continue review inline small-top-margined' %>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <div class='row'>
+          <div class='col-md-9 center-block no-float top-margined'>
+            <div class='grey medium small centered pointer hover-blue toggle-panel' data-toggle-target='#enablePrivateCodeReview'>
+              ENABLE PRIVATE REPOSITORY CODE REVIEWS
+            </div>
+          </div>
+        </div>
+
+        <div class='row hidden' id='enablePrivateCodeReview'>
+          <div class='col-md-10 center-block no-float'>
+            <div class='centered top-margined'>
+              <p>Antipattern.io can be used as a driver of code feedback for private repositories hosted on github.  If you enable this feature, be aware that ONLY users who have read/write access to the github repository can view the code review on antipattern.io.  There will be no public facing links or ability to view code reviews or any associated links to a private codebase on antipattern.io. In order to enable this feature, you will authorize a higher level scope via github's oauth interface.</p>
+            </div>
+            <div class='centered top-margined'>
+              <%= link_to "ENABLE PRIVATE REPOS", user_omniauth_authorize_path(provider: :github_private_scope), class: 'continue review inline small-top-margined' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <%# <div class='row'> %>
+      <%#   <div class='col-md-6'> %>
+      <%#     <div class='pull-right blue'> %>
+      <%#       deactivate account %> 
+      <%#     </div> %>
+      <%#   </div> %>
+      <%#   <div class='col-md-6'> %>
+      <%#     <div class='pull-left'> %>
+      <%#       b %>
+      <%#     </div> %>
+      <%#   </div> %>
+      <%# </div> %>
+
+
+    </div>
+  </div>
+</div>

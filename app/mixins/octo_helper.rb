@@ -42,4 +42,8 @@ module OctoHelper
       end
     end
   end
+
+  def build_octoclient token
+    Octokit::Client.new :access_token => token 
+  end
 end

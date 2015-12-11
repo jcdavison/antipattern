@@ -139,6 +139,12 @@ a.join, a.continue {
   }
 }
 
+.hover-blue {
+  &:hover {
+    color: $blue;
+  }
+}
+
 // APPLICATION STYLES
 
 html, body {
@@ -265,6 +271,7 @@ section.offer {
   border: 1px solid $light_grey;
   margin: .3em;
 } 
+
 
 .product-display {
   border: 1px solid $very-light-grey;
@@ -496,6 +503,13 @@ table.patch-display {
 
 // COMMUNITY
 
+.medium-format {
+  height: 200px;
+  border-radius: 5px;
+  border: 1px solid $light_grey;
+  margin: .3em;
+}
+
 .community-member {
   img {
     height: 35px;
@@ -526,5 +540,4 @@ table.patch-display {
       color: $red;
     }
   }
-
 }

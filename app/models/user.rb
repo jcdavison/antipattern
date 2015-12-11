@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
     identity = Identity.find_for_oauth(auth)
     user = signed_in_resource ? signed_in_resource : identity.user
     if user.nil?
-      if auth.provider.match /google_oauth2|github/
+      if auth.provider.match /google_oauth2|github|github_full_scope/
         email = auth.info.email
       else
         email_is_verified = auth.info.email && (auth.info.verified || auth.info.verified_email)
@@ -65,7 +65,11 @@ class User < ActiveRecord::Base
     github_profile.split("/").last
   end
 
-  def auth_token
-    identities.first.token
+  def octo_token
+    private_repo_token
+  end
+
+  def private_repo_token
+    identities.select {|identity| identity.provider == 'github_private_scope' }.first.token
   end
 end

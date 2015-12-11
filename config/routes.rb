@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
   get '/code-review-offers/:id', to: 'code_reviews#show', as: 'code_review_offer'
   get '/code-reviews/:id', to: 'code_reviews#show', as: 'code_review'
-  get '/profile', to: 'users#profile', as: 'profile'
+  get '/settings', to: 'users#settings', as: 'settings'
+  patch '/users', to: 'users#update', as: 'users'
 
   namespace :api do
     get 'topics', to: 'topics#index'
