@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151211200352) do
+ActiveRecord::Schema.define(version: 20151216191433) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20151211200352) do
     t.string   "repo"
     t.string   "author"
     t.string   "branch"
-    t.boolean  "is_private"
+    t.boolean  "is_private", default: false
   end
 
   create_table "comments", force: true do |t|

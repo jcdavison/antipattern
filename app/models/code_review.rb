@@ -12,7 +12,9 @@ class CodeReview < ActiveRecord::Base
   acts_as_taggable_on :topics
 
   scope :all_active, -> {where(deleted: false)}
-  before_save :verify_repo_privacy
+  scope :all_public, -> {where(is_private: false)}
+  scope :all_private, -> {where(is_private: true)}
+  before_create :verify_repo_privacy
 
   def has_offers?
     ! offers.empty?
