@@ -30,11 +30,16 @@
       $(e).select2( placeholder: '...')
     )
 
+  displayPrivacyNotice: () ->
+    if @state.repo.private
+      $('#repo-privacy-reminder').text("Important Reminder => Code Reviews from private repositories will only be viewable by people who have private access to that repo on github and will not appear in antipattern.io's public facing index.")
+
   initSelectListeners: () ->
     $("##{@state.entitySelectId}").on 'select2:select', (e) =>
       @populateRepos(e)
     $("##{@state.reposSelectId}").on 'select2:select', (e) =>
       @populateBranches(e)
+      @displayPrivacyNotice()
     $("##{@state.branchSelectId}").on 'select2:select', (e) =>
       @populateCommits(e)
 
@@ -136,7 +141,6 @@
           PubSub.publish 'refresh-code-review-index'
       ) 
     else
-      console.log 'wtf'
       'invalid'
 
   codeReviewRequestForm: () ->
@@ -249,6 +253,10 @@
                         id: 'context'
                         cols: 34
                         rows: 3
+                    React.DOM.div
+                      id: 'repo-privacy-reminder'
+                      className: 'red'
+                      ''
   render: () ->
     React.DOM.div
       className: 'modal fade request-code-review'
