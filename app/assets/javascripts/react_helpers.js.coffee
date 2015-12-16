@@ -53,7 +53,7 @@ window.ReactHelpers =
     updateObj[attribute] = newValue
     @setState updateObj
 
-  selectFrom: (collection, attribute) ->
+  selectFrom: (collection, value, attribute) ->
     _.select(collection, (element) =>
-      attribute == element.text
+      value == eval("element.#{attribute}")
     )[0]

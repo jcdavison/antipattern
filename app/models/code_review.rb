@@ -1,5 +1,6 @@
 class CodeReview < ActiveRecord::Base
   include WaffleHelper
+  include OctoHelper
 
   belongs_to :user
   validates_presence_of :user_id
@@ -11,6 +12,7 @@ class CodeReview < ActiveRecord::Base
   acts_as_taggable_on :topics
 
   scope :all_active, -> {where(deleted: false)}
+  before_save :verify_repo_privacy
 
   def has_offers?
     ! offers.empty?
@@ -36,5 +38,10 @@ class CodeReview < ActiveRecord::Base
 
   def notification_channels
     NotificationChannel.where name: topics.map(&:name)
+  end
+
+  def verify_repo_privacy
+    repository = get_repo token: user.octo_token, author: author, repo: repo
+    self.is_private = repository[:private]
   end
 end

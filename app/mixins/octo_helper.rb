@@ -46,4 +46,9 @@ module OctoHelper
   def build_octoclient token
     Octokit::Client.new :access_token => token 
   end
+
+  def get_repo opts
+    client = build_octoclient opts[:token]
+    client.get "repos/#{opts[:author]}/#{opts[:repo]}"
+  end
 end

@@ -38,7 +38,7 @@
     $("##{@state.branchSelectId}").on 'select2:select', (e) =>
       @populateCommits(e)
 
-  enableSelect2: (element, data) ->
+  enableSelect2: (element, data, template = null) ->
     $(element).select2(data: data)
     $(element).val(null)
 
@@ -54,12 +54,12 @@
     )
 
   populateRepos: () ->
-    entity = @props.helpers.selectFrom(@state.entities, @selectedEntity())
+    entity = @props.helpers.selectFrom(@state.entities, @selectedEntity(), 'text')
     @setState entity: entity
     $.get '/api/repositories', {entityType: entity.entityType, entityValue: entity.text} 
     .success( (response) =>
       @setState repos: response.repos
-      @enableSelect2("##{@state.reposSelectId}", response.repos)
+      @enableSelect2("##{@state.reposSelectId}", response.repos, 'someTemplate')
       $("#select2-code-review-repo-container").text('select a repo')
     )
     .error( (response) =>
@@ -67,7 +67,7 @@
     )
 
   populateBranches: (e) ->
-    repo = @props.helpers.selectFrom(@state.repos, @selectedRepo())
+    repo = @props.helpers.selectFrom(@state.repos, @selectedRepo(), 'id')
     @setState repo: repo
     $.get '/api/branches', {
         repo: @selectedRepo(), 
@@ -75,7 +75,6 @@
         entity: {value: @state.entity.text} 
       } 
     .success( (response) =>
-      console.log 'branchs', response
       @enableSelect2("##{@state.branchSelectId}", response.branches)
       $("#select2-code-review-branch-container").text('select a branch')
     )
@@ -115,7 +114,6 @@
     $(selector).val()
 
   submitCodeReview: () ->
-    console.log @state.repo
     if @props.helpers.isValidForm("##{@state.formId}")
       data = 
         codeReview: 
@@ -138,6 +136,7 @@
           PubSub.publish 'refresh-code-review-index'
       ) 
     else
+      console.log 'wtf'
       'invalid'
 
   codeReviewRequestForm: () ->
