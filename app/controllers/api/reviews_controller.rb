@@ -15,6 +15,7 @@ class Api::ReviewsController < ApplicationController
 
   def show
     @code_review = CodeReview.preload(:user).find params[:id]
+    enforce_private_repo_access if @code_review.is_private
     @code_review_owner = @code_review.user.to_waffle.attributes!
     commit_blob = build_commit_blob(OCTOCLIENT.get(commit_url(@code_review))) 
     github_comment_colletion = grab_comments(@code_review, OCTOCLIENT).map {|e| e.to_attrs }
@@ -45,6 +46,7 @@ class Api::ReviewsController < ApplicationController
 
   def update
     @code_review = CodeReview.find_by(user_id: current_user.id, id: params[:code_review][:id])
+    enforce_private_repo_access if @code_review.is_private
     if @code_review.update_attributes(code_review_params)
       render 'api/reviews/update'
     else
@@ -54,6 +56,7 @@ class Api::ReviewsController < ApplicationController
 
   def destroy
     @code_review = CodeReview.find_by(id: params[:id])
+    enforce_private_repo_access if @code_review.is_private
     @code_review.deleted = true
     if @code_review.save
       head :ok
@@ -64,7 +67,7 @@ class Api::ReviewsController < ApplicationController
 
   private
     def code_review_params
-      params.require(:code_review).compact.permit(:context, :repo, :commit_sha, :title, :author, :branch, :is_private)
+      params.require(:code_review).compact.permit(:context, :repo, :commit_sha, :title, :author, :branch, :is_private, :topics)
     end
 
     def tagize_topics enum_data

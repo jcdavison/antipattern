@@ -47,8 +47,13 @@ module OctoHelper
     Octokit::Client.new :access_token => token 
   end
 
-  def get_repo opts
+  def get_repo opts, collaborators = false
     client = build_octoclient opts[:token]
-    client.get "repos/#{opts[:author]}/#{opts[:repo]}"
+    fragment = collaborators == true ? '/collaborators' : ''
+    client.get "repos/#{opts[:author]}/#{opts[:repo]}#{fragment}"
+  end
+
+  def get_collaborators opts
+    get_repo(opts, true).map { |collaborator| collaborator[:login] }
   end
 end

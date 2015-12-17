@@ -3,7 +3,14 @@ class HomeController < ApplicationController
   layout :set_layout
 
   def index
-    @code_reviews = all_active_code_reviews
+    if current_user
+      private_code_reviews = current_user.all_accessible_private_code_reviews.map do |code_review| 
+        code_review.package_with_associations
+      end
+      @code_reviews = [ all_active_code_reviews, private_code_reviews ].flatten.sort_by {|c| c["createdAt"] }.reverse
+    else
+      @code_reviews = all_active_code_reviews
+    end
   end
 
   def splash

@@ -46,4 +46,29 @@ class CodeReview < ActiveRecord::Base
     repository = get_repo token: user.octo_token, author: author, repo: repo
     self.is_private = repository[:private]
   end
+
+  def collaborators_key
+    "#{self.class.to_s}-collaborators-#{id}"
+  end
+
+  def collaborators
+    Rails.cache.read(collaborators_key) || set_collaborators
+  end
+
+  def set_collaborators
+    collaborators = get_collaborators token: user.octo_token, author: author, repo: repo
+    Rails.cache.write collaborators_key, collaborators
+  end
+
+  def self.clear_all_collaborators
+    all_private.each {|code_review| Rails.cache.write code_review.collaborators_key, nil }.map do |code_review|
+      [ code_review.id, Rails.cache.read(code_review.collaborators_key) ]
+    end
+  end
+
+  def self.update_all_collaborators
+    all_private.each {|code_review| code_review.set_collaborators }.map do |code_review|
+      [ code_review.id, code_review.collaborators ]
+    end
+  end
 end

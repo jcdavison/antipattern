@@ -6,6 +6,7 @@ class CodeReviewsController < ApplicationController
 
   def show
     @code_review = CodeReview.preload(:user).find params[:id]
+    enforce_private_repo_access if @code_review.is_private
     @code_review_owner = @code_review.user.to_waffle.attributes!
     commit_blob = build_commit_blob(OCTOCLIENT.get(commit_url(@code_review))) 
     github_comment_colletion = grab_comments(@code_review, OCTOCLIENT).map {|e| e.to_attrs }

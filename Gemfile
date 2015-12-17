@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '2.1.5'
 
 gem 'rails', '4.1.8'
+gem 'dalli'
 gem 'spring',        group: :development
 gem 'quiet_assets', '~> 1.0.3'
 gem 'jbuilder', '~> 2.2.6'
