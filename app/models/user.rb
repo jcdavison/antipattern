@@ -80,8 +80,4 @@ class User < ActiveRecord::Base
   def private_code_review_access_ids
     all_accessible_private_code_reviews.map &:id
   end
-
-  def private_code_review_access_key
-    "#{self.class.to_s}-private-code-review-#{self.id}"
-  end
 end

@@ -1,5 +1,8 @@
 module OctoHelper
   PATCH_INFO_REGEXP = /@@.{3,}@@/
+  WEBHOOK_EVENTS = ['push', 'membership', 'member', 'public']
+  WEBHOOK_SERVER = ENV['WEB_HOOK_SERVER']
+  OCTO_HOOK_SECRET = ENV['OCTO_HOOK_SECRET']
 
   def commit_url code_review
     "/repos/#{code_review.author}/#{code_review.repo}/commits/#{code_review.commit_sha}"
@@ -55,5 +58,36 @@ module OctoHelper
 
   def get_collaborators opts
     get_repo(opts, true).map { |collaborator| collaborator[:login] }
+  end
+
+  def create_webhook opts
+    client = build_octoclient opts[:token]
+    url = webhook_url opts
+    config = { url: url, config_type: 'json', secret: OCTO_HOOK_SECRET }
+    post_body = {name: 'web', events: WEBHOOK_EVENTS, active: true, config: config}
+    client.post "/repos/#{opts[:author]}/#{opts[:repo]}/hooks", post_body
+  end
+
+  def webhook_url opts
+    "#{WEBHOOK_SERVER}/api/hooks/code_review/#{opts[:repo]}"
+  end
+
+  def has_valid_octo_webhook? opts
+    hooks = get_octo_hooks(opts).map {|hook| {url: hook[:config][:url], events: hook[:events]} }
+    hooks.any? {|hook| hook[:url].match("#{Regexp.new(opts[:repo])}") && hook[:events] == WEBHOOK_EVENTS }
+  end
+
+  def get_octo_hooks opts
+    client = build_octoclient opts[:token]
+    client.get "/repos/#{opts[:author]}/#{opts[:repo]}/hooks"
+  end
+
+  def clear_octo_hooks! opts
+    client = build_octoclient opts[:token]
+    get_octo_hooks(opts).map do |hook|
+      if hook[:config][:url].match Regexp.new(WEBHOOK_SERVER)
+        client.delete "/repos/#{opts[:author]}/#{opts[:repo]}/hooks/#{hook[:id]}"
+      end
+    end
   end
 end

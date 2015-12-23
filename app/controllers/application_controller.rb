@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
+  OCTO_DIGEST = OpenSSL::Digest.new('sha1')
+  OCTO_KEY = ENV['OCTO_HOOK_SECRET']
+
   protect_from_forgery with: :exception
   after_filter  :set_csrf_cookie_for_ng
+  class UnauthorizedOctoHook < StandardError ; end
 
   def after_sign_in_path_for(resource)
     code_reviews_path
@@ -9,6 +13,15 @@ class ApplicationController < ActionController::Base
   def enforce_private_repo_access
     unless current_user && current_user.private_code_review_access_ids.include?(Integer(params[:id]))
       raise User::NotAuthorized 
+    end
+  end
+
+  def authorized_octo_hook?
+    hook_body = request.env["rack.request.form_vars"]
+    expected_hook_signature = OpenSSL::HMAC.hexdigest(OCTO_DIGEST, OCTO_KEY, hook_body)
+    actual_hook_signature = request.env["HTTP_X_HUB_SIGNATURE"].gsub('sha1=', '')
+    unless expected_hook_signature == actual_hook_signature
+      raise UnauthorizedOctoHook
     end
   end
 

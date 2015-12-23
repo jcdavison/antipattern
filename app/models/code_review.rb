@@ -15,6 +15,7 @@ class CodeReview < ActiveRecord::Base
   scope :all_public, -> {where(is_private: false)}
   scope :all_private, -> {where(is_private: true)}
   before_create :verify_repo_privacy
+  after_create :build_hook!
 
   def has_offers?
     ! offers.empty?
@@ -56,8 +57,7 @@ class CodeReview < ActiveRecord::Base
   end
 
   def set_collaborators
-    collaborators = get_collaborators token: user.octo_token, author: author, repo: repo
-    Rails.cache.write collaborators_key, collaborators
+    Rails.cache.write collaborators_key, get_collaborators(token: user.octo_token, author: author, repo: repo)
   end
 
   def self.clear_all_collaborators
@@ -70,5 +70,21 @@ class CodeReview < ActiveRecord::Base
     all_private.each {|code_review| code_review.set_collaborators }.map do |code_review|
       [ code_review.id, code_review.collaborators ]
     end
+  end
+
+  def build_hook!
+    create_webhook opts unless valid_hook?
+  end
+
+  def valid_hook?
+    has_valid_octo_webhook? opts
+  end
+
+  def clear_hooks!
+    clear_octo_hooks! opts
+  end
+
+  def opts
+    {author: author, token: user.octo_token, repo: repo, id: id}
   end
 end
