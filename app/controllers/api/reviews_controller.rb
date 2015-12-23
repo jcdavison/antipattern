@@ -9,7 +9,12 @@ class Api::ReviewsController < ApplicationController
   respond_to :json
 
   def index
-    @code_reviews = all_active_code_reviews
+    if current_user
+      private_code_reviews = all_accessible_private_code_reviews current_user.github_username
+      @code_reviews = [ all_active_public_code_reviews, private_code_reviews ].flatten.sort_by {|c| c["createdAt"] }.reverse
+    else
+      @code_reviews = all_active_public_code_reviews
+    end
     render json: {codeReviews: @code_reviews}
   end
 

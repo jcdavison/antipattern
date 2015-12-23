@@ -73,9 +73,6 @@ class User < ActiveRecord::Base
     identities.select {|identity| identity.provider == 'github_private_scope' }.first.token
   end
 
-  def all_accessible_private_code_reviews
-    CodeReview.all_private.select { |code_review| code_review.collaborators.include? github_username }
-  end
 
   def private_code_review_access_ids
     all_accessible_private_code_reviews.map &:id

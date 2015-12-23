@@ -42,7 +42,8 @@ Rails.application.routes.draw do
   devise_scope :user do
     delete '/users/sign_out', to: 'devise/sessions#destroy', as: 'destroy_user_session'
     get '/api/authorized_user' => 'users/sessions#authorized_user'
-    get '/code-reviews', to: 'home#index'
   end
+
+  get '/code-reviews', to: 'code_reviews#index'
   root 'home#splash'
 end

@@ -14,6 +14,7 @@ class CodeReview < ActiveRecord::Base
   scope :all_active, -> {where(deleted: false)}
   scope :all_public, -> {where(is_private: false)}
   scope :all_private, -> {where(is_private: true)}
+  scope :reverse_order, -> {order('created_at DESC')}
   before_create :verify_repo_privacy
   after_create :build_hook!
 
