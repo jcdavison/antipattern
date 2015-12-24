@@ -95,6 +95,7 @@
       } 
     .success( (response) =>
       @enableSelect2("##{@state.commitSelectId}", response.commits)
+      $("#select2-code-review-commit-container").text('select a commit')
     )
     .error( (response) =>
       console.log 'error', response

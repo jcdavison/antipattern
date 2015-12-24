@@ -1,5 +1,7 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
+# Dotenv.load(File.expand_path("../../.env.#{Rails.env}", __FILE__))
+Dotenv.overload '.env.test' if Rails.env.test?
 Devise.setup do |config|
   config.omniauth :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET'], scope: 'user, repo', prompt: 'consent', callback_uri: "#{ENV['LOCAL_SERVER']}/users/auth/github_private_scope/callback", name: 'github_private_scope'
 

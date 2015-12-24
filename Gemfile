@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '2.1.5'
 
 gem 'rails', '4.1.8'
+gem 'dotenv-rails', :groups => [:development, :test]
 gem 'dalli'
 gem 'spring',        group: :development
 gem 'quiet_assets', '~> 1.0.3'
@@ -28,10 +29,14 @@ gem 'stripe'
 group :development, :test do
   gem 'rspec-rails', '~> 3.1.0'
   gem 'factory_girl_rails', '~> 4.5.0'
-  gem 'dotenv-rails'
   gem 'spring-commands-rspec'
   gem 'guard-rspec'
   gem 'pry'
+  gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'selenium-webdriver', '~> 2.48', '>= 2.48.1'
+  gem 'capybara-select2'
+  gem 'database_cleaner', '~> 1.5', '>= 1.5.1'
 end
 
 # assets

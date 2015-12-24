@@ -1,4 +1,5 @@
 include OctoHelper
+include QueryHelper
 include ObjHelper
 include StructuralHelper
 

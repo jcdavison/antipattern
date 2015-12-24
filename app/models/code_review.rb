@@ -17,6 +17,7 @@ class CodeReview < ActiveRecord::Base
   scope :reverse_order, -> {order('created_at DESC')}
   before_create :verify_repo_privacy
   after_create :build_hook!
+  after_create :set_collaborators
 
   def has_offers?
     ! offers.empty?
@@ -54,7 +55,7 @@ class CodeReview < ActiveRecord::Base
   end
 
   def collaborators
-    Rails.cache.read(collaborators_key) || set_collaborators
+    Array(Rails.cache.read(collaborators_key))
   end
 
   def set_collaborators
