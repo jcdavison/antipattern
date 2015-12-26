@@ -77,7 +77,15 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.perform_deliveries = true
+
+  if ENV['LOCAL_SERVER'].match /staging/
+    p "#{ENV['LOCAL_SERVER']} #{Rails.env} env DOES NOT send mail :)"
+    config.action_mailer.perform_deliveries = false
+  else
+    p "#{ENV['LOCAL_SERVER']} #{Rails.env} env DOES send mail :)"
+    config.action_mailer.perform_deliveries = true
+  end
+
   config.action_mailer.default_url_options = { host: 'http://www.antipattern.io' }
 
   config.action_mailer.smtp_settings = {
