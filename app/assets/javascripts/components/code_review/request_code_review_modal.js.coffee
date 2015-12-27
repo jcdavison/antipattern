@@ -75,7 +75,7 @@
     repo = @props.helpers.selectFrom(@state.repos, @selectedRepo(), 'id')
     @setState repo: repo
     $.get '/api/branches', {
-        repo: @selectedRepo(), 
+        repo_id: repo.repoId, 
         private: repo.private
         entity: {value: @state.entity.text} 
       } 
@@ -89,7 +89,7 @@
 
   populateCommits: (e) ->
     $.get '/api/commits', {
-        repo: @selectedRepo(), 
+        repo_id: @state.repo.repoId, 
         branch: @selectedBranch(), 
         entity: {value: @state.entity.text}
       } 
@@ -124,6 +124,7 @@
       data = 
         codeReview: 
           repo: @selectedRepo() 
+          repo_id: @state.repo.repoId
           author: @elementVal("##{@state.entitySelectId}")
           branch: @elementVal("##{@state.branchSelectId}")
           commit_sha: @selectedCommit()

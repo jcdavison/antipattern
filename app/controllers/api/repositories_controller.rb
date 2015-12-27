@@ -3,7 +3,7 @@ class Api::RepositoriesController < ApplicationController
     client = build_octoclient current_user.octo_token
     request_url = repo_url params[:entityType], params[:entityValue]
     repos = client.get(request_url, per_page: 100)
-    repo_names = repos.map {|repo, index| {text: repo_display_text(repo), id: repo[:name], private: repo[:private]} }
+    repo_names = repos.map {|repo, index| {text: repo_display_text(repo), id: repo[:name], private: repo[:private], repoId: repo[:id]} }
     render json: { repos: repo_names.sort_by {|r| r[:text].downcase } }
     rescue
       render json: { repos: [] }

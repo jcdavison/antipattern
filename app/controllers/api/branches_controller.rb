@@ -1,8 +1,7 @@
 class Api::BranchesController < ApplicationController
   def index
-    owner = params[:entity][:value]
-    repo = params[:repo]
-    branches = OCTOCLIENT.get("/repos/#{owner}/#{repo}/branches")
+    opts = { repo_id: params[:repo_id] }
+    branches = OCTOCLIENT.get(octo_branches_url(opts))
     branch_names = branches.map {|branch| {text: branch[:name], id: branch[:name]} } 
     render json: { branches: branch_names }
     rescue

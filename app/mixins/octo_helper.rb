@@ -4,10 +4,6 @@ module OctoHelper
   WEBHOOK_SERVER = ENV['WEB_HOOK_SERVER']
   OCTO_HOOK_SECRET = ENV['OCTO_HOOK_SECRET']
 
-  def commit_url code_review
-    "/repos/#{code_review.author}/#{code_review.repo}/commits/#{code_review.commit_sha}"
-  end
-
   def build_commit_blob octo_blob
     files = octo_blob.files.map {|f| camelize_thing(f.to_attrs) }
     modify_line_break! files
@@ -15,11 +11,8 @@ module OctoHelper
     { files: files, info: info }
   end
 
-  def grab_comments code_review, client = nil
-    author = code_review.author
-    repo = code_review.repo
-    sha = code_review.commit_sha
-    client.send 'get', "/repos/#{author}/#{repo}/commits/#{sha}/comments"
+  def grab_comments opts, client = nil
+    client.get octo_commit_comments_url(opts)
   end
 
   def inject_comments_into comments, commit_blob
@@ -53,7 +46,7 @@ module OctoHelper
   def get_repo opts, collaborators = false
     client = build_octoclient opts[:token]
     fragment = collaborators == true ? '/collaborators' : ''
-    client.get "repos/#{opts[:author]}/#{opts[:repo]}#{fragment}"
+    client.get "#{octo_repo_url(opts)}#{fragment}"
   end
 
   def get_collaborators opts
@@ -62,14 +55,10 @@ module OctoHelper
 
   def create_webhook opts
     client = build_octoclient opts[:token]
-    url = webhook_url opts
+    url = antipattern_webhook_url opts
     config = { url: url, config_type: 'json', secret: OCTO_HOOK_SECRET }
     post_body = {name: 'web', events: WEBHOOK_EVENTS, active: true, config: config}
-    client.post "/repos/#{opts[:author]}/#{opts[:repo]}/hooks", post_body
-  end
-
-  def webhook_url opts
-    "#{WEBHOOK_SERVER}/api/hooks/code_review/#{opts[:repo]}"
+    client.post octo_hooks_url(opts), post_body
   end
 
   def has_valid_octo_webhook? opts
@@ -78,16 +67,47 @@ module OctoHelper
   end
 
   def get_octo_hooks opts
-    client = build_octoclient opts[:token]
-    client.get "/repos/#{opts[:author]}/#{opts[:repo]}/hooks"
+    build_octoclient(opts[:token]).get(octo_hooks_url(opts))
   end
 
   def clear_octo_hooks! opts
     client = build_octoclient opts[:token]
     get_octo_hooks(opts).map do |hook|
       if hook[:config][:url].match Regexp.new(WEBHOOK_SERVER)
-        client.delete "/repos/#{opts[:author]}/#{opts[:repo]}/hooks/#{hook[:id]}"
+        client.delete "#{octo_hooks_url(opts)}/#{hook[:id]}"
       end
     end
+  end
+
+  def octo_commit_url opts
+    "#{octo_repo_url(opts)}/commits/#{opts[:commit_sha]}"
+  end
+
+  def octo_repo_url opts
+    "/repositories/#{opts[:repo_id]}"
+  end
+
+  def octo_hooks_url opts
+    "#{octo_repo_url(opts)}/hooks"
+  end
+
+  def octo_commit_comments_url opts
+    "#{octo_commit_url(opts)}/comments"
+  end
+
+  def octo_commits_url opts
+    "#{octo_repo_url(opts)}/commits?sha=#{opts[:branch]}"
+  end
+
+  def octo_commit_url opts
+    "#{octo_repo_url(opts)}/commits/#{opts[:commit_sha]}"
+  end
+
+  def octo_branches_url opts
+    "#{octo_repo_url(opts)}/branches"
+  end
+
+  def antipattern_webhook_url opts
+    "#{WEBHOOK_SERVER}/api/hooks/code_review/#{opts[:repo]}"
   end
 end

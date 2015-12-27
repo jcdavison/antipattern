@@ -16,6 +16,7 @@ class CodeReview < ActiveRecord::Base
   scope :all_private, -> {where(is_private: true)}
   scope :reverse_order, -> {order('created_at DESC')}
   before_create :verify_repo_privacy
+
   after_create :build_hook!
   after_create :set_collaborators
 
@@ -46,8 +47,9 @@ class CodeReview < ActiveRecord::Base
   end
 
   def verify_repo_privacy
-    repository = get_repo token: user.octo_token, author: author, repo: repo
+    repository = get_repo opts
     self.is_private = repository[:private]
+    self.valid?
   end
 
   def collaborators_key
@@ -59,7 +61,7 @@ class CodeReview < ActiveRecord::Base
   end
 
   def set_collaborators
-    Rails.cache.write collaborators_key, get_collaborators(token: user.octo_token, author: author, repo: repo)
+    Rails.cache.write collaborators_key, get_collaborators(opts)
   end
 
   def self.clear_all_collaborators
@@ -87,6 +89,6 @@ class CodeReview < ActiveRecord::Base
   end
 
   def opts
-    {author: author, token: user.octo_token, repo: repo, id: id}
+    {author: author, token: user.octo_token, repo: repo, id: id, repo_id: repo_id, commit_sha: commit_sha}
   end
 end
