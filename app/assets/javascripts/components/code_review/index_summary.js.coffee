@@ -33,6 +33,7 @@
                   React.DOM.span
                     className: 'medium-small'
                     React.DOM.a
+                      className: 'code-review-show'
                       href: "/code-reviews/#{@props.data.codeReview.id}"
                       @props.data.codeReview.title
                   if @props.data.codeReview.context
@@ -42,7 +43,7 @@
                         className: 'blue'
                         "context: " 
                       React.DOM.span
-                        className: 'grey'
+                        className: 'grey code-review-context'
                         @trimContext @props.data.codeReview.context
                   React.DOM.div
                     className: null

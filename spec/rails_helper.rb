@@ -5,9 +5,12 @@ require File.expand_path("../../config/environment", __FILE__)
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 require 'rspec/rails'
 require 'capybara/rspec'
+Capybara.run_server = false
 Capybara.javascript_driver = :selenium
 Capybara.server_port = 8200
-Capybara.default_wait_time = 20
+Capybara.default_wait_time = 7
+Capybara.app_host = 'http://localhost:3000'
+
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
