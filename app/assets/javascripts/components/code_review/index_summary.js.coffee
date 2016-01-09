@@ -4,9 +4,25 @@
     products: []
     helpers: window.ReactHelpers
 
+  getInitialState: ->
+    showDelete: @showDelete()
+
+  showDelete: () ->
+    if @props.data.currentUser
+      @props.data.currentUser.id == @props.data.codeReview.userId
+
   trimContext: (str) ->
     if str
       return str.slice(0,45) + "..."
+
+  sendDelete: () ->
+    $.ajax(
+      type: 'DELETE'
+      url: "/api/reviews/#{@props.data.codeReview.id}"
+      success: () =>
+        PubSub.publish 'refresh-code-review-index'
+        @setState showDelete: @showDelete()
+    ) 
 
   render: () ->
     React.DOM.div
@@ -53,6 +69,11 @@
                     React.DOM.span
                       className: 'grey'
                       @props.data.codeReview.topics
+                  if @state.showDelete
+                    React.DOM.span
+                      className: 'pointer light-red inline small-top-margined' 
+                      onClick: @sendDelete
+                      'delete'
               React.DOM.div
                 className: 'col-sm-4 fixed-line-45 text-right'
                 React.DOM.a

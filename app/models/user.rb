@@ -1,4 +1,5 @@
 include WaffleHelper
+include QueryHelper
 
 class User < ActiveRecord::Base
   TEMP_EMAIL_PREFIX = 'change@me'
@@ -58,7 +59,7 @@ class User < ActiveRecord::Base
   end
 
   def display_attributes
-    %w(name profile_pic github_profile github_username)
+    %w(name profile_pic github_profile github_username id)
   end
 
   def github_username
@@ -73,8 +74,7 @@ class User < ActiveRecord::Base
     identities.select {|identity| identity.provider == 'github_private_scope' }.first.token
   end
 
-
   def private_code_review_access_ids
-    all_accessible_private_code_reviews.map &:id
+    all_accessible_private_code_reviews(github_username).map {|code_review| code_review['id'] }
   end
 end

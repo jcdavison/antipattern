@@ -15,7 +15,7 @@
       </div>
       <div class='row'>
         <div class='col-sm-10 no-left-padding center-block no-float'>
-          <%= react_component 'codeReviewIndex', { data: { codeReviews: @code_reviews} } %>
+          <%= react_component 'codeReviewIndex', { data: { codeReviews: @code_reviews, currentUser: render_current_user} } %>
         </div>
       </div>
     </div>

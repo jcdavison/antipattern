@@ -20,4 +20,4 @@
     React.DOM.div
       className: 'code-review-index'
       for codeReview, index in @state.codeReviews
-        React.createElement indexSummary, key: "#{index}-summary" , data: {codeReview: codeReview }
+        React.createElement indexSummary, key: "#{codeReview.commitSha}-summary" , data: {codeReview: codeReview, currentUser: @props.data.currentUser }
