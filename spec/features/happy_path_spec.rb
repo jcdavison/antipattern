@@ -6,7 +6,7 @@ TEST_ENTITY = 'AntiPatternIO'
 TEST_REPO = 'antipattern-private | PRIVATE REPO'
 TEST_BRANCH = 'master'
 TEST_COMMIT = 'Add secret token.'
-TEST_CONTEXT = SecureRandom.hex.first(15)
+TEST_CONTEXT = "capy-spec-#{SecureRandom.hex.first(15)}"
 
 describe "The Happy Path :)", :js => true do
   context 'no logged in user' do
@@ -51,7 +51,7 @@ describe "The Happy Path :)", :js => true do
 
       expect(page).to have_content 'Congrats!'
       first('button.close').click
-      expect(all('a.code-review-context').any? {|code_review| code_review.text == "#{TEST_CONTEXT}..."}).to be false
+      expect(page).to have_content "#{TEST_CONTEXT}..."
       sanity_check
     end
   end
