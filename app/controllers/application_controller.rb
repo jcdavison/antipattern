@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   after_filter  :set_csrf_cookie_for_ng
   class UnauthorizedOctoHook < StandardError ; end
+  class UnauthorizedPrivateRepoRequest < StandardError ; end
 
   def after_sign_in_path_for(resource)
     code_reviews_path
@@ -12,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   def enforce_private_repo_access
     unless current_user && current_user.private_code_review_access_ids.include?(Integer(params[:id]))
-      raise User::NotAuthorized 
+      raise UnauthorizedPrivateRepoRequest 
     end
   end
 

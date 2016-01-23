@@ -71,7 +71,10 @@ class User < ActiveRecord::Base
   end
 
   def private_repo_token
-    identities.select {|identity| identity.provider == 'github_private_scope' }.first.token
+    private_tokens = identities.select do |identity| 
+      identity.provider == 'github_private_scope' 
+    end 
+    private_tokens.empty? ? nil : private_tokens.first.token
   end
 
   def private_code_review_access_ids
