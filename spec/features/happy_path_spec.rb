@@ -52,6 +52,11 @@ describe "The Happy Path :)", :js => true do
       expect(page).to have_content 'Congrats!'
       first('button.close').click
       expect(page).to have_content "#{TEST_CONTEXT}..."
+      all("span#delete-#{TEST_CONTEXT}").each do |thing|
+        puts thing.text
+        thing.click
+      end
+      expect(page).to_not have_content "#{TEST_CONTEXT}..."
       sanity_check
     end
   end

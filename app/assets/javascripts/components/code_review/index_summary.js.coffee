@@ -73,6 +73,7 @@
                     React.DOM.span
                       className: 'pointer light-red inline small-top-margined' 
                       onClick: @sendDelete
+                      id: "delete-#{@props.data.codeReview.context}"
                       'delete'
               React.DOM.div
                 className: 'col-sm-4 fixed-line-45 text-right'
