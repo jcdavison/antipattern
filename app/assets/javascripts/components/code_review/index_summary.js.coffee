@@ -14,6 +14,8 @@
   trimContext: (str) ->
     if str
       return str.slice(0,45) + "..."
+    
+  componentDidMount: () ->
 
   sendDelete: () ->
     $.ajax(
@@ -52,6 +54,14 @@
                       className: 'code-review-show'
                       href: "/code-reviews/#{@props.data.codeReview.id}"
                       @props.data.codeReview.title
+                  React.DOM.div
+                    className: null
+                    React.DOM.span
+                      className: 'blue'
+                      "repo: " 
+                    React.DOM.span
+                      className: 'grey'
+                      @props.data.codeReview.repo
                   if @props.data.codeReview.context
                     React.DOM.div
                       className: null

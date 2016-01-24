@@ -125,7 +125,7 @@
         codeReview: 
           repo: @selectedRepo() 
           repo_id: @state.repo.repoId
-          author: @elementVal("##{@state.entitySelectId}")
+          repo_owner: @elementVal("##{@state.entitySelectId}")
           branch: @elementVal("##{@state.branchSelectId}")
           commit_sha: @selectedCommit()
           title: @selectedTitle()

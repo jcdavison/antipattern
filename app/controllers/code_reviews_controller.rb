@@ -18,7 +18,7 @@ class CodeReviewsController < ApplicationController
     enforce_private_repo_access if @code_review.is_private
     @code_review_owner = @code_review.user.to_waffle.attributes!
     @reviewable_commit = ReviewableCommit.new(@code_review)
-    rescue 
-      redirect_to code_reviews_path
+    # rescue 
+    #   redirect_to code_reviews_path
   end
 end

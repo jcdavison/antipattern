@@ -9,6 +9,7 @@
     fileName: @props.data.fileName
     position: @props.data.position
     repo: @props.data.repo
+    repoOwner: @props.data.repoOwner
     owner: @props.data.owner
     currentUser: @props.data.currentUser
 
@@ -26,7 +27,7 @@
       path: @state.fileName
       position: @state.position
       repo: @state.repo
-      commitOwner: @state.owner.githubUsername
+      repoOwner: @props.data.repoOwner
 
   buildCommentBody: () ->
     if @state.antipattern

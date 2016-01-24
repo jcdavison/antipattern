@@ -9,6 +9,7 @@
     fileName: @props.data.file.filename
     commitSha: @props.data.info.commitSha
     repo: @props.data.info.repo
+    repoOwner: @props.data.info.repoOwner
 
   componentDidMount: () ->
 
@@ -18,7 +19,7 @@
     @setState comments: newProps.data.file.comments
 
   commitInfo: () ->
-    { commitSha: @state.commitSha, fileName: @state.fileName, repo: @state.repo }
+    { commitSha: @state.commitSha, fileName: @state.fileName, repo: @state.repo, repoOwner: @state.repoOwner }
 
   calculateStartingPosition: (patches) ->
     for patch, index in patches

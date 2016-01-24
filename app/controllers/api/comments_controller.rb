@@ -28,6 +28,6 @@ class Api::CommentsController < ApplicationController
     end
 
     def comment_post_url comment
-      "/repos/#{comment[:commit_owner]}/#{comment[:repo]}/commits/#{comment[:sha]}/comments"
+      "/repos/#{comment[:repo_owner]}/#{comment[:repo]}/commits/#{comment[:sha]}/comments"
     end
 end

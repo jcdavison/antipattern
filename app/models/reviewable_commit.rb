@@ -9,7 +9,14 @@ class ReviewableCommit
     @comments = build_comments code_review.opts
     save_comments code_review
     merge_comments
-    self.content[:info].merge!({repo: code_review.repo, commitSha: code_review.commit_sha, context: code_review.context})
+    self.content[:info].merge!(summary_info(code_review))
+  end
+
+  def summary_info code_review
+    { repo: code_review.repo, 
+      repoOwner: code_review.repo_owner, 
+      commitSha: code_review.commit_sha, 
+      context: code_review.context }
   end
 
   def merge_comments

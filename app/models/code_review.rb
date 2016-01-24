@@ -89,6 +89,6 @@ class CodeReview < ActiveRecord::Base
   end
 
   def opts
-    {author: author, token: user.octo_token, repo: repo, id: id, repo_id: repo_id, commit_sha: commit_sha}
+    {repo_owner: repo_owner, token: user.octo_token, repo: repo, id: id, repo_id: repo_id, commit_sha: commit_sha}
   end
 end

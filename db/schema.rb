@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151227170019) do
+ActiveRecord::Schema.define(version: 20160124171142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20151227170019) do
     t.string   "url"
     t.string   "commit_sha"
     t.string   "repo"
-    t.string   "author"
+    t.string   "repo_owner"
     t.string   "branch"
     t.boolean  "is_private", default: false
     t.integer  "repo_id"
