@@ -4,6 +4,7 @@ require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 require 'rspec/rails'
+require 'devise'
 require 'capybara/rspec'
 
 Capybara.register_driver :selenium do |app|
@@ -18,7 +19,9 @@ Capybara.app_host = 'http://localhost:3000'
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
-
+  config.include Warden::Test::Helpers
+  config.include Devise::TestHelpers, :type => :controller
+  config.include Rails.application.routes.url_helpers
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.include Capybara::DSL
   config.include FeaturesHelper, :type => :feature
