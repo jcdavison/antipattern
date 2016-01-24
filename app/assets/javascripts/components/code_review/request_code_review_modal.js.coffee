@@ -44,6 +44,7 @@
       @populateCommits(e)
 
   enableSelect2: (element, data, template = null) ->
+    $(element).empty()
     $(element).select2(data: data)
     $(element).val(null)
 
@@ -64,7 +65,7 @@
     $.get '/api/repositories', {entityType: entity.entityType, entityValue: entity.text} 
     .success( (response) =>
       @setState repos: response.repos
-      @enableSelect2("##{@state.reposSelectId}", response.repos, 'someTemplate')
+      @enableSelect2("##{@state.reposSelectId}", response.repos)
       $("#select2-code-review-repo-container").text('select a repo')
     )
     .error( (response) =>
