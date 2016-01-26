@@ -19,7 +19,7 @@ class Api::CommentsController < ApplicationController
 
   private
     def post_comment user, comment
-      client = build_octoclient current_user.octo_token
+      client = build_octoclient user.octo_token
       client.post comment_post_url(comment), postable_comment(comment)
     end
 

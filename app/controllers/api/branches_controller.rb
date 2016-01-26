@@ -1,4 +1,6 @@
 class Api::BranchesController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     opts = { repo_id: params[:repo_id] }
     branches = OCTOCLIENT.get(octo_branches_url(opts))

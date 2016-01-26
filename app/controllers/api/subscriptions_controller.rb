@@ -16,11 +16,6 @@ class Api::SubscriptionsController < ApplicationController
       render json: { subscribedTo: [] }
   end
 
-  # def subscriptions
-  #   @user = User.find_by_id(current_user.id)
-  #   subscribed_to = @user.notification_channels.any? {|c| c.name == PRIMARY_CHANNEL_NAME }
-  #   render json: { subscribedTo: subscribed_to }
-  # end
   private
     def remove_from_all user
       NotificationChannel.includes(:subscribers).each do |channel|

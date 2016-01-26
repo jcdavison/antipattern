@@ -1,4 +1,6 @@
 class Api::RepositoriesController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     client = build_octoclient current_user.octo_token
     request_url = repo_url params[:entityType], params[:entityValue]
