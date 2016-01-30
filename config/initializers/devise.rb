@@ -5,6 +5,8 @@ Dotenv.overload '.env.test' if Rails.env.test?
 Devise.setup do |config|
   config.omniauth :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET'], scope: 'user, repo', prompt: 'consent', callback_uri: "#{ENV['LOCAL_SERVER']}/users/auth/github_private_scope/callback", name: 'github_private_scope'
 
+  config.omniauth :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET'], scope: 'user, public_repo', prompt: 'consent', callback_uri: "#{ENV['LOCAL_SERVER']}/users/auth/github_private_scope/callback", name: 'github_public_scope'
+
   config.omniauth :stripe_connect, ENV['STRIPE_CLIENT_ID'], ENV['STRIPE_SECRET'], scope: 'read_write', always_prompt: true
   #
   # The secret key used by Devise. Devise uses this key to generate

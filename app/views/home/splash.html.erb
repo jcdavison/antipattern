@@ -63,12 +63,17 @@
 <div class="container">
   <div class="row">
     <div class='col-sm-12 centered top-margined'>
-      <%= link_to 'VIEW CODE REVIEWS', code_reviews_path, class: 'medium join' %>
+      <%= link_to 'VIEW PUBLIC REPO CODE REVIEWS', code_reviews_path, class: 'medium join' %>
     </div>
   </div>
   <div class="row">
     <div class='col-sm-12 centered top-margined'>
-      <%= link_to "LOGIN #{fa_icon 'github-alt'}".html_safe, user_omniauth_authorize_path(:github_private_scope), class: 'medium join' %>
+      <%= link_to "LOGIN with PUBLIC REPO SCOPE #{fa_icon 'github-alt'}".html_safe, user_omniauth_authorize_path(:github_public_scope), class: 'medium join' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-12 centered top-margined'>
+      <%= link_to "LOGIN with PRIVATE & PUBLIC REPO SCOPE #{fa_icon 'github-alt'}".html_safe, user_omniauth_authorize_path(:github_private_scope), class: 'medium join' %>
     </div>
   </div>
 </div>

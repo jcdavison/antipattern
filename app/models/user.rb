@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :notification_channels, dependent: :destroy
 
   def self.find_for_oauth(auth, signed_in_resource = nil)
-    identity = Identity.find_for_oauth(auth)
+    identity = Identity.build_for_oauth(auth)
     user = signed_in_resource ? signed_in_resource : identity.user
     if user.nil?
       if auth.provider.match /google_oauth2|github|github_full_scope/
@@ -67,14 +67,11 @@ class User < ActiveRecord::Base
   end
 
   def octo_token
-    private_repo_token
+    identities.last.token
   end
 
-  def private_repo_token
-    private_tokens = identities.select do |identity| 
-      identity.provider == 'github_private_scope' 
-    end 
-    private_tokens.empty? ? nil : private_tokens.first.token
+  def has_private_repo_scope?
+    identities.first.private_scope
   end
 
   def private_code_review_access_ids

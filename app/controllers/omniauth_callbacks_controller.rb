@@ -15,7 +15,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     }
   end
 
-  [:stripe_connect, :github_private_scope].each do |provider|
+  [:github_public_scope, :github_private_scope].each do |provider|
     provides_callback_for provider
   end
 
@@ -27,27 +27,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
-  def stripe_connect
-    wallet = current_user.wallet
-    if wallet
-      wallet.update_attributes wallet_params
-    else
-      Wallet.new(wallet_params).save
-    end
-    redirect_to profile_url(current_user, protocol: 'http')
-  end
-
   private
     def provider
       request.env['omniauth.auth']
-    end
-
-    def wallet_params
-      { stripe_uid: provider[:uid], 
-      stripe_access_token: provider[:credentials][:token], 
-      stripe_refresh_token: provider[:credentials][:refresh_token], 
-      stripe_publishable_key: provider[:info][:stripe_publishable_key], 
-      stripe_scope: provider[:info][:scope], 
-      user_id: current_user.id }
     end
 end
