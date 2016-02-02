@@ -68,6 +68,8 @@ class User < ActiveRecord::Base
 
   def octo_token
     identities.last.token
+  rescue
+    ENV['GITHUB_PERSONAL_ACCESS_TOKEN']
   end
 
   def has_private_repo_scope?
