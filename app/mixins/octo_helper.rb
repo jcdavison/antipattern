@@ -110,4 +110,8 @@ module OctoHelper
   def antipattern_webhook_url opts
     "#{WEBHOOK_SERVER}/api/hooks/code_review/#{opts[:repo]}"
   end
+
+  def repo_all_comments_url opts
+    "/repositories/#{opts[:repo_id]}/comments"
+  end
 end

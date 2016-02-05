@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     get '/api/authorized_user' => 'users/sessions#authorized_user'
   end
 
+  get '/comment-feedback', to: 'comments#index'
   get '/code-reviews', to: 'code_reviews#index'
   root 'home#splash'
 end
