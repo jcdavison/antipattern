@@ -39,12 +39,12 @@ module OctoHelper
     end
   end
 
-  def build_octoclient token
+  def build_octo_client token
     Octokit::Client.new :access_token => token 
   end
 
   def get_repo opts, collaborators = false
-    client = build_octoclient opts[:token]
+    client = build_octo_client opts[:token]
     fragment = collaborators == true ? '/collaborators' : ''
     client.get "#{octo_repo_url(opts)}#{fragment}"
   end
@@ -54,7 +54,7 @@ module OctoHelper
   end
 
   def create_webhook opts
-    client = build_octoclient opts[:token]
+    client = build_octo_client opts[:token]
     url = antipattern_webhook_url opts
     config = { url: url, config_type: 'json', secret: OCTO_HOOK_SECRET }
     post_body = {name: 'web', events: WEBHOOK_EVENTS, active: true, config: config}
@@ -67,11 +67,11 @@ module OctoHelper
   end
 
   def get_octo_hooks opts
-    build_octoclient(opts[:token]).get(octo_hooks_url(opts))
+    build_octo_client(opts[:token]).get(octo_hooks_url(opts))
   end
 
   def clear_octo_hooks! opts
-    client = build_octoclient opts[:token]
+    client = build_octo_client opts[:token]
     get_octo_hooks(opts).map do |hook|
       if hook[:config][:url].match Regexp.new(WEBHOOK_SERVER)
         client.delete "#{octo_hooks_url(opts)}/#{hook[:id]}"

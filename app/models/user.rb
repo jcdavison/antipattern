@@ -79,4 +79,8 @@ class User < ActiveRecord::Base
   def private_code_review_access_ids
     all_accessible_private_code_reviews(github_username).map {|code_review| code_review['id'] }
   end
+
+  def comments_cache_key
+    "user_id_#{id}_comments"
+  end
 end

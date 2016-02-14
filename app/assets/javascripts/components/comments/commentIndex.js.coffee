@@ -4,11 +4,22 @@
     helpers: window.ReactHelpers
 
   getInitialState: () ->
-    comments: @props.data.commentObjects
+    comments: null
+    hasComments: false
 
   componentDidMount: () ->
-    console.log @state.comments
+    console.log @props.data
+
+  # getCommentsIndex: () ->
+    # while @state.comments == null
+    #   $.get '/api/comments-index'
+    #     .success( (response) =>
+    #       console.log(response)
+    #       @setState: comments: true
+    #       @setState: hasComments: true
+    #     )
+    #       .failure( () => console.log 'failure' )
 
   render: () ->
     React.DOM.div
-      className: 'comment-index'
+      className: 'somestuff'

@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     get 'channels', to: 'notifications#index'
     get 'subscriptions', to: 'subscriptions#index'
     get 'comments', to: 'comments#show'
+    get 'comments-index', to: 'comments#index'
     post 'update_profile', to: 'users#update'
     post 'offers/deliver', to: 'offers#deliver'
     post 'reviews', to: 'reviews#create'

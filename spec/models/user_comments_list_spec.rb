@@ -1,10 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe UserCommentsList, :type => :model do
+RSpec.describe UserCommentsList do
   context 'init methods' do
-    before(:all) do
-      user = FactoryGirl.create :user, identities: [FactoryGirl.create(:identity)]
-      @user_comments_list = UserCommentsList.new client: build_octoclient(user.octo_token)
+    before(:each) do
+      @user = FactoryGirl.create :user, identities: [FactoryGirl.create(:identity)]
+      user_opts = {octo_token: @user.octo_token, user_comments_cache_key: @user.comments_cache_key }
+      @user_comments_list = UserCommentsList.new user_opts
     end
 
     it '#org_names' do
@@ -26,7 +27,19 @@ RSpec.describe UserCommentsList, :type => :model do
     end
 
     it '#comment_objects' do
-      expect(@user_comments_list.comment_objects.all? {|obj| obj.keys == [:comment, :repo]}).to eq true
+      all_commit_ids = @user_comments_list.all_comments.map {|c| c[:comment][:commit_id] }.uniq
+      aggregated_commit_ids = @user_comments_list.comment_objects.keys
+      expect(all_commit_ids.sort == aggregated_commit_ids.sort).to eq true
+    end
+
+    it '#clear_user_cache' do
+      expect(Rails.cache.read(@user.comments_cache_key).nil?).to eq false
+      expect(@user_comments_list.clear_user_cache(@user.comments_cache_key)).to eq true
+    end
+
+    it '#write_to_user_cache' do
+      @user_comments_list.write_to_user_cache @user.comments_cache_key
+      expect(Rails.cache.read(@user.comments_cache_key) == @user_comments_list.comment_objects).to eq true
     end
   end
 end
