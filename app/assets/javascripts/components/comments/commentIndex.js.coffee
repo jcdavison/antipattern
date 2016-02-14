@@ -4,22 +4,14 @@
     helpers: window.ReactHelpers
 
   getInitialState: () ->
-    comments: null
+    commentThreads: @props.data.commentThreads
     hasComments: false
 
   componentDidMount: () ->
-    console.log @props.data
-
-  # getCommentsIndex: () ->
-    # while @state.comments == null
-    #   $.get '/api/comments-index'
-    #     .success( (response) =>
-    #       console.log(response)
-    #       @setState: comments: true
-    #       @setState: hasComments: true
-    #     )
-    #       .failure( () => console.log 'failure' )
 
   render: () ->
     React.DOM.div
-      className: 'somestuff'
+      className: null
+      for commentThreadSha, comments of @state.commentThreads 
+        React.createElement commentThread, key: "commentThread-#{commentThreadSha}", data: commentThreadSha: commentThreadSha, comments: comments
+

@@ -31,6 +31,22 @@ $rounding: 5px;
   color: $pale_blue;
 }
 
+@mixin borders {
+  border: 1px solid grey;
+}
+
+@mixin light-borders {
+  border: 1px solid $very-light-grey;
+}
+
+@mixin padded {
+  padding: .6em;
+}
+
+@mixin small-vertical-padding {
+  padding: .5em 0;
+}
+
 .ultra-light-blue-background {
   background-color: $ultra_light_blue;
 }

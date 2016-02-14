@@ -400,7 +400,7 @@ a.venmo {
 }
 
 .borders {
-  border: 1px solid grey;
+  @include borders;
 }
 
 .inline {
@@ -544,4 +544,15 @@ table.patch-display {
       color: $red;
     }
   }
+}
+
+// COMMENT THREAD
+
+.comment-thread-tile {
+  @include padded;
+}
+
+.comment-feedback-tile {
+  @include light-borders;
+  @include small-vertical-padding;
 }
