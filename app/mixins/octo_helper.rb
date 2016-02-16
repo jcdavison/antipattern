@@ -63,7 +63,7 @@ module OctoHelper
 
   def has_valid_octo_webhook? opts
     hooks = get_octo_hooks(opts).map {|hook| {url: hook[:config][:url], events: hook[:events]} }
-    hooks.any? {|hook| hook[:url].match("#{Regexp.new(opts[:repo])}") && hook[:events] == WEBHOOK_EVENTS }
+    hooks.any? {|hook| String(hook[:url]).match("#{Regexp.new(opts[:repo])}") && hook[:events] == WEBHOOK_EVENTS }
   end
 
   def get_octo_hooks opts
