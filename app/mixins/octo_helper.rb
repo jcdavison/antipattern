@@ -27,7 +27,7 @@ module OctoHelper
 
   def modify_line_break! things
     things.each do |thing|
-      thing[:patches] = thing[:patch].lines
+      thing[:patches] = String(thing[:patch]).lines
       thing[:patches] = thing[:patches].inject([]) do |patch, line|
         if line.match PATCH_INFO_REGEXP
           patch.push [line]
