@@ -7,6 +7,7 @@
     comment: @props.data.comment
 
   componentDidMount: () ->
+    console.log @props.data.comment
     @hideAllInline()
 
   componentWillReceiveProps: (newProps) ->

@@ -16,7 +16,7 @@ class UserCommentsList
     @user_repos = get_user_repos
     @all_repos = self.user_repos.push(org_repos).flatten
     @recently_updated_repos = select_recently_updated_repos
-    @all_comments = get_all_repo_comments
+    @all_comments = get_all_repo_comments(user_id: opts[:user_id])
     @comment_objects = group_by_commit self.all_comments
     write_to_user_cache opts[:user_comments_cache_key]
   end
@@ -61,8 +61,8 @@ class UserCommentsList
     end
   end
 
-  def get_all_repo_comments
-    self.comment_objects = sort_repo_comments get_comments({repos: recently_updated_repos})
+  def get_all_repo_comments opts
+    self.comment_objects = sort_repo_comments get_comments({repos: recently_updated_repos, user_id: opts[:user_id]})
   end
 
   def group_by_commit comments
@@ -85,11 +85,24 @@ class UserCommentsList
 
   def get_comments opts
     opts[:repos].inject([]) do |collection, repo|
-      comments = client.get(repo_all_comments_url(repo_id: repo[:id]))
-      unless comments.empty?
-        comments.each do |comment|
-          comment[:user] = comment[:user].to_h
-          collection.push({ comment: comment.to_h, repo: repo} )
+      raw_comments = client.get(repo_all_comments_url(repo_id: repo[:id]))
+      unless raw_comments.empty?
+        change_key(raw_comments, :id, :github_id)
+        raw_comments.each do |raw_comment|
+          code_review = CodeReview.find_by_commit_sha(raw_comment[:commit_id])
+
+          if code_review.nil?
+            code_review_opts = { commit_sha: raw_comment[:commit_id], repo_id: repo[:id], repo: repo[:name], user_id: opts[:user_id] }
+            CodeReview.find_or_create_by code_review_opts
+            code_review = CodeReview.find_by_commit_sha(raw_comment[:commit_id])
+          end
+
+          comment = save_comment(raw_comment, code_review)
+          raw_comment[:user] = raw_comment[:user].to_h
+
+          # comment_obj needs to be encapsulated and managed by something other than this method
+          comment_obj_for_client = { comment: raw_comment.to_h, repo: repo, code_review_id: code_review.id, sentiments: comment.sentiments_as_opts}
+          collection.push( comment_obj_for_client )
         end
       end
       collection
@@ -102,5 +115,9 @@ class UserCommentsList
     elsif entity_type == 'orgs'
       "/orgs/#{org_id}/repos"
     end
+  end
+
+  def save_comment comment, code_review
+    save_and_associate({find_key: :github_id, objects: [comment], attributes: [:body, :github_id], class: 'Comment', parent: code_review})[:created_objs].first
   end
 end

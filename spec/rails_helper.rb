@@ -25,7 +25,7 @@ RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.include Capybara::DSL
   config.include FeaturesHelper, :type => :feature
-
+  config.include FactoryGirl::Syntax::Methods
   config.use_transactional_fixtures = false
 
   config.before(:suite) do

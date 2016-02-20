@@ -4,7 +4,7 @@ RSpec.describe UserCommentsList do
   context 'init methods' do
     before(:each) do
       @user = FactoryGirl.create :user, identities: [FactoryGirl.create(:identity)]
-      user_opts = {octo_token: @user.octo_token, user_comments_cache_key: @user.comments_cache_key }
+      user_opts = {octo_token: @user.octo_token, user_comments_cache_key: @user.comments_cache_key, user_id: @user.id }
       @user_comments_list = UserCommentsList.new user_opts
     end
 

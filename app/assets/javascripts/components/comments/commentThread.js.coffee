@@ -20,6 +20,6 @@
       React.DOM.div
         className: 'row'
         React.DOM.div
-          className: 'col-sm-11 col-sm-offset-1 small-top-margined'
+          className: 'col-sm-12 small-top-margined'
           for commentObj, index in @state.comments
             React.createElement commentFeedbackTile, key: "comment-feedback-#{index}-#{@props.data.commentThreadSha}", data: commentObj: commentObj

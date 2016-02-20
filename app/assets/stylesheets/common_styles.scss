@@ -60,6 +60,10 @@ a.join, a.continue {
   margin: 1em 0;
 }
 
+.big-bottom-margined {
+  margin: 0em 3em;
+}
+
 .small-top-margined {
   margin: .75em 0;
 }
@@ -552,7 +556,20 @@ table.patch-display {
   @include padded;
 }
 
+.comment-thread-tile:nth-child(odd) {
+  border-left: 2px solid $blue;
+}
+
+.comment-thread-tile:nth-child(even) {
+  border-left: 2px solid $green;
+}
+
 .comment-feedback-tile {
+  // margin-bottom: 4em;
   @include light-borders;
   @include small-vertical-padding;
+}
+
+.comment-feedback-interface {
+  @include light-blue-borders;
 }

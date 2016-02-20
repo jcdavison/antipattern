@@ -39,6 +39,10 @@ $rounding: 5px;
   border: 1px solid $very-light-grey;
 }
 
+@mixin light-blue-borders {
+  border: 1px solid $light-blue;
+}
+
 @mixin padded {
   padding: .6em;
 }

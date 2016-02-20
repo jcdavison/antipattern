@@ -7,12 +7,14 @@
     comment: @props.data.commentObj.comment
     repo: @props.data.commentObj.repo
     updated_at: moment(@props.data.commentObj.comment.updated_at).format("M/D/YY HH:MM:SS")
+    displayFeedbackTools: false
 
   componentDidMount: () ->
+    console.log @props.data.commentObj
 
   render: () ->
     React.DOM.div
-      className: 'comment-feedback-tile'
+      className: 'pointer comment-feedback-tile'
       React.DOM.div
         className: 'row'
         React.DOM.div
@@ -23,3 +25,8 @@
         React.DOM.div
           className: 'col-sm-12'
           dangerouslySetInnerHTML: {__html: marked(@state.comment.body)}
+      React.DOM.div
+        className: 'row'
+        React.DOM.div
+          className: 'col-sm-12'
+          React.createElement commentFeedbackInterface
