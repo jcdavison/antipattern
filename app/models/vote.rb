@@ -2,6 +2,7 @@ class Vote < ActiveRecord::Base
   include WaffleHelper
 
   belongs_to :voteable, polymorphic: true
+  belongs_to :sentiment
 
   COMMENT_SENTIMENT_VOTE = Proc.new do |vote| 
     ! vote.sentiment_id.nil?

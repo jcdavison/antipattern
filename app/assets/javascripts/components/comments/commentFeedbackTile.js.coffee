@@ -10,7 +10,6 @@
     displayFeedbackTools: false
 
   componentDidMount: () ->
-    console.log @props.data.commentObj
 
   render: () ->
     React.DOM.div
@@ -29,4 +28,4 @@
         className: 'row'
         React.DOM.div
           className: 'col-sm-12'
-          React.createElement commentFeedbackInterface
+          React.createElement commentFeedbackInterface, data: commentObj: @props.data.commentObj

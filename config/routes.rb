@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get '/code-reviews/:id', to: 'code_reviews#show', as: 'code_review'
   get '/settings', to: 'users#settings', as: 'settings'
   patch '/users', to: 'users#update', as: 'users'
+  post '/foo', to: 'home#exp'
 
   namespace :api do
     get 'topics', to: 'topics#index'

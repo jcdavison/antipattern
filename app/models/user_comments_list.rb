@@ -101,12 +101,20 @@ class UserCommentsList
           raw_comment[:user] = raw_comment[:user].to_h
 
           # comment_obj needs to be encapsulated and managed by something other than this method
-          comment_obj_for_client = { comment: raw_comment.to_h, repo: repo, code_review_id: code_review.id, sentiments: comment.sentiments_as_opts}
+          comment_obj_for_client = { comment: raw_comment.to_h, 
+                                     repo: repo, 
+                                     code_review_id: code_review.id, 
+                                     sentiments: comment.sentiments_as_opts,
+                                     votes: comment.votes }
           collection.push( comment_obj_for_client )
         end
       end
       collection
     end
+  end
+
+  def build_comment_obj_for_client opts
+
   end
 
   def repos_url entity_type, org_id = nil

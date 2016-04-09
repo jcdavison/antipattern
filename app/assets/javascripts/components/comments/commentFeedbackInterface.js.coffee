@@ -2,7 +2,6 @@
 
   componentDidMount: () ->
 
-
   render: () ->
     React.DOM.div
       className: 'comment-feedback-interface'

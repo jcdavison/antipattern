@@ -22,4 +22,5 @@
         React.DOM.div
           className: 'col-sm-12 small-top-margined'
           for commentObj, index in @state.comments
+            console.log commentObj
             React.createElement commentFeedbackTile, key: "comment-feedback-#{index}-#{@props.data.commentThreadSha}", data: commentObj: commentObj
