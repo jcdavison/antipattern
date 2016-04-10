@@ -11,7 +11,6 @@
     sentimentSummary: {}
 
   componentDidMount: () ->
-    console.log @props.data.commentObj.comment.html_url
     @getCommentSentimentSummary()
 
   getCommentSentimentSummary: () ->
