@@ -123,7 +123,7 @@
   submitCodeReview: () ->
     if @props.helpers.isValidForm("##{@state.formId}")
       data = 
-        codeReview: 
+        code_review:
           repo: @selectedRepo() 
           repo_id: @state.repo.repoId
           repo_owner: @elementVal("##{@state.entitySelectId}")
