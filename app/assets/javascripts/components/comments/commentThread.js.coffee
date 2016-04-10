@@ -12,11 +12,19 @@
       React.DOM.div
         className: 'row'
         React.DOM.div
-          className: 'col-sm-6'
-          "commit: #{@props.data.commentThreadSha}"
-        React.DOM.div
-          className: 'col-sm-6'
-          "repo: #{@state.repo}"
+          className: 'col-sm-10 foo-small'
+          React.DOM.span
+            className: 'grey'
+            "commit: " 
+          React.DOM.span
+            className: 'blue'
+            " #{@props.data.commentThreadSha}"
+          React.DOM.span
+            className: 'grey'
+            " repository:" 
+          React.DOM.span
+            className: 'blue'
+            " #{@state.repo} " 
       React.DOM.div
         className: 'row'
         React.DOM.div
