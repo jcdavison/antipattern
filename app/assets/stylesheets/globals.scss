@@ -190,8 +190,12 @@ button.btn-default {
 }
 
 
-.pointer {
+@mixin pointer {
   cursor: pointer !important;
+}
+
+.pointer {
+  @include pointer
 }
 
 @mixin standard-form {

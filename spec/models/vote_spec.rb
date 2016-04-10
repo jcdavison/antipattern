@@ -21,6 +21,11 @@ RSpec.describe Vote, :type => :model do
       end
     end
 
+    it '#switch_value!' do
+      @vote.switch_value!
+      expect(@vote.value).to eq -1
+    end
+
     context 'uniqeness conditions' do
       it 'one comment one vote' do
         @vote.save

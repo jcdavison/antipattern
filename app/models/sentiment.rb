@@ -4,7 +4,7 @@ class Sentiment < ActiveRecord::Base
   has_and_belongs_to_many :comments
 
   def self.comment_emotion_names
-    %w(informative succint ambiguous kind motivating harsh)
+    %w(informative succint compassionate motivating)
   end
 
   def self.build_comment_emotions

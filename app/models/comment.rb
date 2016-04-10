@@ -4,7 +4,7 @@ class Comment < ActiveRecord::Base
   belongs_to :code_review
   has_many :votes, as: :voteable
   validates_uniqueness_of :github_id
-  after_create :create_sentiments
+  after_create :associate_to_sentiments
   has_and_belongs_to_many :sentiments
 
   def display_attributes
@@ -27,8 +27,8 @@ class Comment < ActiveRecord::Base
     count_votes votes_on_comments
   end
 
-  def sentiments_vote_summary
-    SentimentAggregator.collate votes_on_sentiments
+  def sentiments_vote_summary user
+    SentimentAggregator.collate votes_on_sentiments, user
   end
 
   def count_votes selected_votes
@@ -39,9 +39,11 @@ class Comment < ActiveRecord::Base
     end
   end
 
-  def create_sentiments
+  def associate_to_sentiments
     Sentiment.for_comments.each do |sentiment|
-      sentiments << sentiment
+      unless sentiments.include? sentiment
+        sentiments << sentiment
+      end
     end
   end
 

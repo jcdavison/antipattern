@@ -1,33 +1,33 @@
 class SentimentAggregator
-  def self.collate votes
-    aggregate_votes build_sentiment_votes_map votes
+  def self.collate votes, user
+    sentiment_votes_map = build_sentiment_votes_map votes
+    tally_votes votes, sentiment_votes_map, user
   end
 
   def self.build_sentiment_votes_map votes
-    votes.inject({}) do |votes_by_sentiment, vote|
-      if votes_by_sentiment[vote.sentiment.name]
-        votes_by_sentiment[vote.sentiment.name].push vote
-      else
-        votes_by_sentiment[vote.sentiment.name] = [vote]
-      end
+    votes.inject(comment_votes_map) do |votes_by_sentiment, vote|
       votes_by_sentiment
     end
   end
 
-  def self.aggregate_votes sentiment_votes_map
-    sentiment_votes_map.each do |sentiment, votes|
-      sentiment_votes_map[sentiment] = tally_votes votes
+  def self.tally_votes votes, sentiment_votes_map, user
+    votes.each do |vote|
+      sentiment_name = vote.sentiment.name
+      if vote.value == 1
+        sentiment_votes_map[sentiment_name][:has_up_vote] = true if user.id == vote.user_id
+        sentiment_votes_map[sentiment_name][:up_votes] += vote.value
+      elsif vote.value == -1
+        sentiment_votes_map[sentiment_name][:has_down_vote] = true if user.id == vote.user_id
+        sentiment_votes_map[sentiment_name][:down_votes] += vote.value 
+      end
     end
+    sentiment_votes_map
   end
 
-  def self.tally_votes votes
-    votes.inject({up_votes: 0, down_votes: 0}) do |votes_tally, vote|
-      if vote.value == 1
-        votes_tally[:up_votes] += vote.value
-      elsif vote.value == -1
-        votes_tally[:down_votes] += vote.value 
-      end
-      votes_tally
+  def self.comment_votes_map
+    Sentiment.for_comments.inject({}) do |votes_map, sentiment|
+      votes_map[sentiment.name] = {up_votes: 0, down_votes: 0, has_up_vote: false, has_down_vote: false}
+      votes_map
     end
   end
 end

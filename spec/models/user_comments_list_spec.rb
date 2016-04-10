@@ -26,6 +26,10 @@ RSpec.describe UserCommentsList do
       end
     end
 
+    it '#all_comments' do
+      expect(@user_comments_list.all_comments.empty?).to be false
+    end
+
     it '#comment_objects' do
       all_commit_ids = @user_comments_list.all_comments.map {|c| c[:comment][:commit_id] }.uniq
       aggregated_commit_ids = @user_comments_list.comment_objects.keys

@@ -548,22 +548,40 @@ table.patch-display {
 
 .comment-thread-tile {
   @include padded;
+  margin-bottom: 2em;
 }
 
 .comment-thread-tile:nth-child(odd) {
-  border-left: 2px solid $blue;
+  border-left: 1px solid $light-blue;
 }
 
 .comment-thread-tile:nth-child(even) {
-  border-left: 2px solid $green;
+  border-left: 1px solid $light-green;
 }
 
 .comment-feedback-tile {
-  // margin-bottom: 4em;
-  @include light-borders;
-  @include small-vertical-padding;
+  margin-bottom: 1em;
+  border-left: 1px solid $very-light-grey;
+  padding: .7em;
 }
 
-.comment-feedback-interface {
+.comment-feedback-button {
+  border-radius: 4px;
+  padding: .3em;
+  margin: 0 .3em;
   @include light-blue-borders;
+}
+
+.comment-sentiment-downvote {
+  @include pointer;
+  &:hover {
+    background-color: $very-light-red;
+  }
+}
+
+.comment-sentiment-upvote {
+  @include pointer;
+  &:hover {
+    background-color: $very-light-blue;
+  }
 }

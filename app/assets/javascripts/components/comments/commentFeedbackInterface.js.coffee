@@ -1,27 +1,35 @@
 @commentFeedbackInterface = React.createClass
 
   componentDidMount: () ->
+    # console.log @props.data
+
+  getInitialState: () ->
+    upVotes: @props.data.voteSummary.up_votes
+    downVotes: @props.data.voteSummary.down_votes
+
+  componentWillReceiveProps: (newProps) ->
+    @setState upVotes: newProps.data.voteSummary.up_votes
+    @setState downVotes: newProps.data.voteSummary.down_votes
+
+  voteParams: (voteType) ->
+    value = 1 if voteType == 'upVote'
+    value = -1 if voteType == 'downVote'
+    { value: value , sentiment: @props.data.sentiment, commentId: @props.data.commentId }
+
+  submitVote: (params) ->
+    @props.data.submitVote(params)
 
   render: () ->
-    React.DOM.div
-      className: 'comment-feedback-interface'
-      React.DOM.div
-        className: 'row'
-        React.DOM.div
-          className: 'col-sm-2 centered'
-          'informative'
-        React.DOM.div
-          className: 'col-sm-2 centered'
-          'succint'
-        React.DOM.div
-          className: 'col-sm-2 centered'
-          'ambiguous'
-        React.DOM.div
-          className: 'col-sm-2 centered'
-          'kind'
-        React.DOM.div
-          className: 'col-sm-2 centered'
-          'motivating'
-        React.DOM.div
-          className: 'col-sm-2 centered'
-          'harsh'
+    React.DOM.span
+      className: 'comment-feedback-button'
+      React.DOM.span
+        className: 'comment-sentiment-downvote'
+        onClick: @submitVote.bind(@, @voteParams('downVote'))
+        "#{@state.downVotes} - | "
+      React.DOM.span
+        className: null
+        @props.data.sentiment
+      React.DOM.span
+        className: 'comment-sentiment-upvote'
+        onClick: @submitVote.bind(@, @voteParams('upVote'))
+        " | + #{@state.upVotes}"

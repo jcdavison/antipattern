@@ -8,7 +8,6 @@ class HomeController < ApplicationController
   end
 
   def exp
-    binding.pry
     render json: { response_body: 'empty'}, status: 200
   end
 

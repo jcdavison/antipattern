@@ -24,4 +24,9 @@ class Vote < ActiveRecord::Base
   def self.vote_of_record_for opts
     where(opts).first
   end
+
+  def switch_value!
+    value == 1 ? self.value = -1 : self.value = 1
+    save
+  end
 end
