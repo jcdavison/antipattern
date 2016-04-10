@@ -17,7 +17,7 @@ class CodeReview < ActiveRecord::Base
   scope :reverse_order, -> {order('created_at DESC')}
   before_create :verify_repo_privacy
 
-  after_create :build_hook!
+  # after_create :build_hook!
   after_create :set_collaborators
 
   def has_offers?

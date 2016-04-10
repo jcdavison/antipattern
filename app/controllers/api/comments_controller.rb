@@ -1,5 +1,5 @@
 class Api::CommentsController < ApplicationController
-  before_filter :authenticate_user!, only: [:create]
+  before_filter :authenticate_user!, only: [:create, :index]
 
   def show
     comment = Comment.find_by github_id: params[:github_id]
@@ -17,9 +17,18 @@ class Api::CommentsController < ApplicationController
       render json: { content: 'not ok'}, status: 401
   end
 
+  def index
+    # cached_comment_objects = Rails.cache.read(current_user.comments_cache_key)
+    # if cached_comment_objects.nil? || params['updateCache'] == 'true'
+    #   client = build_octo_client current_user.octo_token
+    #   UserCommentsList.delay.new(client: client, user_comments_cache_key: current_user.comments_cache_key)
+    # end
+    # json: { comments: cached_comment_objects }
+  end
+
   private
     def post_comment user, comment
-      client = build_octoclient user.octo_token
+      client = build_octo_client user.octo_token
       client.post comment_post_url(comment), postable_comment(comment)
     end
 

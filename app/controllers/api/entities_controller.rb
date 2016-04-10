@@ -4,7 +4,7 @@ class Api::EntitiesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    client = build_octoclient current_user.octo_token
+    client = build_octo_client current_user.octo_token
     orgs = client.get("/user/orgs", per_page: 100)
     org_objs = orgs.map {|org| {text: org[:login], id: org[:login], entityType: 'orgs'} }
     user_entity = { entityType: 'user', text: current_user.github_username, id: current_user.github_username }

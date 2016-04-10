@@ -60,6 +60,10 @@ a.join, a.continue {
   margin: 1em 0;
 }
 
+.big-bottom-margined {
+  margin: 0em 3em;
+}
+
 .small-top-margined {
   margin: .75em 0;
 }
@@ -341,12 +345,6 @@ a.venmo {
   border: 1px solid $light_grey;
 }
 
-// ANGULAR
-
-[ng\:cloak], [ng-cloak], .ng-cloak {
-  display: none !important;
-}
-
 // LAYOUT
 
 .inline {
@@ -400,7 +398,7 @@ a.venmo {
 }
 
 .borders {
-  border: 1px solid grey;
+  @include borders;
 }
 
 .inline {
@@ -543,5 +541,51 @@ table.patch-display {
     i.downvote {
       color: $red;
     }
+  }
+}
+
+// COMMENT THREAD
+
+.comment-thread-tile {
+  @include padded;
+  margin-bottom: 2em;
+}
+
+.comment-thread-tile {
+  border-left: 1px solid $light-blue;
+}
+
+// .comment-thread-tile:nth-child(odd) {
+//   border-left: 1px solid $light-blue;
+// }
+
+// .comment-thread-tile:nth-child(even) {
+//   border-left: 1px solid $light-green;
+// }
+
+.comment-feedback-tile {
+  margin-bottom: 1em;
+  border-left: 1px solid $very-light-grey;
+  padding: .7em;
+}
+
+.comment-feedback-button {
+  border-radius: 4px;
+  padding: .3em;
+  margin: 0 .3em;
+  @include light-blue-borders;
+}
+
+.comment-sentiment-downvote {
+  @include pointer;
+  &:hover {
+    background-color: $very-light-red;
+  }
+}
+
+.comment-sentiment-upvote {
+  @include pointer;
+  &:hover {
+    background-color: $very-light-blue;
   }
 }

@@ -2,7 +2,7 @@ class Api::RepositoriesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    client = build_octoclient current_user.octo_token
+    client = build_octo_client current_user.octo_token
     request_url = repo_url params[:entityType], params[:entityValue]
     repos = client.get(request_url, per_page: 100)
     repo_names = repos.map {|repo, index| {text: repo_display_text(repo), id: repo[:name], private: repo[:private], repoId: repo[:id], fullname: repo[:full_name]} }

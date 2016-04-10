@@ -12,12 +12,10 @@ RSpec.describe Api::EntitiesController do
   end
 
   context 'authenticated user' do
-    context 'malformed resource params' do
-      it '401' do
-        login_as user
-        get "/api/entities?id=1"
-        expect(response.status).to eq 401
-      end
+    it '200' do
+      login_as user
+      get "/api/entities"
+      expect(response.status).to eq 200
     end
   end
 end

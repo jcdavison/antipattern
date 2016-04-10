@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get '/code-reviews/:id', to: 'code_reviews#show', as: 'code_review'
   get '/settings', to: 'users#settings', as: 'settings'
   patch '/users', to: 'users#update', as: 'users'
+  post '/foo', to: 'home#exp'
 
   namespace :api do
     get 'topics', to: 'topics#index'
@@ -24,6 +25,8 @@ Rails.application.routes.draw do
     get 'channels', to: 'notifications#index'
     get 'subscriptions', to: 'subscriptions#index'
     get 'comments', to: 'comments#show'
+    get 'comments/:id/sentiments', to: 'comments_sentiments#show'
+    get 'comments-index', to: 'comments#index'
     post 'update_profile', to: 'users#update'
     post 'offers/deliver', to: 'offers#deliver'
     post 'reviews', to: 'reviews#create'
@@ -33,6 +36,7 @@ Rails.application.routes.draw do
     post 'votes', to: 'votes#create'
     post 'comments', to: 'comments#create'
     post 'hooks/code_review/:repo_name', to: 'hooks#consume'
+    post 'comments/:id/sentiments', to: 'comments_sentiments#create'
     put 'offers', to: 'offers#update'
     put 'reviews', to: 'reviews#update'
     patch 'subscriptions', to: 'subscriptions#update'
@@ -44,6 +48,7 @@ Rails.application.routes.draw do
     get '/api/authorized_user' => 'users/sessions#authorized_user'
   end
 
+  get '/comment-feedback', to: 'comments#index'
   get '/code-reviews', to: 'code_reviews#index'
   root 'home#splash'
 end

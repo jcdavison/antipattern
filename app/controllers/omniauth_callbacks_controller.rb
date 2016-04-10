@@ -1,8 +1,13 @@
+include OctoHelper
+
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def self.provides_callback_for(provider)
     class_eval %Q{
       def #{provider}
         @user = User.find_for_oauth(env["omniauth.auth"], current_user)
+        opts = {user_comments_cache_key: @user.comments_cache_key, octo_token: @user.octo_token}
+        Delayed::Job.enqueue UserCommentsListWorker.new(opts)
+
 
         if @user.persisted?
           sign_in_and_redirect @user, event: :authentication

@@ -10,11 +10,11 @@ RSpec.describe ReviewableCommit, :type => :model do
       context '#content' do
         it ':files' do
           expect(commit.content[:files].length).to eq 1
-          expect(commit.content[:files].first[:filename]).to eq 'test.rb'
+          expect(commit.content[:files].first[:filename]).to eq '_config.yml'
         end
 
         it ':info' do
-          expect(commit.content[:info][:message]).to eq 'test test test' 
+          expect(commit.content[:info][:message]).to eq 'Edit config.' 
         end
       end
     end
