@@ -1,4 +1,4 @@
-<div class='modal fade' id='please-login'>
+<div class='modal fade please-login' id='please-login'>
   <div class='modal-dialog'>
     <div class="modal-content">
       <div class="modal-header">
@@ -7,7 +7,8 @@
       </div>
       <div class="modal-body">
         <ul class='list-group'>
-          <li class="list-group-item"><a href="/users/auth/github">Sign In with Github</a></li>
+          <li class='list-group-item'><%= link_to "Sign In With Github - Public Repo Scope", user_omniauth_authorize_path(provider: :github_public_scope) %></li>
+          <li class='list-group-item'><%= link_to "Sign In With Github - Private Repo Scope", user_omniauth_authorize_path(provider: :github_private_scope) %></li>
         </ul>
       </div>
       <div class="modal-footer">
@@ -16,3 +17,6 @@
     </div>
   </div>
 </div>
+<script>
+  console.log('login')
+</script>

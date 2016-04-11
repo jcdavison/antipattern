@@ -17,7 +17,11 @@
           <a href='#' id='request-a-code-review' class="hover-blue small" data-toggle='modal' data-target='.request-code-review'>Request Code Review</a>
         </li>
         <li>
-          <%= link_to 'Comment Feedback', comment_feedback_path, class: 'small hover-blue' %>
+          <% if current_user %>
+            <%= link_to 'Comment Feedback', comment_feedback_path, class: 'small hover-blue' %>
+          <% else %>
+            <a href='#' id='please-login' class="hover-blue small" data-toggle='modal' data-target='.please-login'>Comment Feedback</a>
+          <% end %>
         </li>
       </ul>
       <ul class='nav navbar-nav navbar-right'>
