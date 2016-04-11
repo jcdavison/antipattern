@@ -33,7 +33,7 @@
         React.DOM.div
           className: 'blue medium-small centered'
           React.DOM.span
-            'Your comment feed is queing ('
+            'Your comment feed is queueing ('
           React.DOM.i
             className: 'fa fa-spinner fa-spin'
           React.DOM.span
