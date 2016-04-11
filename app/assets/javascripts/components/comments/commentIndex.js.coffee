@@ -28,10 +28,10 @@
 
   render: () ->
     React.DOM.div
-      className: 'centered'
+      className: null
       if @state.showPlaceholder == true
         React.DOM.div
-          className: 'blue medium-small'
+          className: 'blue medium-small centered'
           React.DOM.span
             'Your comment feed is queing ('
           React.DOM.i
