@@ -18,12 +18,13 @@ class Api::CommentsController < ApplicationController
   end
 
   def index
-    # cached_comment_objects = Rails.cache.read(current_user.comments_cache_key)
-    # if cached_comment_objects.nil? || params['updateCache'] == 'true'
-    #   client = build_octo_client current_user.octo_token
-    #   UserCommentsList.delay.new(client: client, user_comments_cache_key: current_user.comments_cache_key)
-    # end
-    # json: { comments: cached_comment_objects }
+    @comment_threads = Rails.cache.read current_user.comments_cache_key
+    if params['updateCache'] == 'true' || @comment_threads.nil?
+      @comment_threads = 'in_progress'
+      opts = {user_comments_cache_key: current_user.comments_cache_key, octo_token: current_user.octo_token, user_id: current_user.id}
+      Delayed::Job.enqueue UserCommentsListWorker.new(opts)
+    end
+    render json: { commentThreads: @comment_threads }
   end
 
   private

@@ -57,7 +57,7 @@ class UserCommentsList
 
   def select_recently_updated_repos
     all_repos.select do |repo|
-      (Time.now - repo[:updated_at]) < 90.days
+      (Time.now - repo[:updated_at]) < 45.days
     end
   end
 
