@@ -19,6 +19,7 @@ Capybara.app_host = 'http://localhost:3000'
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+  config.include RspecHelpers
   config.include Warden::Test::Helpers
   config.include Devise::TestHelpers, :type => :controller
   config.include Rails.application.routes.url_helpers

@@ -1,7 +1,6 @@
 class Comment < ActiveRecord::Base
   include WaffleHelper
 
-  belongs_to :code_review
   has_many :votes, as: :voteable
   validates_uniqueness_of :github_id
   after_create :associate_to_sentiments

@@ -9,6 +9,7 @@
     showPlaceholder: true
 
   componentDidMount: () ->
+    console.log(@props.data)
     if @props.data.commentThreads == 'in_progress'
       @setState intervalId: setInterval(@getCommentThreads, 3000)
     else

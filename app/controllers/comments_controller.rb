@@ -14,4 +14,8 @@ class CommentsController < ApplicationController
       Delayed::Job.enqueue UserCommentsListWorker.new(opts)
     end
   end
+
+  def show
+
+  end
 end
