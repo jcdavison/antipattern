@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   protect_from_forgery :except => [:exp]
 
   def splash
-    @users = User.first(300).shuffle.map {|u| u.to_waffle.attributes! }
+    @users = User.first(308).shuffle.map {|u| u.to_waffle.attributes! }
   end
 
   def exp
