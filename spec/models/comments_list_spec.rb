@@ -7,12 +7,11 @@ RSpec.describe CommentsList do
       identity = FactoryGirl.create(:identity)
       @user = FactoryGirl.create :user, identities: [ identity ]
       client = build_octo_client @user.octo_token
-      opts = {client: client, repo: 'antipattern', user: 'AntiPatternIO'}
+      opts = {client: client, repo: 'antipattern', user: 'jcdavison'}
       @comments_list = CommentsList.new opts
     end
 
     it '#all_comments' do
-      binding.pry
       expect(@comments_list.raw_comments.first.to_h.keys).to eq augmented_github_comment_keys
     end
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Code Review Controller' do
+RSpec.describe 'Code Review Controller', :skip => true do
   context 'authenticated user' do
     context "GET '/code_reviews/:id'" do
       let(:user) { FactoryGirl.create :user, identities: [FactoryGirl.create(:identity)]}

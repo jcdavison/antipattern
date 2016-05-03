@@ -26,7 +26,7 @@ RSpec.describe Vote, :type => :model do
       expect(@vote.value).to eq -1
     end
 
-    context 'uniqeness conditions' do
+    context 'uniqueness conditions' do
       it 'one comment one vote' do
         @vote.save
         duplicate_vote = build :vote

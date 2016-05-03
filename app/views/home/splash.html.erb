@@ -32,7 +32,7 @@
     <div class='col-sm-12'>
       <div class="centered splash">
         <div class='top-margined'>
-          <div class='medium blue'>Join the movement :)</div>
+          <div class='medium blue'>Join the movement.</div>
           <div class='community-grid top-margined'>
             <% @users.each do |user| %>
               <div class='community-member'><%= image_tag user['profilePic'] %></div>
@@ -45,19 +45,28 @@
   </div>
 </div>
 
-<div class="container">
-  <div class="row">
-    <div class='col-sm-12 centered top-margined'>
-      <%= link_to "LOGIN with PRIVATE & PUBLIC REPO SCOPE #{fa_icon 'github-alt'}".html_safe, user_omniauth_authorize_path(:github_private_scope), class: 'medium join' %>
+<% if current_user %>
+  <div class="container">
+    <div class="row">
+      <div class='col-sm-12 centered top-margined'>
+        <%= link_to "View Comment Feed", comment_feedback_path, class: 'medium join' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class='col-sm-12 centered foo-small'>
+        <%= link_to 'SIGN OUT', destroy_user_session_path, method: :delete, class: 'red' %>
+      </div>
     </div>
   </div>
-
-  <div class="row">
-    <div class='col-sm-12 centered top-margined'>
-      <%= link_to "LOGIN with PUBLIC REPO SCOPE #{fa_icon 'github-alt'}".html_safe, user_omniauth_authorize_path(:github_public_scope), class: 'medium join' %>
+<% else %>
+  <div class="container">
+    <div class="row">
+      <div class='col-sm-12 centered top-margined'>
+        <%= link_to "LOGIN with PRIVATE & PUBLIC REPO SCOPE #{fa_icon 'github-alt'}".html_safe, user_omniauth_authorize_path(:github_private_scope), class: 'medium join' %>
+      </div>
     </div>
   </div>
-</div>
+<% end %>
 
 <script>
 document.addEventListener("DOMContentLoaded", function(e){

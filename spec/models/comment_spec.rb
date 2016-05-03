@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Comment, :type => :model do
   VOTES_ON_COMMENTS = 4
-  VOTES_TALLEY_EXAMPLE = {"informative"=>{:up_votes=>1, :down_votes=>-1}, "succint"=>{:up_votes=>1, :down_votes=>-1}, "ambiguous"=>{:up_votes=>1, :down_votes=>-1}, "kind"=>{:up_votes=>1, :down_votes=>-1}, "motivating"=>{:up_votes=>1, :down_votes=>-1}, "harsh"=>{:up_votes=>1, :down_votes=>-1}}
+  VOTES_TALLEY_EXAMPLE = {"informative"=>{:up_votes=>1, :down_votes=>-1, :has_up_vote=>false, :has_down_vote=>false}, "succint"=>{:up_votes=>1, :down_votes=>-1, :has_up_vote=>false, :has_down_vote=>false}, "compassionate"=>{:up_votes=>1, :down_votes=>-1, :has_up_vote=>false, :has_down_vote=>false}, "motivating"=>{:up_votes=>1, :down_votes=>-1, :has_up_vote=>false, :has_down_vote=>false}}
 
   context 'happy behaviors' do
     before :each do
@@ -33,7 +33,8 @@ RSpec.describe Comment, :type => :model do
     end
 
     it '#sentiments_vote_summary' do
-      expect(@comment.sentiments_vote_summary).to eq VOTES_TALLEY_EXAMPLE 
+      user = OpenStruct.new id: 123
+      expect(@comment.sentiments_vote_summary(user)).to eq VOTES_TALLEY_EXAMPLE 
     end
   end
 end

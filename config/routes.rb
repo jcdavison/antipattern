@@ -34,7 +34,6 @@ Rails.application.routes.draw do
     post 'offers/payments', to: 'offers#payments'
     post 'offers', to: 'offers#create'
     post 'votes', to: 'votes#create'
-    post 'comments', to: 'comments#create'
     post 'hooks/code_review/:repo_name', to: 'hooks#consume'
     post 'comments/:id/sentiments', to: 'comments_sentiments#create'
     put 'offers', to: 'offers#update'

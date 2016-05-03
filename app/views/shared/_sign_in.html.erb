@@ -1,13 +1,8 @@
 <% if current_user %>
   <ul class="nav navbar-nav navbar-left">
-    <% if current_user.has_private_repo_scope? %>
-      <li><%= link_to "remove private repo scope", user_omniauth_authorize_path(:github_public_scope), class: 'hover-blue' %></li>
-    <% else %>
-      <li><%= link_to "ENABLE PRIVATE SCOPE REPOs", user_omniauth_authorize_path(:github_private_scope), class: 'hover-blue' %></li>
-    <% end %>
     <li><%= link_to "signed in as: #{github_username(current_user)}", current_user.github_profile, target: 'new' %></li>
-    <li><%= link_to 'SETTINGS', settings_path, class: 'hover-blue' %></li>
-    <li><a href="http://blog.antipattern.io" class="hover-blue" target="new">FAQ</a></li>
+    <%# <li><%= link_to 'SETTINGS', settings_path, class: 'hover-blue' %1></li> %>
+    <%# <li><a href="http://blog.antipattern.io" class="hover-blue" target="new">FAQ</a></li> %>
     <li><%= link_to 'SIGN OUT', destroy_user_session_path, method: :delete, class: 'hover-blue' %></li>
   </ul>
 <% else %>
