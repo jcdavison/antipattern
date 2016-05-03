@@ -2,7 +2,7 @@ class Api::CommentsSentimentsController < ApplicationController
   before_filter :authenticate_user!, only: [:create]
 
   def show
-    comment = Comment.find(params[:id])
+    comment = Comment.find_by_id(params[:id])
     render json: { comment: comment, sentiments_vote_summary: comment.sentiments_vote_summary(set_user_context(current_user)) }
   end
 

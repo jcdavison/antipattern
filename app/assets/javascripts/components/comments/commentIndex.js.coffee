@@ -9,11 +9,9 @@
     showPlaceholder: true
 
   componentDidMount: () ->
-    if @props.data.commentThreads == 'in_progress'
-      @setState intervalId: setInterval(@getCommentThreads, 3000)
-    else
-      @setState commentThreads: @props.data.commentThreads
-      @setState showPlaceholder: false
+
+  componentWillReceiveProps: (newProps) ->
+    @setState commentThreads: newProps.data.commentThreads
 
   getCommentThreads: () ->
     $.ajax(
@@ -29,56 +27,8 @@
   render: () ->
     React.DOM.div
       className: null
-      if @state.showPlaceholder == true
-        React.DOM.div
-          className: 'blue medium-small centered'
-          React.DOM.span
-            'Your comment feed is queueing ('
-          React.DOM.i
-            className: 'fa fa-spinner fa-spin'
-          React.DOM.span
-            ') and will display momentarily.'
-      if @state.showPlaceholder == false && Object.keys(@state.commentThreads).length > 0
+      if Object.keys(@state.commentThreads).length > 0
         React.DOM.div
           className: null
-          React.DOM.a
-            className: 'foo-small'
-            href: '/comment-feedback?updateCache=true'
-            'update comment feed'
           for commentThreadSha, comments of @state.commentThreads 
             React.createElement commentThread, key: "commentThread-#{commentThreadSha}", data: commentThreadSha: commentThreadSha, comments: comments
-      if @state.showPlaceholder == false && Object.keys(@state.commentThreads).length == 0
-        React.DOM.div
-          className: 'centered'
-          React.DOM.div
-            className: 'foo-small blue'
-            'Yikes, seems like your repositories do not have reviewable comments in the last 45 days.'
-          React.DOM.div
-            className: 'null'
-            React.DOM.span
-              className: 'foo-small blue'
-              'This is an excellent time to '
-            React.DOM.a
-              className: 'foo-small red' 
-              href: '/code-reviews'
-              ' request a code review'
-            React.DOM.span
-              className: 'foo-small blue'
-              ' or '
-            React.DOM.a
-              className: 'foo-small red'
-              href: '/comment-feedback?updateCache=true'
-              'update your comment feed.'
-          React.DOM.div
-            className: 'foo-small centered top-margined'
-            React.DOM.div
-              className: null
-              'or learn about the way of the intercepting fist...'
-            React.DOM.div
-              className: null
-              React.DOM.iframe
-                width: 420
-                height: 315
-                src: 'https://www.youtube.com/embed/2qvYa5t-JUc'
-                frameBorder: 0
-

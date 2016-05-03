@@ -1,7 +1,6 @@
 @commentFeedbackInterface = React.createClass
 
   componentDidMount: () ->
-    # console.log @props.data
 
   getInitialState: () ->
     upVotes: @props.data.voteSummary.up_votes

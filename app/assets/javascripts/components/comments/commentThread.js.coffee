@@ -2,7 +2,7 @@
 
   getInitialState: () ->
     comments: @props.data.comments
-    repo: @props.data.comments[0].repo.name
+    repo: @props.data.comments[0].repo
 
   componentDidMount: () ->
 
@@ -15,16 +15,10 @@
           className: 'col-sm-10 foo-small'
           React.DOM.span
             className: 'grey'
-            "commit: " 
+            "commit sha: " 
           React.DOM.span
             className: 'blue'
             " #{@props.data.commentThreadSha}"
-          React.DOM.span
-            className: 'grey'
-            " repository:" 
-          React.DOM.span
-            className: 'blue'
-            " #{@state.repo} " 
       React.DOM.div
         className: 'row'
         React.DOM.div

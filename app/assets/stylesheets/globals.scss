@@ -32,7 +32,8 @@ $rounding: 5px;
 }
 
 @mixin borders {
-  border: 1px solid grey;
+  border: 1px solid $very_light_grey;
+  border-radius: 3px;
 }
 
 @mixin light-borders {
