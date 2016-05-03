@@ -115,7 +115,7 @@
             className: 'row'
             React.DOM.div
               className: 'col-md-2 form-steps centered padded'
-              'entity:'
+              'user:'
             React.DOM.div
               className: 'col-md-4 form-steps centered'
               React.DOM.select
