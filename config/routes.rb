@@ -49,7 +49,6 @@ Rails.application.routes.draw do
   end
 
   get '/comment-feedback', to: 'comments#index'
-  get '/comment-show', to: 'comments#show'
   get '/code-reviews', to: 'code_reviews#index'
   root 'home#splash'
 end

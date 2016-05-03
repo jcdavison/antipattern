@@ -27,6 +27,7 @@ class CommentsList
         comment.save
       end
       raw_comment[:user] = raw_comment[:user].to_h
+      raw_comment[:id] = comment.id
       comment_obj = { comment: raw_comment.to_h, 
                       repo: @repo, 
                       sentiments: comment.sentiments_as_opts,

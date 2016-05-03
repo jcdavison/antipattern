@@ -12,6 +12,7 @@ RSpec.describe CommentsList do
     end
 
     it '#all_comments' do
+      binding.pry
       expect(@comments_list.raw_comments.first.to_h.keys).to eq augmented_github_comment_keys
     end
 

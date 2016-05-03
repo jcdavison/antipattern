@@ -9,6 +9,7 @@
     entities: []
     repos: []
     entity: null
+    commentThreads: []
 
   initEmptySelect: () ->
     $('.init-empty').each( (i,e,c) ->
@@ -23,15 +24,11 @@
     .success( (response) =>
       @setState entities: response.entities
       @enableSelect2("##{@state.entitySelectId}", response.entities)
-      $("#select2-code-review-entity-container").text('select self or org')
+      $("#select2-comment-entity-container").text('select self or org')
     )
     .error( (response) =>
       console.log 'error', response
     )
-
-  displayPrivacyNotice: () ->
-    if @state.repo.private
-      $('#repo-privacy-reminder').text("Important Reminder => Code Reviews from private repositories will only be viewable by people who have private access to that repo on github and will not appear in antipattern.io's public facing index.")
 
   populateBranches: (e) ->
     repo = @props.helpers.selectFrom(@state.repos, @selectedRepo(), 'id')
@@ -42,8 +39,8 @@
         entity: {value: @state.entity.text} 
       } 
     .success( (response) =>
-      @enableSelect2("##{@state.branchSelectId}", response.branches)
-      $("#select2-code-review-branch-container").text('select a branch')
+      # @enableSelect2("##{@state.branchSelectId}", response.branches)
+      # $("#select2-comment-branch-container").text('filter commits by branch')
     )
     .error( (response) =>
       console.log 'error', response
@@ -65,7 +62,7 @@
     .success( (response) =>
       @setState repos: response.repos
       @enableSelect2("##{@state.reposSelectId}", response.repos)
-      $("#select2-code-review-repo-container").text('select a repo')
+      $("#select2-comment-repo-container").text('select a repo')
     )
     .error( (response) =>
       console.log 'error', response
@@ -73,12 +70,24 @@
 
   initSelectListeners: () ->
     $("##{@state.entitySelectId}").on 'select2:select', (e) =>
+      @setState commentThreads: []
+      $("#select2-comment-repo-container").text('select a repo')
       @populateRepos(e)
     $("##{@state.reposSelectId}").on 'select2:select', (e) =>
-      @populateBranches(e)
-      @displayPrivacyNotice()
-    $("##{@state.branchSelectId}").on 'select2:select', (e) =>
-      console.log('get comments from branch', e)
+      @setState commentThreads: []
+      @loadComments()
+      # @populateBranches(e)
+    # $("##{@state.branchSelectId}").on 'select2:select', (e) =>
+      # console.log('get comments from branch', e)
+
+  loadComments: () ->
+    $.get '/api/comments-index', {entity: @selectedEntity(), repo: @selectedRepo()} 
+    .success( (response) =>
+      @setState commentThreads: response.commentThreads
+    )
+    .error( (response) =>
+      console.log 'error', response
+    )
 
   enableSelect2: (element, data, template = null) ->
     $(element).empty()
@@ -105,23 +114,27 @@
           React.DOM.div
             className: 'row'
             React.DOM.div
-              className: 'col-md-4 form-steps'
-              'Organization '
+              className: 'col-md-2 form-steps centered padded'
+              'entity:'
+            React.DOM.div
+              className: 'col-md-4 form-steps centered'
               React.DOM.select
                 className: 'init-empty'
                 id: @state.entitySelectId
                 required: 'required'
             React.DOM.div
-              className: 'col-md-4 form-steps'
-              'Repository '
+              className: 'col-md-2 form-steps centered padded'
+              'repository:'
+            React.DOM.div
+              className: 'col-md-4 form-steps centered'
               React.DOM.select
                 className: 'init-empty'
                 id: @state.reposSelectId
                 required: 'required'
-            React.DOM.div
-              className: 'col-md-4 form-steps'
-              'Branch '
-              React.DOM.select
-                id: @state.branchSelectId
-                className: 'init-empty'
-                required: 'required'
+      if @state.commentThreads.length == 0
+        React.DOM.div
+          className: 'light-red medium centered top-margined'
+          'please select a repository with comments'
+      React.DOM.div
+        className: 'top-margined'
+        React.createElement commentIndex, data: { commentThreads: @state.commentThreads }
