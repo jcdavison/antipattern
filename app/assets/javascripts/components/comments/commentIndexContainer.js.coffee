@@ -6,6 +6,7 @@
     reposSelectId: 'comment-repo'
     branchSelectId: 'comment-branch'
     entitySelectId: 'comment-entity'
+    statusMessage: null
     entities: []
     repos: []
     entity: null
@@ -18,6 +19,12 @@
 
   getDefaultProps: () ->
     helpers: window.ReactHelpers
+
+  showSaveButton: () ->
+    $('#saveCommentFeed').removeClass('hidden')
+
+  hideSaveButton: () ->
+    $('#saveCommentFeed').addClass('hidden')
 
   populateEntities: () ->
     $.get '/api/entities', {} 
@@ -68,12 +75,21 @@
       console.log 'error', response
     )
 
+  hidePrompt: () ->
+    $('#commentPrompt').addClass('hidden')
+
+  hideStatus: () ->
+    $('#commentStatus').addClass('hidden')
+
   initSelectListeners: () ->
     $("##{@state.entitySelectId}").on 'select2:select', (e) =>
       @setState commentThreads: []
       $("#select2-comment-repo-container").text('select a repo')
       @populateRepos(e)
     $("##{@state.reposSelectId}").on 'select2:select', (e) =>
+      @hideStatus()
+      @hidePrompt()
+      @hideSaveButton()
       @setState commentThreads: []
       @loadComments()
       # @populateBranches(e)
@@ -84,10 +100,18 @@
     $.get '/api/comments-index', {entity: @selectedEntity(), repo: @selectedRepo()} 
     .success( (response) =>
       @setState commentThreads: response.commentThreads
+      @setStatus(Object.keys(response.commentThreads).length)
+      @showSaveButton()
     )
     .error( (response) =>
       console.log 'error', response
     )
+
+  setStatus: (commentCount) ->
+    if commentCount == 0
+      @setState statusMessage: 'this repository has no comments'
+    if commentCount > 0
+      @setState statusMessage: null
 
   enableSelect2: (element, data, template = null) ->
     $(element).empty()
@@ -117,7 +141,7 @@
               className: 'col-md-2 form-steps centered padded'
               'user:'
             React.DOM.div
-              className: 'col-md-4 form-steps centered'
+              className: 'col-md-3 form-steps centered'
               React.DOM.select
                 className: 'init-empty'
                 id: @state.entitySelectId
@@ -126,15 +150,25 @@
               className: 'col-md-2 form-steps centered padded'
               'repository:'
             React.DOM.div
-              className: 'col-md-4 form-steps centered'
+              className: 'col-md-3 form-steps centered'
               React.DOM.select
                 className: 'init-empty'
                 id: @state.reposSelectId
                 required: 'required'
-      if @state.commentThreads.length == 0
-        React.DOM.div
-          className: 'light-red medium centered top-margined'
-          'please select a repository with comments'
+            React.DOM.div
+              className: 'col-md-2 centered'
+              React.DOM.button
+                id: 'saveCommentFeed'
+                className: 'btn btn-default accept no-margin hidden'
+                'save'
+      React.DOM.div
+        id: '#commentStatus'
+        className: 'light-red medium centered top-margined'
+        @state.statusMessage
+      React.DOM.div
+        id: 'commentPrompt'
+        className: 'light-red medium centered top-margined'
+        'please select a repository with comments'
       React.DOM.div
         className: 'top-margined'
         React.createElement commentIndex, data: { commentThreads: @state.commentThreads }

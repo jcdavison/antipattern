@@ -36,6 +36,11 @@ $rounding: 5px;
   border-radius: 3px;
 }
 
+@mixin scaffold-borders {
+  border: 1px solid $blue;
+  border-radius: 3px;
+}
+
 @mixin light-borders {
   border: 1px solid $very-light-grey;
 }
@@ -78,6 +83,14 @@ $rounding: 5px;
 
 .double-left-padding {
   @include double-left-padding;
+}
+
+@mixin no-margin {
+  margin: 0 !important;
+}
+
+.no-margin {
+  @include no-margin;
 }
 
 @mixin no-horizontal-margin {
