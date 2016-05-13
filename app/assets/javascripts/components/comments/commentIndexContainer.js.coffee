@@ -6,7 +6,7 @@
     reposSelectId: 'comment-repo'
     branchSelectId: 'comment-branch'
     entitySelectId: 'comment-entity'
-    statusMessage: null
+    statusMessage: 'foo status'
     entities: []
     repos: []
     entity: null
@@ -53,6 +53,21 @@
       console.log 'error', response
     )
 
+  saveFeed: (e) ->
+    e.preventDefault()
+    $('button#saveCommentFeed').prop('disabled', true)
+    $.post '/api/comment-feed', {
+        github_entity: @selectedEntity(), 
+        repository: @selectedRepo(), 
+      } 
+    .success( (response) =>
+      $('button#saveCommentFeed').prop('disabled', false)
+      PubSub.publish('refreshCommentFeeds')
+    )
+    .error( (response) =>
+      console.log 'error', response
+    )
+
   selectedEntity: () ->
     $("##{@state.entitySelectId}").val()
 
@@ -91,15 +106,14 @@
       @hidePrompt()
       @hideSaveButton()
       @setState commentThreads: []
-      @loadComments()
-      # @populateBranches(e)
-    # $("##{@state.branchSelectId}").on 'select2:select', (e) =>
-      # console.log('get comments from branch', e)
+      @loadComments( {entity: @selectedEntity(), repo: @selectedRepo()} )
 
-  loadComments: () ->
-    $.get '/api/comments-index', {entity: @selectedEntity(), repo: @selectedRepo()} 
+
+  loadComments: (opts) ->
+    $.get '/api/comments-index', { entity: opts.entity, repo: opts.repo } 
     .success( (response) =>
       @setState commentThreads: response.commentThreads
+      @setState commentFeed: true
       @setStatus(Object.keys(response.commentThreads).length)
       @showSaveButton()
     )
@@ -122,13 +136,20 @@
     @initEmptySelect()
     @props.helpers.validateForm("##{@state.formId}")
     if @props.data.currentUser
+      if @props.showCommentFeedBuilder
+        @setState showCommentFeedBuilder: true
+      if @props.data.commentFeed
+        @setState commentFeed: true
+        @props.data.commentFeed['preLoad'] = true
+        @loadComments( @props.data.commentFeed )
       @populateEntities()
       @initSelectListeners()
     else
       @enableSelect2("##{@state.entitySelectId}", [])
       $("#select2-code-review-entity-container").text('please sign in to continue')
 
-  render: () ->
+
+  renderCommentBuilder: () ->
     React.DOM.div
       className: null
       React.DOM.div
@@ -160,15 +181,23 @@
               React.DOM.button
                 id: 'saveCommentFeed'
                 className: 'btn btn-default accept no-margin hidden'
-                'save'
+                onClick: @saveFeed
+                'save feed'
+          React.createElement commentFeedsIndex
+
+  renderCommentFeed: () ->
+    React.DOM.div
+      className: null
       React.DOM.div
-        id: '#commentStatus'
-        className: 'light-red medium centered top-margined'
-        @state.statusMessage
-      React.DOM.div
-        id: 'commentPrompt'
-        className: 'light-red medium centered top-margined'
-        'please select a repository with comments'
+        className: 'row'
       React.DOM.div
         className: 'top-margined'
         React.createElement commentIndex, data: { commentThreads: @state.commentThreads }
+
+  render: () ->
+    React.DOM.div
+      className: null
+      if @state.showCommentFeedBuilder || @props.data.showCommentFeedBuilder
+        @renderCommentBuilder()
+      if @state.commentFeed
+        @renderCommentFeed()

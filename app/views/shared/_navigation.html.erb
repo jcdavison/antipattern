@@ -14,13 +14,8 @@
           <%# <%= link_to 'Code Reviews', code_reviews_path, class: 'small hover-blue' %1> %>
         </li>
         <li>
-          <%# <a href='#' id='request-a-code-review' class="hover-blue small" data-toggle='modal' data-target='.request-code-review'>Request Code Review</a> %>
-        </li>
-        <li>
           <% if current_user %>
-            <%# <%= link_to 'Comment Feedback', comment_feedback_path, class: 'small hover-blue' %1> %>
-          <% else %>
-            <%# <a href='#' id='please-login' class="hover-blue small" data-toggle='modal' data-target='.please-login'>Comment Feedback</a> %>
+            <%= link_to 'Comment Feeds', comment_feeds_path, class: 'small hover-blue' %>
           <% end %>
         </li>
       </ul>

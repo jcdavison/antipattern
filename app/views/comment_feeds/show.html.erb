@@ -1,0 +1,15 @@
+<div class='container'>
+  <div class='row'>
+    <div class='col-sm-11 center-block no-float'>
+      <div class='row'>
+        <div class='col-md-2 red medium'>
+          repo:
+        </div>
+        <div class='col-md-9 red medium'>
+          <%= @comment_feed['repository'] %>
+        </div>
+      </div>
+      <%= react_component 'commentIndexContainer', { data: { currentUser: render_current_user , commentFeed: {entity: @comment_feed["githubEntity"], repo: @comment_feed["repository"]}} } %>
+    </div>
+  </div>
+</div>

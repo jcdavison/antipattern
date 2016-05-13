@@ -22,7 +22,7 @@ class Api::RepositoriesController < ApplicationController
 
     def repo_display_text repo
       if repo[:private]
-        "#{repo[:name]} | PRIVATE REPO"
+        "#{repo[:name]} (private)"
       else
         repo[:name]
       end

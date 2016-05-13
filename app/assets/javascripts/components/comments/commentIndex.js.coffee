@@ -25,9 +25,17 @@
       ) 
 
   render: () ->
+    commentThreadCount = Object.keys(@state.commentThreads).length
     React.DOM.div
       className: null
-      if Object.keys(@state.commentThreads).length > 0
+      React.DOM.div
+        className: 'top-margined'
+        React.DOM.span
+          className: 'blue'
+          "comment thread count: #{commentThreadCount}"
+      React.DOM.div
+        className: null
+      if commentThreadCount > 0
         React.DOM.div
           className: null
           for commentThreadSha, comments of @state.commentThreads 

@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   class UnauthorizedPrivateRepoRequest < StandardError ; end
 
   def after_sign_in_path_for(resource)
-    comment_feedback_path
+    comment_feeds_path
   end
 
   def enforce_private_repo_access
