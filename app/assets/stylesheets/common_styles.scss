@@ -405,6 +405,10 @@ a.venmo {
   @include borders;
 }
 
+.scaffold-borders {
+  @include scaffold-borders;
+}
+
 .inline {
   display: inline;
 }

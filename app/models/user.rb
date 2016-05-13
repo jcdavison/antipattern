@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :identities, dependent: :destroy
   has_many :code_reviews, dependent: :destroy
   has_many :offers, dependent: :destroy
+  has_many :comment_feeds
   has_one :wallet, dependent: :destroy
   has_and_belongs_to_many :notification_channels, dependent: :destroy
 
