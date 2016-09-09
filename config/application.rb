@@ -8,7 +8,6 @@ Bundler.require(*Rails.groups)
 
 module Antipattern
   class Application < Rails::Application
-    config.middleware.use Rack::SslEnforcer, :except_environments => ['development', 'test']
 
     config.autoload_paths  = %W(#{config.root}/lib, #{config.root}/app/mixins)
     # Settings in config/environments/* take precedence over those specified here.
