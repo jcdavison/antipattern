@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20160512205412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
 
   create_table "code_reviews", force: true do |t|
     t.text     "context"
@@ -83,20 +82,6 @@ ActiveRecord::Schema.define(version: 20160512205412) do
   end
 
   add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
-
-  create_table "leads", force: true do |t|
-    t.string   "email"
-    t.string   "username"
-    t.string   "source"
-    t.hstore   "original_blob"
-    t.boolean  "registered",    default: false
-    t.boolean  "opt_out",       default: false
-    t.integer  "uid"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.hstore   "user_blob"
-    t.hstore   "repo_blob"
-  end
 
   create_table "notification_channels", force: true do |t|
     t.string   "name"

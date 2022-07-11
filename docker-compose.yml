@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  app:
+    stdin_open: true
+    tty: true
+    restart: always
+    image: antipattern
+    env_file:
+      - .env
+    build:
+      context: ./
+      args:
+        bundle_without: development:test
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app
+    command: bundle exec rails s -b 0.0.0.0
+    environment:
+      BUNDLE_WITHOUT: development:test
+      # The remaining environment variables should be loaded via .env
